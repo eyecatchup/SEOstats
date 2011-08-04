@@ -127,7 +127,7 @@ class SEOstats
     /**
      * HTTP GET request with curl.
      *
-     * @access        private
+     * @access        public
      * @param         string        $url        String, containing the URL to
      *                                          curl.
      * @return        string                    Returns string, containing the
