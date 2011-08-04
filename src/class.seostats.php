@@ -23,11 +23,17 @@
      * 2011/08/04   Stephan Schmitz     Added method Bing_Siteindex_Total()
      *                                  Added method Bing_Siteindex_Array()
      *                                  Added method Bing()
+     *                                  Updated constant
+     *                                              PAGERANK_CHECKSUM_API_URI
+     *=======================================================================
+     * Note: The above changelog is related to this file only. Each file of
+     * the package has it's own changelog in the head section. For a general
+     * changelog, please see the CHANGELOG file.
      *=======================================================================
      * Copyright (c) 2010-present, Stephan Schmitz
      * All rights reserved.
      *=======================================================================
-     * Project Contributors (alphabetical order):
+     * Project Contributors (Alphabetically by first names):
      *
      * |Chris Alvares <mail@chrisalvares.com>
      * |-> contributed the BING child class
