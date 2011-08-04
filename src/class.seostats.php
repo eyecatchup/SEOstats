@@ -25,6 +25,8 @@
      *                                  Added method Bing()
      *                                  Updated constant
      *                                              PAGERANK_CHECKSUM_API_URI
+     *                                  Removed pre tags when output of the
+     *                                  print_array() method is json
      *=======================================================================
      * Note: The above changelog is related to this file only. Each file of
      * the package has it's own changelog in the head section. For a general
@@ -243,11 +245,16 @@ class SEOstats
      */
     public function print_array($method,$output='')
     {
-        $array = ($output != 'json') ? $this->$method() : json_encode($this->$method());
-
-        print '<pre>';
-        print_r ($array);
-        print '</pre>';
+        if($output=='json')
+        {
+            print_r (json_encode($this->$method()));
+        }
+        else
+        {
+            print '<pre>';
+            print_r ($this->$method());
+            print '</pre>';
+        }
     }
 
     /**
