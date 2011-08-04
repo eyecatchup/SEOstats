@@ -1,6 +1,14 @@
  ======================================================================
  CHANGELOG
  ----------------------------------------------------------------------
+ v2.0.8       04.08.2011    * implemented contributed child class:
+                              added child class SEOstats_Bing
+                            * added method SEOstats::Bing()
+                            * implemented contributed fix:
+                              added folder support for SEOstats_Majesticseo::report()
+                            * implemented contributed fix:
+                              fixed return method for SEOstats_Google::googleTotal2()
+                            * updated constant PAGERANK_CHECKSUM_API_URI
  v2.0.7       11.06.2011    * added method Google_Siteindex_Total_API
                             * added method Google_Backlinks_Total_API
                             * fixed Majesticseo methods
