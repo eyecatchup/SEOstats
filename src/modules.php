@@ -14,7 +14,9 @@
      *
      *  @changelog
      *  date        author              change(s)
-     *  2011/08/04  Stephan Schmitz     included seostats.bing.php
+     *  2011/08/04  Stephan Schmitz     added seostats.bing.php
+     *  2011/08/08  Stephan Schmitz     added seostats.facebook.php
+     *                                  and seostats.twitter.php
      */
 
 include_once('seostats.google.php');
@@ -23,5 +25,7 @@ include_once('seostats.bing.php');
 include_once('seostats.majesticseo.php');
 include_once('seostats.seomoz.php');
 include_once('seostats.alexa.php');
+include_once('seostats.facebook.php');
+include_once('seostats.twitter.php');
 include_once('seostats.exception.php');
 ?>
