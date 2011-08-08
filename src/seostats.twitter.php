@@ -31,8 +31,9 @@ class SEOstats_Twitter extends SEOstats {
     function getTweetCount($url) {
         $url = urlencode($url);
         $twitterEndpoint = "http://urls.api.twitter.com/1/urls/count.json?url=%s";
-        $fileData = file_get_contents(sprintf($twitterEndpoint, $url)); $json = json_decode($fileData, true);
-        unset($fileData);               # free memory
+        $fileData = file_get_contents(sprintf($twitterEndpoint, $url)); 
+        $json = json_decode($fileData, true);
+        unset($fileData);               // free memory
         return $json['count'];
     }
 
