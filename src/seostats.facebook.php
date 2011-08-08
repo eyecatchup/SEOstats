@@ -2,7 +2,7 @@
     /**
      *  PHP class SEOstats
      *
-     *  @class      SEOstats_Google
+     *  @class      SEOstats_Facebook
      *  @package    class.seostats
      *  @link       https://github.com/eyecatchup/SEOstats/
      *  @updated    2011/08/08
