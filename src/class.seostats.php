@@ -74,97 +74,109 @@ include_once('modules.php');
 
 class SEOstats
 {
-    const BUILD_NO                  = '2.0.8';
-    const PAGERANK_CHECKSUM_API_URI = 'http://pagerank.bexton.net/?url=';
+	const BUILD_NO 					= '2.0.7';
+	const PAGERANK_CHECKSUM_API_URI = 'http://217.150.244.124/prch/?url=';
+	
+	/**
+	 * Object URL
+	 *
+	 * @access		public
+	 * @var			string
+	 */
+	public $url;
+	
+	/**
+	 * Constructor
+	 *
+	 * Checks for valid URL syntax and server response.
+	 *
+	 * @access		public
+	 * @param		string		$url		String, containing the initialized 
+	 *                                      object URL.
+	 */		
+	public function __construct($url)
+	{
+		$url = str_replace(' ', '+', $url);
+		$this->url = $url;
+		$url_validation = $this->valid_url($this->url);
+		if($url_validation == 'valid')
+		{
+			$valid_response_codes = array('200','301','302');
+			$curl_result = $this->get_status_code($this->url);
+			if(in_array($curl_result,$valid_response_codes))
+			{
+				$this->host 		= parse_url($this->url, PHP_URL_HOST);
+				$this->protocol 	= parse_url($this->url, PHP_URL_SCHEME);
+			}
+			elseif($curl_result == '0')
+			{
+				$e = 'Invalid URL > '.$this->url.' returned no response for a HTTP HEAD request, at all. It seems like the Domain does not exist.';
+				$this->errlogtxt($e);
+				throw new SEOstatsException($e);
+			}
+			else
+			{
+				$e = 'Invalid Request > '.$this->url.' returned a '.$curl_result.' status code.';
+				$this->errlogtxt($e);
+				throw new SEOstatsException($e);
+			}
+		}
+		else
+		{
+			$e = $url_validation;
+			$this->errlogtxt($e);
+			throw new SEOstatsException($e);
+		}
+	}	
+	
+	function errlogtxt($errtxt)
+	{
+		$fp = fopen('errlog.txt','a+'); //ouvrir le fichier
+		$newerr = date('Y-m-d\TH:i:sP') .' : ' . $errtxt."\r\n"; //creation du texte de l'erreur
+		fwrite($fp,$newerr); //edition du fichier texte
+		fclose($fp); //fermeture du fichier texte
+		echo $newerr;
+	}
 
-    /**
-     * Object URL
-     *
-     * @access        public
-     * @var           string
-     */
-    public $url;
+	/**
+	 * HTTP GET request with curl.
+	 *
+	 * @access		private
+	 * @param		string		$url		String, containing the URL to 
+	 *                                      curl.
+	 * @return		string					Returns string, containing the 
+	 *                                      curl result.
+	 */
+	public static function cURL($url)
+	{
+		$ch  = curl_init($url);
+		curl_setopt($ch,CURLOPT_USERAGENT,
+			'SEOstats '. SEOstats::BUILD_NO .' code.google.com/p/seostats/');
+		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
+		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
+		curl_setopt($ch,CURLOPT_MAXREDIRS,2);
+		if(strtolower(parse_url($url, PHP_URL_SCHEME)) == 'https')
+		{
+			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,1);
+			curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,1);
+		}
+		$str = curl_exec($ch);
+		curl_close($ch);
 
-    /**
-     * Constructor
-     *
-     * Checks for valid URL syntax and server response.
-     *
-     * @access        public
-     * @param         string        $url        String, containing the initialized
-     *                                          object URL.
-     */
-    public function __construct($url)
-    {
-        $this->url = $url;
-        $url_validation = $this->valid_url($this->url);
-        if($url_validation == 'valid')
-        {
-            $valid_response_codes = array('200','301','302');
-            $curl_result = $this->get_status_code($this->url);
-            if(in_array($curl_result,$valid_response_codes))
-            {
-                $this->host         = parse_url($this->url, PHP_URL_HOST);
-                $this->protocol     = parse_url($this->url, PHP_URL_SCHEME);
-            }
-            elseif($curl_result == '0')
-            {
-                $e = 'Invalid URL > '.$this->url.' returned no response for a
-                    HTTP HEAD request, at all. It seems like the Domain does
-                    not exist.';
-                throw new SEOstatsException($e);
-            }
-            else
-            {
-                throw new SEOstatsException('Invalid Request > '.$this->url.
-                    ' returned a '.$curl_result.' status code.');
-            }
-        }
-        else
-        {
-            throw new SEOstatsException($url_validation);
-        }
-    }
+		return $str;   
+	}
 
-    /**
-     * HTTP GET request with curl.
-     *
-     * @access        public
-     * @param         string        $url        String, containing the URL to
-     *                                          curl.
-     * @return        string                    Returns string, containing the
-     *                                          curl result.
-     */
-    public static function cURL($url)
-    {
-        $ch  = curl_init($url);
-        curl_setopt($ch,CURLOPT_USERAGENT,
-            'SEOstats '. SEOstats::BUILD_NO .' code.google.com/p/seostats/');
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
-        curl_setopt($ch,CURLOPT_MAXREDIRS,2);
-        if(strtolower(parse_url($url, PHP_URL_SCHEME)) == 'https')
-        {
-            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,1);
-            curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,1);
-        }
-        $str = curl_exec($ch);
-        curl_close($ch);
-
-        return $str;
-    }
-
-    /**
-     * HTTP HEAD request with curl.
-     *
-     * @access        private
-     * @param         string        $url        String, containing the
-     *                                          initialized object URL.
-     * @return        intval                    Returns a HTTP status code.
-     */
-    private function get_status_code($url)
-    {
+	/**
+	 * HTTP HEAD request with curl.
+	 *
+	 * @access		private
+	 * @param		string		$url		String, containing the 
+	 *                                      initialized object URL.
+	 * @return		intval					Returns a HTTP status code.
+	 */		
+	private function get_status_code($url)
+	{
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_USERAGENT,
             'SEOstats '. SEOstats::BUILD_NO .' code.google.com/p/seostats/');
@@ -243,7 +255,7 @@ class SEOstats
      * @access        public
      * @return        string                       Prints an array within <pre> tags.
      */
-    public function print_array($method,$output='')
+    public function print_array($method,$output='json')
     {
         if($output=='json')
         {
@@ -653,8 +665,9 @@ class SEOstats
      */
     public function Facebook_Mentions_Total()
     {
-        $q = urlencode('site:facebook.com "'.$this->host.'"');
-        return SEOstats_Google::googleTotal($q);
+        //$q = urlencode('site:facebook.com "'.$this->host.'"');
+        //return SEOstats_Google::googleTotal($q);
+        return SEOstats_Facebook::facebookSharesTotal($this->url);
     }
 
     /**
@@ -675,8 +688,9 @@ class SEOstats
      */
     public function Twitter_Mentions_Total()
     {
-        $q = urlencode('site:twitter.com "'.$this->host.'"');
-        return SEOstats_Google::googleTotal($q);
+        //$q = urlencode('site:twitter.com "'.$this->host.'"');
+        //return SEOstats_Google::googleTotal($q);
+        return SEOstats_Twitter::getTweetCount($this->url);
     }
 
     /**
@@ -833,6 +847,16 @@ class SEOstats
         );
         return array('OBJECT' => $this->url, 'DATA' => $all);
     }
+    
+    /**
+	 * @access		public
+	 * @return		integer					Returns a global unique ID (useful for database integration)
+	 */	
+	public function Guid()
+	{
+
+		return SEOstats_Guid::CreateGUID($this->varGUID);
+	}
 
     /**
      * Method processing might take a few more seconds!
@@ -922,5 +946,55 @@ class SEOstats
         );
         return array('OBJECT' => $this->url, 'DATA' => $all);
     }
+    
+    /**
+	 * Custom Arrays
+	 *
+	 * @access		public
+	 * @return		array					Returns multi-array, containing custom data.
+	 */
+	public function Custom()
+	{
+			$all = 	array(
+					'MAJESTICSEO' => array(
+						'Majesticseo_Backlinks_Total'			=> $this->Majesticseo_Backlinks_Total(),
+					),			
+					'SEOMOZ' => array(
+						'Seomoz_Domainauthority_Array'			=> $this->Seomoz_Domainauthority_Array()
+					),
+					'FACEBOOK' => array(
+						'Facebook_Mentions_Total'				=> $this->Facebook_Mentions_Total()
+					),
+					'TWITTER' => array(
+						'Twitter_Mentions_Total'				=> $this->Twitter_Mentions_Total()
+					),
+					'GUID' => array(
+						'Global_Unique_ID'				=> $this->Guid()
+					)	
+				);
+		return array('OBJECT' => $this->url, 'DATA' => $all);			
+	}
+
+	/**
+	 * Social Arrays
+	 *
+	 * @access		public
+	 * @return		array					Returns multi-array, containing social data.
+	 */	
+	public function Social()
+	{
+			$all = 	array(
+					'FACEBOOK' => array(
+						'Facebook_Mentions_Total'				=> $this->Facebook_Mentions_Total()
+					),
+					'TWITTER' => array(
+						'Twitter_Mentions_Total'				=> $this->Twitter_Mentions_Total()
+					),
+					'GUID' => array(
+						'Global_Unique_ID'				=> $this->Guid()
+					)	
+				);
+		return array('OBJECT' => $this->url, 'DATA' => $all);			
+	}
 }
 ?>
