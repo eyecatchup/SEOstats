@@ -667,7 +667,7 @@ class SEOstats
     {
         //$q = urlencode('site:facebook.com "'.$this->host.'"');
         //return SEOstats_Google::googleTotal($q);
-        return SEOstats_Facebook::facebookSharesTotal($this->url);
+        return SEOstats_Facebook::getFacebookShares($this->url);
     }
 
     /**
