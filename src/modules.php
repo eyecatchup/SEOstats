@@ -13,7 +13,6 @@
  
 include_once('seostats.google.php');
 include_once('seostats.yahoo.php');
-include_once('seostats.majesticseo.php');
 include_once('seostats.seomoz.php');
 include_once('seostats.alexa.php');
 include_once('seostats.exception.php');
