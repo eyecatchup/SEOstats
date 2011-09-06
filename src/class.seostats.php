@@ -1,14 +1,14 @@
 <?php
     /************************************************************************
-     * PHP Class SEOstats 2.0.8
+     * PHP Class SEOstats 2.0.8.2
      *=======================================================================
      * PHP class to request a bunch of SEO data, such as Backlinkdetails,
      * Traffic Statistics, Pageauthority and much more.
      *=======================================================================
-     * @package     class.seostats.2.0.8
+     * @package     class.seostats.2.0.8.2
      * @link        https://github.com/eyecatchup/SEOstats/
      * @link        https://bexton.net/SEOstats/
-     * @updated     2011/08/04
+     * @updated     2011/09/06
      * @author      Stephan Schmitz <eyecatchup@gmail.com>
      * @copyright   2010-present, Stephan Schmitz
      * @license     GNU General Public License (GPL)
@@ -20,6 +20,7 @@
      *=======================================================================
      * @changelog
      * date         author              method: change(s)
+     * 2011/09/06   Stephan Schmitz     Removed Majesticseo methods.
      * 2011/08/04   Stephan Schmitz     Added method Bing_Siteindex_Total()
      *                                  Added method Bing_Siteindex_Array()
      *                                  Added method Bing()
@@ -451,51 +452,6 @@ class SEOstats
 
     /**
      * @access        public
-     * @return        integer    Returns the total amount of indexed pages for the object URL, listed at Majesticseo.
-     */
-    public function Majesticseo_Siteindex_Total()
-    {
-        return SEOstats_Majesticseo::report($this->url, 6);
-    }
-
-    /**
-     * @access        public
-     * @return        integer    Returns the total amount of backlinks, listed at Majesticseo.
-     */
-    public function Majesticseo_Backlinks_Total()
-    {
-        return SEOstats_Majesticseo::report($this->url, 3);
-    }
-
-    /**
-     * @access        public
-     * @return        integer    Returns the total amount of backlinking domains, listed at Majesticseo.
-     */
-    public function Majesticseo_Backlinking_Domains_Total()
-    {
-        return SEOstats_Majesticseo::report($this->url, 1);
-    }
-
-    /**
-     * @access        public
-     * @return        integer    Returns the total amount of backlinking IP's, listed at Majesticseo.
-     */
-    public function Majesticseo_Backlinking_IPs_Total()
-    {
-        return SEOstats_Majesticseo::report($this->url, 4);
-    }
-
-    /**
-     * @access        public
-     * @return        integer    Returns the total amount of backlinking Class C subnets.
-     */
-    public function Majesticseo_Backlinking_CSubnets_Total()
-    {
-        return SEOstats_Majesticseo::report($this->url, 5);
-    }
-
-    /**
-     * @access        public
      * @return        array      Returns array, containing the keys 'URL Authority', 'URL mozRank', 'Domain Authority' and 'Domain mozRank'.
      */
     public function Seomoz_Domainauthority_Array()
@@ -761,24 +717,6 @@ class SEOstats
 
     /**
      * @access        public
-     * @return        array      Returns multi-array, containing all Majesticseo data.
-     */
-    public function Majesticseo()
-    {
-        $all = array(
-		    'MAJESTICSEO' => array(
-                'Majesticseo_Siteindex_Total'            => $this->Majesticseo_Siteindex_Total(),
-                'Majesticseo_Backlinks_Total'            => $this->Majesticseo_Backlinks_Total(),
-                'Majesticseo_Backlinking_Domains_Total'  => $this->Majesticseo_Backlinking_Domains_Total(),
-                'Majesticseo_Backlinking_IPs_Total'      => $this->Majesticseo_Backlinking_IPs_Total(),
-                'Majesticseo_Backlinking_CSubnets_Total' => $this->Majesticseo_Backlinking_CSubnets_Total()
-            )
-        );
-        return array('OBJECT' => $this->url, 'DATA' => $all);
-    }
-
-    /**
-     * @access        public
      * @return        array      Returns multi-array, containing all SEOmoz data.
      */
     public function Seomoz()
@@ -882,13 +820,6 @@ class SEOstats
             'BING' => array(
                 'Bing_Siteindex_Total'                   => $this->Bing_Siteindex_Total()
             ),
-            'MAJESTICSEO' => array(
-                'Majesticseo_Siteindex_Total'            => $this->Majesticseo_Siteindex_Total(),
-                'Majesticseo_Backlinks_Total'            => $this->Majesticseo_Backlinks_Total(),
-                'Majesticseo_Backlinking_Domains_Total'  => $this->Majesticseo_Backlinking_Domains_Total(),
-                'Majesticseo_Backlinking_IPs_Total'      => $this->Majesticseo_Backlinking_IPs_Total(),
-                'Majesticseo_Backlinking_CSubnets_Total' => $this->Majesticseo_Backlinking_CSubnets_Total()
-            ),
             'SEOMOZ' => array(
                 'Seomoz_Domainauthority_Array'           => $this->Seomoz_Domainauthority_Array()
             ),
@@ -928,7 +859,6 @@ class SEOstats
         $google    = $this->Google();
         $yahoo     = $this->Yahoo();
         $bing      = $this->Bing();
-        $majestics = $this->Majesticseo();
         $seomoz    = $this->Seomoz();
         $alexa     = $this->Alexa();
         $facebook  = $this->Facebook();
@@ -938,7 +868,6 @@ class SEOstats
             $google['DATA'],
             $yahoo['DATA'],
             $bing['DATA'],
-            $majestics['DATA'],
             $seomoz['DATA'],
             $alexa['DATA'],
             $facebook['DATA'],
@@ -955,23 +884,20 @@ class SEOstats
 	 */
 	public function Custom()
 	{
-			$all = 	array(
-					'MAJESTICSEO' => array(
-						'Majesticseo_Backlinks_Total'			=> $this->Majesticseo_Backlinks_Total(),
-					),			
-					'SEOMOZ' => array(
-						'Seomoz_Domainauthority_Array'			=> $this->Seomoz_Domainauthority_Array()
-					),
-					'FACEBOOK' => array(
-						'Facebook_Mentions_Total'				=> $this->Facebook_Mentions_Total()
-					),
-					'TWITTER' => array(
-						'Twitter_Mentions_Total'				=> $this->Twitter_Mentions_Total()
-					),
-					'GUID' => array(
-						'Global_Unique_ID'				=> $this->Guid()
-					)	
-				);
+		$all = 	array(			
+			'SEOMOZ' => array(
+				'Seomoz_Domainauthority_Array'	=> $this->Seomoz_Domainauthority_Array()
+			),
+			'FACEBOOK' => array(
+				'Facebook_Mentions_Total'	=> $this->Facebook_Mentions_Total()
+			),
+			'TWITTER' => array(
+				'Twitter_Mentions_Total'	=> $this->Twitter_Mentions_Total()
+			),
+			'GUID' => array(
+				'Global_Unique_ID'		=> $this->Guid()
+			)	
+		);
 		return array('OBJECT' => $this->url, 'DATA' => $all);			
 	}
 
@@ -983,17 +909,17 @@ class SEOstats
 	 */	
 	public function Social()
 	{
-			$all = 	array(
-					'FACEBOOK' => array(
-						'Facebook_Mentions_Total'				=> $this->Facebook_Mentions_Total()
-					),
-					'TWITTER' => array(
-						'Twitter_Mentions_Total'				=> $this->Twitter_Mentions_Total()
-					),
-					'GUID' => array(
-						'Global_Unique_ID'				=> $this->Guid()
-					)	
-				);
+		$all = 	array(
+			'FACEBOOK' => array(
+				'Facebook_Mentions_Total' 	=> $this->Facebook_Mentions_Total()
+			),
+			'TWITTER' => array(
+				'Twitter_Mentions_Total'	=> $this->Twitter_Mentions_Total()
+			),
+			'GUID' => array(
+				'Global_Unique_ID'		=> $this->Guid()
+			)	
+		);
 		return array('OBJECT' => $this->url, 'DATA' => $all);			
 	}
 }
