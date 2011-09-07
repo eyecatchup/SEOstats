@@ -1,14 +1,23 @@
 <?php
-	/**
-	 *  PHP class SEOstats
-	 *
-	 *  @class      SEOstats_Seomoz
-	 *  @package	class.seostats
-	 *  @updated	2011/06/11
-	 *  @author		Stephan Schmitz <eyecatchup@gmail.com>
-	 *  @copyright	2010-present, Stephan Schmitz
-	 *  @license	GNU General Public License (GPL)
-	 */
+     /**
+     *  PHP class SEOstats
+     *
+     *  @class      SEOstats_Seomoz
+     *  @package    class.seostats
+     *  @link       https://github.com/eyecatchup/SEOstats/
+     *  @updated    2011/04/29
+     *  @author     Stephan Schmitz <eyecatchup@gmail.com>
+     *  @copyright  2010-present, Stephan Schmitz
+     *  @license    GNU General Public License (GPL)
+     *
+     *  @filename   ./seostats.seomoz.php
+     *  @desc       Child class of SEOstats, extending the main class
+     *              by methods for http://www.seomoz.com
+     *
+     *  @changelog
+     *  date        author              method: change(s)
+     *  2011/09/07  Sylvain Rocheleau   added all the results returned by Seomoz to function Seomoz_Authority
+     */
 
 class SEOstats_Seomoz extends SEOstats {
 
@@ -30,10 +39,17 @@ class SEOstats_Seomoz extends SEOstats {
 
 		$data = json_decode($tmp);
 		
-		$result = array('URL Authority' 	=> $data->upa,
-						'URL mozRank' 		=> $data->umrp,
-						'Domain Authority' 	=> $data->pda,
-						'Domain mozRank' 	=> $data->fmrp
+		$result = array(
+						'Title' 		=> $data->ut,
+						'URL' 			=> $data->uu,		
+						'External Links' 	=> $data->ueid,
+						'Links' 		=> $data->uid,
+						'URL Authority' 	=> $data->upa,
+						'URL mozRank' 		=> $data->umrp,												
+						'Subdomain mozRank' 	=> $data->fmrp,						
+						'HTTP Status Code' 	=> $data->us,																		
+						'Page Authority' 	=> $data->upa,
+						'Domain Authority' 	=> $data->pda
 						);
 		return $result;
 	}
