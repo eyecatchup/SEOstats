@@ -1,6 +1,7 @@
  ======================================================================
  CHANGELOG
  ----------------------------------------------------------------------
+ v2.0.8.2     06.09.2011    * removed child class SEOstats_Majesticseo
  v2.0.8       04.08.2011    * implemented contributed child class:
                               added child class SEOstats_Bing
                             * added method SEOstats::Bing()
