@@ -75,9 +75,9 @@ include_once('modules.php');
 
 class SEOstats
 {
-	const BUILD_NO 					= '2.0.7';
-	const PAGERANK_CHECKSUM_API_URI = 'http://217.150.244.124/prch/?url=';
-	
+	const BUILD_NO 					= '2.0.8.2';
+	const PAGERANK_CHECKSUM_API_URI = 'http://pagerank.bexton.net/?url=';
+
 	/**
 	 * Object URL
 	 *
@@ -85,16 +85,16 @@ class SEOstats
 	 * @var			string
 	 */
 	public $url;
-	
+
 	/**
 	 * Constructor
 	 *
 	 * Checks for valid URL syntax and server response.
 	 *
 	 * @access		public
-	 * @param		string		$url		String, containing the initialized 
+	 * @param		string		$url		String, containing the initialized
 	 *                                      object URL.
-	 */		
+	 */
 	public function __construct($url)
 	{
 		$url = str_replace(' ', '+', $url);
@@ -128,8 +128,8 @@ class SEOstats
 			$this->errlogtxt($e);
 			throw new SEOstatsException($e);
 		}
-	}	
-	
+	}
+
 	function errlogtxt($errtxt)
 	{
 		$fp = fopen('errlog.txt','a+'); //ouvrir le fichier
@@ -143,9 +143,9 @@ class SEOstats
 	 * HTTP GET request with curl.
 	 *
 	 * @access		private
-	 * @param		string		$url		String, containing the URL to 
+	 * @param		string		$url		String, containing the URL to
 	 *                                      curl.
-	 * @return		string					Returns string, containing the 
+	 * @return		string					Returns string, containing the
 	 *                                      curl result.
 	 */
 	public static function cURL($url)
@@ -165,17 +165,17 @@ class SEOstats
 		$str = curl_exec($ch);
 		curl_close($ch);
 
-		return $str;   
+		return $str;
 	}
 
 	/**
 	 * HTTP HEAD request with curl.
 	 *
 	 * @access		private
-	 * @param		string		$url		String, containing the 
+	 * @param		string		$url		String, containing the
 	 *                                      initialized object URL.
 	 * @return		intval					Returns a HTTP status code.
-	 */		
+	 */
 	private function get_status_code($url)
 	{
         $ch = curl_init($url);
@@ -785,11 +785,11 @@ class SEOstats
         );
         return array('OBJECT' => $this->url, 'DATA' => $all);
     }
-    
+
     /**
 	 * @access		public
 	 * @return		integer					Returns a global unique ID (useful for database integration)
-	 */	
+	 */
 	public function Guid()
 	{
 
@@ -875,7 +875,7 @@ class SEOstats
         );
         return array('OBJECT' => $this->url, 'DATA' => $all);
     }
-    
+
     /**
 	 * Custom Arrays
 	 *
@@ -884,7 +884,7 @@ class SEOstats
 	 */
 	public function Custom()
 	{
-		$all = 	array(			
+		$all = 	array(
 			'SEOMOZ' => array(
 				'Seomoz_Domainauthority_Array'	=> $this->Seomoz_Domainauthority_Array()
 			),
@@ -896,9 +896,9 @@ class SEOstats
 			),
 			'GUID' => array(
 				'Global_Unique_ID'		=> $this->Guid()
-			)	
+			)
 		);
-		return array('OBJECT' => $this->url, 'DATA' => $all);			
+		return array('OBJECT' => $this->url, 'DATA' => $all);
 	}
 
 	/**
@@ -906,7 +906,7 @@ class SEOstats
 	 *
 	 * @access		public
 	 * @return		array					Returns multi-array, containing social data.
-	 */	
+	 */
 	public function Social()
 	{
 		$all = 	array(
@@ -918,9 +918,9 @@ class SEOstats
 			),
 			'GUID' => array(
 				'Global_Unique_ID'		=> $this->Guid()
-			)	
+			)
 		);
-		return array('OBJECT' => $this->url, 'DATA' => $all);			
+		return array('OBJECT' => $this->url, 'DATA' => $all);
 	}
 }
 ?>
