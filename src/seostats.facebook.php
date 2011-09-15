@@ -5,8 +5,9 @@
      *  @class      SEOstats_Facebook
      *  @package    class.seostats
      *  @link       https://github.com/eyecatchup/SEOstats/
-     *  @updated    2011/08/08
-     *  @author     Florent Cima <florentcm@gmail.com>
+     *  @updated    2011/09/15
+     *  @author     Florent Cima <florentcm@gmail.com>,
+     *              Stephan Schmitz <eyecatchup@gmail.com>
      *  @copyright  2010-present, Stephan Schmitz, Florent Cima
      *  @license    GNU General Public License (GPL)
      *
@@ -17,6 +18,7 @@
      *  @changelog
      *  date        author              method: change(s)
      *  2011/08/08  Florent Cima        first commit
+     *  2011/09/15  Stephan Schmitz     Updated SEOstats_Facebook::getFacebookShares
      */
 
 class SEOstats_Facebook extends SEOstats {
@@ -32,7 +34,7 @@ class SEOstats_Facebook extends SEOstats {
      */
     public static function getFacebookShares($q)
     {
-        $url = 'https://graph.facebook.com/?ids=';
+        $url = 'http://graph.facebook.com/?id=';
 
         // Parameters
         $url .= urlencode($q);
@@ -44,7 +46,7 @@ class SEOstats_Facebook extends SEOstats {
         $data = json_decode($str);
 
         //Return only number of facebook shares
-        $r = $data->$q->shares;
+        $r = $data->shares;
         return ($r != NULL) ? $r : intval('0');
     }
 }
