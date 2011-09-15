@@ -621,8 +621,6 @@ class SEOstats
      */
     public function Facebook_Mentions_Total()
     {
-        //$q = urlencode('site:facebook.com "'.$this->host.'"');
-        //return SEOstats_Google::googleTotal($q);
         return SEOstats_Facebook::getFacebookShares($this->url);
     }
 
@@ -638,14 +636,25 @@ class SEOstats
         return SEOstats_Google::googleArray($q);
     }
 
+	/**
+	 * Returns the internal ID, the Facebook Graph API registers to - and uses for identifying - a Domain.
+	 *
+	 * @access		  public
+	 * @link		  http://developers.facebook.com/docs/reference/api/domain/
+	 * @param   host  string  	 The URL to get the ID for.
+	 * @return        integer    Returns 0, or the unique Domain-ID.
+	 */
+    public function Facebook_GraphApi_DomainId_ByHostname()
+    {
+        return SEOstats_Facebook::fbGraphApiIdByHost($this->host);
+    }
+	
     /**
      * @access        public
      * @return        integer    Returns the total amount of Twitter pages mention the URL.
      */
     public function Twitter_Mentions_Total()
     {
-        //$q = urlencode('site:twitter.com "'.$this->host.'"');
-        //return SEOstats_Google::googleTotal($q);
         return SEOstats_Twitter::getTweetCount($this->url);
     }
 
