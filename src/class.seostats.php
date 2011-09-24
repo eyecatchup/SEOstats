@@ -152,7 +152,7 @@ class SEOstats
 	{
 		$ch  = curl_init($url);
 		curl_setopt($ch,CURLOPT_USERAGENT,
-			'SEOstats '. SEOstats::BUILD_NO .' code.google.com/p/seostats/');
+			'SEOstats '. SEOstats::BUILD_NO .' https://github.com/eyecatchup/SEOstats');
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
 		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
