@@ -142,17 +142,15 @@ class SEOstats
 	/**
 	 * HTTP GET request with curl.
 	 *
-	 * @access		private
-	 * @param		string		$url		String, containing the URL to
-	 *                                      curl.
-	 * @return		string					Returns string, containing the
-	 *                                      curl result.
+	 * @access	private
+	 * @param	string	  $url		String, containing the URL to curl.
+	 * @return	string		Returns string, containing the curl result.
+	 *                                      
 	 */
 	public static function cURL($url)
 	{
 		$ch  = curl_init($url);
-		curl_setopt($ch,CURLOPT_USERAGENT,
-			'SEOstats '. SEOstats::BUILD_NO .' https://github.com/eyecatchup/SEOstats');
+		curl_setopt($ch,CURLOPT_USERAGENT,'GoogleHttpClient');
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
 		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
@@ -179,8 +177,7 @@ class SEOstats
 	private function get_status_code($url)
 	{
         $ch = curl_init($url);
-        curl_setopt($ch,CURLOPT_USERAGENT,
-            'SEOstats '. SEOstats::BUILD_NO .' https://github.com/eyecatchup/SEOstats');
+        curl_setopt($ch,CURLOPT_USERAGENT,'GoogleHttpClient');
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_NOBODY,1);
         curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
