@@ -35,26 +35,26 @@ class SEOstats_Yahoo extends SEOstats {
 	 * Returns array, containing details about the pages indexed at Yahoo!
 	 *
 	 * @access		private
-	 * @link 		http://developer.yahoo.com/search/siteexplorer/		Get your own application ID here
-	 * @return		array 					Returns array, containing details about the pages indexed at Yahoo!
+	 * @return		array 			Returns array, containing details about the pages indexed at Yahoo!
 	 */		
 	public static function yahooSiteindexArray($uri)
 	{
-		$url  = 'http://search.yahooapis.com/SiteExplorerService/V1/pageData?appid=';
-		$url .= YAHOO_APP_ID;
-		$url .= '&results=100&output=json&query=http://'.urlencode($uri);
-		$str  = SEOstats::cURL($url);
-
-		$data = json_decode($str);
+		$tsv_url  = 'http://siteexplorer.search.yahoo.com/de/export;_ylt=?p='.
+			urlencode($uri).'&bwmf=s&fr=sfp&fr2=seo-rd-se';
 
 		$result = array();
-		for($i=0;$i<sizeof($data->ResultSet->Result);$i++)
+		foreach ( file($tsv_url) as $line )
 		{
-			$result[] =  array( 'Title' => utf8_decode($data->ResultSet->Result[$i]->Title),
-								  'URL' => $data->ResultSet->Result[$i]->Url,
-							'Click URL' => $data->ResultSet->Result[$i]->ClickUrl);
+			$tmp = explode("\t", $line);
+			if ( isset($tmp[1]) && !empty($tmp[1]) && $tmp[1] != "URL" )
+			{
+				$result[] = array(
+					'Title' => utf8_decode($tmp[0]),
+					'URL' => $tmp[1]
+				);
+			}
 		}
-		return $result;   
+		return $result; 
 	}
 	
 	/**
@@ -91,13 +91,11 @@ class SEOstats_Yahoo extends SEOstats {
 		foreach ( file($tsv_url) as $line )
 		{
 			$tmp = explode("\t", $line);
-			$text = $tmp[0];
-			$link = $tmp[1];
 			if ( isset($tmp[1]) && !empty($tmp[1]) && $tmp[1] != "URL" )
 			{
 				$result[] = array(
 					'URL' => $tmp[1],
-					'Anchortext' => utf8_decode($text)
+					'Anchortext' => utf8_decode($tmp[0])
 				);
 			}
 		}
