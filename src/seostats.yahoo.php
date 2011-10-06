@@ -80,23 +80,26 @@ class SEOstats_Yahoo extends SEOstats {
 	 * Returns an array containing details about the backlinks indexed at Yahoo!
 	 *
 	 * @access		private
-	 * @link 		http://developer.yahoo.com/search/siteexplorer/		Get your own application ID here
-	 * @return		array 					Returns an array containing details about the backlinks indexed at Yahoo!
+	 * @return		array 			Returns an array containing details about the backlinks indexed at Yahoo!
 	 */		
 	public static function yahooBacklinksArray($uri)
 	{
-		$url  = 'http://search.yahooapis.com/SiteExplorerService/V1/inlinkData?appid=';
-		$url .= YAHOO_APP_ID;
-		$url .= '&results=100&output=json&query=http://'.urlencode($uri);
-		$str  = SEOstats::cURL($url);
-
-		$data = json_decode($str);
+		$tsv_url  = 'http://siteexplorer.search.yahoo.com/de/export;_ylt=?p='.
+			urlencode($uri).'&bwm=i&bwmf=s&fr=sfp&fr2=seo-rd-se';
 
 		$result = array();
-		for($i=0;$i<sizeof($data->ResultSet->Result);$i++)
+		foreach ( file($tsv_url) as $line )
 		{
-			$result[] = array('URL' => $data->ResultSet->Result[$i]->Url,
-					   'Anchortext' => utf8_decode($data->ResultSet->Result[$i]->Title));
+			$tmp = explode("\t", $line);
+			$text = $tmp[0];
+			$link = $tmp[1];
+			if ( isset($tmp[1]) && !empty($tmp[1]) && $tmp[1] != "URL" )
+			{
+				$result[] = array(
+					'URL' => $tmp[1],
+					'Anchortext' => utf8_decode($text)
+				);
+			}
 		}
 		return $result;   
 	}
