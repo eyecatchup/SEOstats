@@ -18,6 +18,7 @@
      *  date        author              method: change(s)
      *  2011/08/04  Stephan Schmitz     googleTotal2: Added if condition at return, to fix/avoid
      *                                  errors when estimatedResultCount is not set.
+     *  2011/10/07  Stephan Schmitz     Google_PR: Updated the toolbar URL for Pagerank requests.
      */
 
 class SEOstats_Google extends SEOstats {
@@ -226,7 +227,7 @@ class SEOstats_Google extends SEOstats {
         {
             $checksum = self::genhash($domain);
         }
-        $googleurl  = 'http://toolbarqueries.google.com/search?features=Rank&sourceid=navclient-ff&client=navclient-auto-ff';
+        $googleurl  = 'http://toolbarqueries.google.com/tbr?features=Rank&sourceid=navclient-ff&client=navclient-auto-ff';
         $googleurl .= '&googleip=O;66.249.81.104;104&ch='.$checksum.'&q=info:'.urlencode($domain);
         $out = SEOstats::cURL($googleurl);
 
