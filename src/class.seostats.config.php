@@ -15,12 +15,13 @@
      *  @changelog
      *  date        author              change(s)
      *  2011/08/04  Stephan Schmitz     Defined BING_APP_ID constant.
+     *  2012/01/28  Stephan Schmitz     Set USE_PAGERANK_CHECKSUM_API to false.
      */
 
     define('GOOGLE_TLD',
         'com');
     define('USE_PAGERANK_CHECKSUM_API',
-        true);
+        false);
 
     /**
      *  Optional changes.
