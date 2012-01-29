@@ -4,7 +4,7 @@
      *
      *  @package    class.seostats
      *  @link       https://github.com/eyecatchup/SEOstats/
-     *  @updated    2011/08/04
+     *  @updated    2012/01/29
      *  @author     Stephan Schmitz <eyecatchup@gmail.com>
      *  @copyright  2010-present, Stephan Schmitz
      *  @license    GNU General Public License (GPL)
@@ -16,11 +16,14 @@
      *  date        author              change(s)
      *  2011/08/04  Stephan Schmitz     Defined BING_APP_ID constant.
      *  2012/01/28  Stephan Schmitz     Set USE_PAGERANK_CHECKSUM_API to false.
+     *  2012/01/29  Stephan Schmitz     Added USE_PAGERANK_CHECKSUM_ALT.
      */
 
     define('GOOGLE_TLD',
         'com');
     define('USE_PAGERANK_CHECKSUM_API',
+        false);
+    define('USE_PAGERANK_CHECKSUM_ALT',
         false);
 
     /**
