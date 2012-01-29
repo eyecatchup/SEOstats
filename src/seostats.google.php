@@ -5,7 +5,7 @@
      *  @class      SEOstats_Google
      *  @package    class.seostats
      *  @link       https://github.com/eyecatchup/SEOstats/
-     *  @updated    2011/08/04
+     *  @updated    2012/01/29
      *  @author     Stephan Schmitz <eyecatchup@gmail.com>
      *  @copyright  2010-present, Stephan Schmitz
      *  @license    GNU General Public License (GPL)
@@ -19,6 +19,9 @@
      *  2011/08/04  Stephan Schmitz     googleTotal2: Added if condition at return, to fix/avoid
      *                                  errors when estimatedResultCount is not set.
      *  2011/10/07  Stephan Schmitz     Google_PR: Updated the toolbar URL for Pagerank requests.
+     *  2012/01/29  Stephan Schmitz     Google_PR: Implemented alternative checksum calculation.
+     *                                  performanceAnalysis: Updated request URL.
+     *                                  pageSpeedScore: Updated request URL.
      */
 
 class SEOstats_Google extends SEOstats {
@@ -126,7 +129,7 @@ class SEOstats_Google extends SEOstats {
 
     public static function performanceAnalysis($uri)
     {
-        $url  = 'http://pagespeed.googlelabs.com/run_pagespeed?url='.$uri.'&format=json';
+        $url  = 'https://developers.google.com/_apps/pagespeed/run_pagespeed?url='.$uri.'&format=json';
         $str  = SEOstats::cURL($url);
 
         return json_decode($str);
@@ -134,7 +137,7 @@ class SEOstats_Google extends SEOstats {
 
     public static function pageSpeedScore($uri)
     {
-        $url  = 'http://pagespeed.googlelabs.com/run_pagespeed?url='.$uri.'&format=json';
+        $url  = 'https://developers.google.com/_apps/pagespeed/run_pagespeed?url='.$uri.'&format=json';
         $str  = SEOstats::cURL($url);
 
         $data = json_decode($str);
@@ -162,6 +165,17 @@ class SEOstats_Google extends SEOstats {
         }
         return '8' . self::hexencode($c);
     }
+
+    public static function genhashALT($url){
+		$seed = "Mining PageRank is AGAINST GOOGLE'S TERMS OF SERVICE. Yes, I'm talking to you, scammer.";
+		$result = 0x01020345;
+		$len = strlen($url);
+		for ($i=0; $i<$len; $i++) {
+			$result ^= ord($seed{$i%strlen($seed)}) ^ ord($url{$i});
+			$result = (($result >> 23) & 0x1ff) | $result << 9;
+		}
+		return sprintf('8%x', $result);
+	}
 
     /**
      * @return         integer
@@ -223,7 +237,11 @@ class SEOstats_Google extends SEOstats {
 
             $checksum = $data->CH;
         }
-        else
+        elseif(USE_PAGERANK_CHECKSUM_ALT == true)
+        {
+            $checksum = self::genhashALT($domain);
+        }
+		else
         {
             $checksum = self::genhash($domain);
         }
