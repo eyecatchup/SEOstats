@@ -1,6 +1,10 @@
  ======================================================================
  CHANGELOG
  ----------------------------------------------------------------------
+ v2.0.9       30.01.2011    * New Checksum API for Pagerank requests.
+							* New built-in method for GPR Awesome Hash.
+							* Updated Pagespeed Service URL's.
+							* New license.
  v2.0.8.2     06.09.2011    * removed child class SEOstats_Majesticseo
  v2.0.8       04.08.2011    * implemented contributed child class:
                               added child class SEOstats_Bing

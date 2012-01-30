@@ -1,18 +1,17 @@
 <?php
     /************************************************************************
-     * PHP Class SEOstats 2.0.8.2
+     * PHP Class SEOstats 2.0.9
      *=======================================================================
      * PHP class to request a bunch of SEO data, such as Backlinkdetails,
      * Traffic Statistics, Pageauthority and much more.
      *=======================================================================
-     * @package     class.seostats.2.0.8.2
+     * @package     class.seostats.2.0.9
      * @link        https://github.com/eyecatchup/SEOstats/
-     * @link        https://bexton.net/SEOstats/
-     * @updated     2011/09/06
+     * @updated     2012/01/30
      * @author      Stephan Schmitz <eyecatchup@gmail.com>
      * @copyright   2010-present, Stephan Schmitz
-     * @license     GNU General Public License (GPL)
-     * @link        http://www.gnu.org/copyleft/gpl.html
+     * @license     Creative Commons Attribution 3.0 Licence
+     * @link        http://creativecommons.org/licenses/by/3.0/legalcode
      *=======================================================================
      * @filename    ./class.seostats.php
      * @description SEOstats main class file that includes the child classes
@@ -28,6 +27,9 @@
      *                                              PAGERANK_CHECKSUM_API_URI
      *                                  Removed pre tags when output of the
      *                                  print_array() method is json
+     * 2012/01/30   Stephan Schmitz     New license!
+     *                                  Updated constant
+     *                                              PAGERANK_CHECKSUM_API_URI
      *=======================================================================
      * Note: The above changelog is related to this file only. Each file of
      * the package has it's own changelog in the head section. For a general
@@ -36,26 +38,20 @@
      * Copyright (c) 2010-present, Stephan Schmitz
      * All rights reserved.
      *=======================================================================
-     * Project Contributors (Alphabetically by first names):
+     * As of version 2.0.9, SEOstats package is released as 'open source'
+     * under the terms of the Creative Commons Attribution 3.0 Licence,
+     * which - in short - means that:
      *
-     * |Chris Alvares <mail@chrisalvares.com>
-     * |-> contributed the BING child class
-     *
-     * |Florent Cima <florentcm@gmail.com>
-     * |-> code fix for SEOstats_Majesticseo::report
-     *
-     * |http://code.google.com/u/@UxJTQFFRABFDXwZ%2F/
-     * |-> code fix for SEOstats_Google::googleTotal2
-     *=======================================================================
-     * Redistribution and use in source and binary forms, with or without
-     * modification, are permitted provided that the following conditions are
-     * met:
-     *
+     * You are free to :
+     *     * copy, distribute and transmit the work.
+     *     * adapt the work.
+     *     * use the work for any private and/or commercial purpose.
+     * Under the following conditions:
      *     * Redistributions of source code must retain the above copyright
-     * notice, this list of conditions and the following disclaimer.
-     *     * Neither the name of the Author nor the name of the Product
-     * may be used to endorse or promote products derived from
-     * this software without specific prior written permission.
+     *       notice, this list of conditions and the following disclaimer.
+     *     * Any public available service containing the entire or parts
+     *       of source code (such as websites), must add a reference link to
+     *       https://github.com/eyecatchup/SEOstats.
      *
      * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
      * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -75,109 +71,111 @@ include_once('modules.php');
 
 class SEOstats
 {
-	const BUILD_NO 					= '2.0.8.2';
-	const PAGERANK_CHECKSUM_API_URI = 'http://pagerank.bexton.net/?url=';
+    const BUILD_NO                     = '2.0.9';
+    const PAGERANK_CHECKSUM_API_URI = 'http://www.nahklick.de/api/pagerank/prch.php?url=';
 
-	/**
-	 * Object URL
-	 *
-	 * @access		public
-	 * @var			string
-	 */
-	public $url;
+    /**
+     * Object URL
+     *
+     * @access        public
+     * @var           string
+     */
+    public $url;
 
-	/**
-	 * Constructor
-	 *
-	 * Checks for valid URL syntax and server response.
-	 *
-	 * @access		public
-	 * @param		string		$url		String, containing the initialized
-	 *                                      object URL.
-	 */
-	public function __construct($url)
-	{
-		$url = str_replace(' ', '+', $url);
-		$this->url = $url;
-		$url_validation = $this->valid_url($this->url);
-		if($url_validation == 'valid')
-		{
-			$valid_response_codes = array('200','301','302');
-			$curl_result = $this->get_status_code($this->url);
-			if(in_array($curl_result,$valid_response_codes))
-			{
-				$this->host 		= parse_url($this->url, PHP_URL_HOST);
-				$this->protocol 	= parse_url($this->url, PHP_URL_SCHEME);
-			}
-			elseif($curl_result == '0')
-			{
-				$e = 'Invalid URL > '.$this->url.' returned no response for a HTTP HEAD request, at all. It seems like the Domain does not exist.';
-				$this->errlogtxt($e);
-				throw new SEOstatsException($e);
-			}
-			else
-			{
-				$e = 'Invalid Request > '.$this->url.' returned a '.$curl_result.' status code.';
-				$this->errlogtxt($e);
-				throw new SEOstatsException($e);
-			}
-		}
-		else
-		{
-			$e = $url_validation;
-			$this->errlogtxt($e);
-			throw new SEOstatsException($e);
-		}
-	}
+    /**
+     * Constructor
+     *
+     * Checks for valid URL syntax and server response.
+     *
+     * @access        public
+     * @param         string        $url        String, containing the initialized
+     *                                          object URL.
+     */
+    public function __construct($url)
+    {
+        $url = str_replace(' ', '+', $url);
+        $this->url = $url;
+        $url_validation = $this->valid_url($this->url);
+        if($url_validation == 'valid')
+        {
+            $valid_response_codes = array('200','301','302');
+            $curl_result = $this->get_status_code($this->url);
+            if(in_array($curl_result,$valid_response_codes))
+            {
+                $this->host         = parse_url($this->url, PHP_URL_HOST);
+                $this->protocol     = parse_url($this->url, PHP_URL_SCHEME);
+            }
+            elseif($curl_result == '0')
+            {
+                $e = 'Invalid URL > '.$this->url.' returned no response for a HTTP HEAD request, at all. It seems like the Domain does not exist.';
+                $this->errlogtxt($e);
+                throw new SEOstatsException($e);
+            }
+            else
+            {
+                $e = 'Invalid Request > '.$this->url.' returned a '.$curl_result.' status code.';
+                $this->errlogtxt($e);
+                throw new SEOstatsException($e);
+            }
+        }
+        else
+        {
+            $e = $url_validation;
+            $this->errlogtxt($e);
+            throw new SEOstatsException($e);
+        }
+    }
 
-	function errlogtxt($errtxt)
-	{
-		$fp = fopen('errlog.txt','a+'); //ouvrir le fichier
-		$newerr = date('Y-m-d\TH:i:sP') .' : ' . $errtxt."\r\n"; //creation du texte de l'erreur
-		fwrite($fp,$newerr); //edition du fichier texte
-		fclose($fp); //fermeture du fichier texte
-		echo $newerr;
-	}
+    function errlogtxt($errtxt)
+    {
+        $fp = fopen('errlog.txt','a+'); //ouvrir le fichier
+        $newerr = date('Y-m-d\TH:i:sP') .' : ' . $errtxt."\r\n"; //creation du texte de l'erreur
+        fwrite($fp,$newerr); //edition du fichier texte
+        fclose($fp); //fermeture du fichier texte
+        echo $newerr;
+    }
 
-	/**
-	 * HTTP GET request with curl.
-	 *
-	 * @access	private
-	 * @param	string	  $url		String, containing the URL to curl.
-	 * @return	string		Returns string, containing the curl result.
-	 *                                      
-	 */
-	public static function cURL($url)
-	{
-		$ch  = curl_init($url);
-		curl_setopt($ch,CURLOPT_USERAGENT,'GoogleHttpClient');
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
-		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
-		curl_setopt($ch,CURLOPT_MAXREDIRS,2);
-		if(strtolower(parse_url($url, PHP_URL_SCHEME)) == 'https')
-		{
-			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,1);
-			curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,1);
-		}
-		$str = curl_exec($ch);
-		curl_close($ch);
+    /**
+     * HTTP GET request with curl.
+     *
+     * @access    private
+     * @param     string      $url        String, containing the URL to curl.
+     * @return    string        Returns string, containing the curl result.
+     *
+     */
+    public static function cURL($url)
+    {
+        $ch  = curl_init($url);
+        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. BUILD_NO .'
+          https://github.com/eyecatchup/SEOstats' );
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
+        curl_setopt($ch,CURLOPT_MAXREDIRS,2);
+        if(strtolower(parse_url($url, PHP_URL_SCHEME)) == 'https')
+        {
+            curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,1);
+            curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,1);
+        }
+        $str = curl_exec($ch);
+        curl_close($ch);
 
-		return $str;
-	}
+        return $str;
+    }
 
-	/**
-	 * HTTP HEAD request with curl.
-	 *
-	 * @access		private
-	 * @param		string		$url		String, containing the
-	 *                                      initialized object URL.
-	 * @return		intval					Returns a HTTP status code.
-	 */
-	private function get_status_code($url)
-	{
+    /**
+     * HTTP HEAD request with curl.
+     *
+     * @access        private
+     * @param         string        $url        String, containing the
+     *                                          initialized object URL.
+     * @return        intval                    Returns a HTTP status code.
+     */
+    private function get_status_code($url)
+    {
         $ch = curl_init($url);
-        curl_setopt($ch,CURLOPT_USERAGENT,'GoogleHttpClient');
+        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. BUILD_NO .'
+          https://github.com/eyecatchup/SEOstats' );
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_NOBODY,1);
         curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
@@ -633,19 +631,19 @@ class SEOstats
         return SEOstats_Google::googleArray($q);
     }
 
-	/**
-	 * Returns the internal ID, the Facebook Graph API registers to - and uses for identifying - a Domain.
-	 *
-	 * @access		  public
-	 * @link		  http://developers.facebook.com/docs/reference/api/domain/
-	 * @param   host  string  	 The URL to get the ID for.
-	 * @return        integer    Returns 0, or the unique Domain-ID.
-	 */
+    /**
+     * Returns the internal ID, the Facebook Graph API registers to - and uses for identifying - a Domain.
+     *
+     * @access          public
+     * @link          http://developers.facebook.com/docs/reference/api/domain/
+     * @param   host  string       The URL to get the ID for.
+     * @return        integer    Returns 0, or the unique Domain-ID.
+     */
     public function Facebook_GraphApi_DomainId_ByHostname()
     {
         return SEOstats_Facebook::fbGraphApiIdByHost($this->host);
     }
-	
+
     /**
      * @access        public
      * @return        integer    Returns the total amount of Twitter pages mention the URL.
@@ -793,14 +791,14 @@ class SEOstats
     }
 
     /**
-	 * @access		public
-	 * @return		integer					Returns a global unique ID (useful for database integration)
-	 */
-	public function Guid()
-	{
+     * @access        public
+     * @return        integer                    Returns a global unique ID (useful for database integration)
+     */
+    public function Guid()
+    {
 
-		return SEOstats_Guid::CreateGUID($this->varGUID);
-	}
+        return SEOstats_Guid::CreateGUID($this->varGUID);
+    }
 
     /**
      * Method processing might take a few more seconds!
@@ -883,50 +881,50 @@ class SEOstats
     }
 
     /**
-	 * Custom Arrays
-	 *
-	 * @access		public
-	 * @return		array					Returns multi-array, containing custom data.
-	 */
-	public function Custom()
-	{
-		$all = 	array(
-			'SEOMOZ' => array(
-				'Seomoz_Domainauthority_Array'	=> $this->Seomoz_Domainauthority_Array()
-			),
-			'FACEBOOK' => array(
-				'Facebook_Mentions_Total'	=> $this->Facebook_Mentions_Total()
-			),
-			'TWITTER' => array(
-				'Twitter_Mentions_Total'	=> $this->Twitter_Mentions_Total()
-			),
-			'GUID' => array(
-				'Global_Unique_ID'		=> $this->Guid()
-			)
-		);
-		return array('OBJECT' => $this->url, 'DATA' => $all);
-	}
+     * Custom Arrays
+     *
+     * @access        public
+     * @return        array                    Returns multi-array, containing custom data.
+     */
+    public function Custom()
+    {
+        $all =     array(
+            'SEOMOZ' => array(
+                'Seomoz_Domainauthority_Array'    => $this->Seomoz_Domainauthority_Array()
+            ),
+            'FACEBOOK' => array(
+                'Facebook_Mentions_Total'    => $this->Facebook_Mentions_Total()
+            ),
+            'TWITTER' => array(
+                'Twitter_Mentions_Total'    => $this->Twitter_Mentions_Total()
+            ),
+            'GUID' => array(
+                'Global_Unique_ID'        => $this->Guid()
+            )
+        );
+        return array('OBJECT' => $this->url, 'DATA' => $all);
+    }
 
-	/**
-	 * Social Arrays
-	 *
-	 * @access		public
-	 * @return		array					Returns multi-array, containing social data.
-	 */
-	public function Social()
-	{
-		$all = 	array(
-			'FACEBOOK' => array(
-				'Facebook_Mentions_Total' 	=> $this->Facebook_Mentions_Total()
-			),
-			'TWITTER' => array(
-				'Twitter_Mentions_Total'	=> $this->Twitter_Mentions_Total()
-			),
-			'GUID' => array(
-				'Global_Unique_ID'		=> $this->Guid()
-			)
-		);
-		return array('OBJECT' => $this->url, 'DATA' => $all);
-	}
+    /**
+     * Social Arrays
+     *
+     * @access        public
+     * @return        array                    Returns multi-array, containing social data.
+     */
+    public function Social()
+    {
+        $all =     array(
+            'FACEBOOK' => array(
+                'Facebook_Mentions_Total'     => $this->Facebook_Mentions_Total()
+            ),
+            'TWITTER' => array(
+                'Twitter_Mentions_Total'    => $this->Twitter_Mentions_Total()
+            ),
+            'GUID' => array(
+                'Global_Unique_ID'        => $this->Guid()
+            )
+        );
+        return array('OBJECT' => $this->url, 'DATA' => $all);
+    }
 }
 ?>

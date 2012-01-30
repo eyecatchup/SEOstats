@@ -143,7 +143,7 @@ class SEOstats_Google extends SEOstats {
         $data = json_decode($str);
         return intval($data->results->score);
     }
-
+	
     /**
      * Gets the 'GPR_awesomeHash' of the object URL.
      *
@@ -152,6 +152,24 @@ class SEOstats_Google extends SEOstats {
      * @return        string                     Returns hash.
      */
     public static function genhash ($url)
+	{
+		$seed = "Mining PageRank is AGAINST GOOGLE'S TERMS OF SERVICE. Yes, I'm talking to you, scammer.";
+		$ch = 0x01020345;
+		for ($i=0; $i < strlen($url); $i++) {
+			$ch ^= ord($seed{$i%87}) ^ ord($url{$i});
+			$ch = (($ch >> 23) & 0x1ff) | $ch << 9;
+		}
+		return sprintf('8%x', $ch);
+	}	
+	
+    /**
+     * Gets the 'GPR_awesomeHash' of the object URL (alternative method).
+     *
+     * @access        private
+     * @param         string         $url        String, containing the URL to hash.
+     * @return        string                     Returns hash.
+     */
+    public static function genhashALT ($url)
     {
         $hash = 'Mining PageRank is AGAINST GOOGLE\'S TERMS OF SERVICE. Yes, I\'m talking to you, scammer.';
         $c = 16909125;
@@ -165,17 +183,6 @@ class SEOstats_Google extends SEOstats {
         }
         return '8' . self::hexencode($c);
     }
-
-    public static function genhashALT($url){
-		$seed = "Mining PageRank is AGAINST GOOGLE'S TERMS OF SERVICE. Yes, I'm talking to you, scammer.";
-		$result = 0x01020345;
-		$len = strlen($url);
-		for ($i=0; $i<$len; $i++) {
-			$result ^= ord($seed{$i%strlen($seed)}) ^ ord($url{$i});
-			$result = (($result >> 23) & 0x1ff) | $result << 9;
-		}
-		return sprintf('8%x', $result);
-	}
 
     /**
      * @return         integer
