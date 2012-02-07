@@ -146,7 +146,7 @@ class SEOstats
     public static function cURL($url)
     {
         $ch  = curl_init($url);
-        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. BUILD_NO .'
+        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. self::BUILD_NO .'
           https://github.com/eyecatchup/SEOstats' );
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
@@ -174,7 +174,7 @@ class SEOstats
     private function get_status_code($url)
     {
         $ch = curl_init($url);
-        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. BUILD_NO .'
+        curl_setopt($ch,CURLOPT_USERAGENT,'SEOstats '. self::BUILD_NO .'
           https://github.com/eyecatchup/SEOstats' );
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_NOBODY,1);
