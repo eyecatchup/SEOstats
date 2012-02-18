@@ -13,7 +13,7 @@ SEOstats offers over 50 different methods to request SEO relevant data for websi
 try 
 {
   $url = new SEOstats("http://www.domain.com/");
-	print $url->Google_Page_Rank();
+  print $url->Google_Page_Rank();
 } 
 catch (SEOstatsException $e) 
 {
