@@ -1,13 +1,13 @@
 <?php
     /************************************************************************
-     * PHP Class SEOstats 2.0.9
+     * PHP Class SEOstats 2.1.0
      *=======================================================================
      * PHP class to request a bunch of SEO data, such as Backlinkdetails,
      * Traffic Statistics, Pageauthority and much more.
      *=======================================================================
-     * @package     class.seostats.2.0.9
+     * @package     class.seostats.2.1.0
      * @link        https://github.com/eyecatchup/SEOstats/
-     * @updated     2012/01/30
+     * @updated     2012/05/12
      * @author      Stephan Schmitz <eyecatchup@gmail.com>
      * @copyright   2010-present, Stephan Schmitz
      * @license     Creative Commons Attribution 3.0 Licence
@@ -30,6 +30,8 @@
      * 2012/01/30   Stephan Schmitz     New license!
      *                                  Updated constant
      *                                              PAGERANK_CHECKSUM_API_URI
+     * 2012/05/12   Stephan Schmitz     Initial commit of new child class: 
+	 *                                              SEOstats_SEMRush()	 
      *=======================================================================
      * Note: The above changelog is related to this file only. Each file of
      * the package has it's own changelog in the head section. For a general
@@ -71,7 +73,7 @@ include_once('modules.php');
 
 class SEOstats
 {
-    const BUILD_NO                     = '2.0.9';
+    const BUILD_NO                  = '2.1.0';
     const PAGERANK_CHECKSUM_API_URI = 'http://www.nahklick.de/api/pagerank/prch.php?url=';
 
     /**
@@ -443,6 +445,17 @@ class SEOstats
     public function Bing_Siteindex_Array()
     {
         return SEOstats_Bing::bingSiteindexArray($this->host);
+    }
+	
+    /**
+     * @access        public
+     * @param         string     $db        Specifies the SEMRush database, which actualy defines
+     *                                      the Google server location, as a basis of computation. 
+     * @return        array      Returns array, containing the SEMRush Main Report (/w description).
+     */
+    public function SEMRush($db="us")
+    {
+        return SEOstats_SEMRush::semrushMainReport($this->host, $db);
     }
 
     /**
