@@ -128,13 +128,19 @@ class SEOstats
         }
     }
 
+    /**
+     * Logs an error to the error log file
+     * 
+     * @param  String $errtxt The error message to log
+     */
     function errlogtxt($errtxt)
     {
-        $fp = fopen('errlog.txt','a+'); //ouvrir le fichier
-        $newerr = date('Y-m-d\TH:i:sP') .' : ' . $errtxt."\r\n"; //creation du texte de l'erreur
-        fwrite($fp,$newerr); //edition du fichier texte
-        fclose($fp); //fermeture du fichier texte
-        echo $newerr;
+        if (ERR_LOG_ENABLED) {
+            $fp = fopen(ERR_LOG_PATH,'a+'); 
+            $newerr = date('Y-m-d\TH:i:sP') .' : ' . $errtxt."\r\n";
+            fwrite($fp,$newerr); 
+            fclose($fp);
+        }
     }
 
     /**
