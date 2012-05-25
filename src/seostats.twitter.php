@@ -28,7 +28,7 @@ class SEOstats_Twitter extends SEOstats {
      * @param   url  string             The URL to check.
      * @return       integer            Returns the total of twitter mentions for a single page.
      */
-    function getTweetCount($url) {
+    public static function getTweetCount($url) {
         $url = urlencode($url);
         $twitterEndpoint = "http://urls.api.twitter.com/1/urls/count.json?url=%s";
         $fileData = file_get_contents(sprintf($twitterEndpoint, $url)); 
