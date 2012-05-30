@@ -19,16 +19,16 @@ try {
 
   // Define object URL on init
   $SEOstats = new SEOstats($url);  
-  print $SEOstats->Google->getPageRank();
+  print $SEOstats->Google()->getPageRank();
 
   // Define object URL using the setter function
   $SEOstats = new SEOstats();
   $SEOstats->setUrl($url); 
-  print $SEOstats->Google->getPageRank();
+  print $SEOstats->Google()->getPageRank();
 
   // Define request URL on function call
   $SEOstats = new SEOstats();  
-  print $SEOstats->Google->getPageRank($url);  
+  print $SEOstats->Google()->getPageRank($url);  
 } 
 catch (SEOstatsException $e) {
   die($e->getMessage());
@@ -42,7 +42,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php  
   //  Returns the Google Toolbar PageRank.
-  print $SEOstats->Google->getPageRank();
+  print $SEOstats->Google()->getPageRank();
 ```
 
 ### Google Pagespeed Service
@@ -50,10 +50,10 @@ catch (SEOstatsException $e) {
 ```php
 <?php   
   // Returns an array, containing the resultset for a 'Google Pagespeed' analysis. 
-  print_r( $SEOstats->Google->getPagespeedAnalysis() );
+  print_r( $SEOstats->Google()->getPagespeedAnalysis() );
 
   // Returns the 'Google Pagespeed' analysis' total score.
-  print $SEOstats->Google->getPagespeedScore();
+  print $SEOstats->Google()->getPagespeedScore();
 ```
 
 ### Google Websearch Index
