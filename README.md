@@ -69,3 +69,6 @@ catch (SEOstatsException $e) {
   // Returns the total amount of results for a Google search.
   print $SEOstats->Google()->getSearchResultsTotal("keyword");
 ```
+
+(c) 2012, Stephan Schmitz <eyecatchup@gmail.com>,   
+URL: https://github.com/eyecatchup/SEOstats
