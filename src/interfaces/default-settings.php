@@ -1,4 +1,4 @@
-<?php  if ( ! defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
 /**
  *  Default User Settings
  *
@@ -7,14 +7,13 @@
  *  @updated    2012/05/30
  */
 
-    interface default_settings
-    {
-        const GOOGLE_TLD = 'com';
-        const ERROR_LOGS = '0';
-        const ERRLOG_DIR = 'log/';
-        const EXPORT_DIR = 'data/';
-    }
+interface default_settings
+{
+	const GOOGLE_TLD = 'com';
+	const ERROR_LOGS = '0';
+	const ERRLOG_DIR = 'log/';
+	const EXPORT_DIR = 'data/';
+}
 
 /* End of file default-settings.php */
 /* Location: ./src/interfaces/default-settings.php */
-?>
