@@ -35,48 +35,27 @@ catch (SEOstatsException $e) {
 
 #### Google Toolbar PageRank
  
-```php 
+```php
+<?php  
   //  Returns the Google Toolbar PageRank.
   print $SEOstats->Google->getPageRank();
-  
-  // Returns an array, containing the resultset for a 'Google Pagespeed' analysis. 
-  print_r( $SEOstats->Google->getPagespeedAnalysis() );
-
-  // Returns the 'Google Pagespeed' analysis' total score.
-  print $SEOstats->Google->getPagespeedScore();  
-
-  // Returns the total amount of results for a Google site-search for the object URL.
-  print $seostats->Google()->getSiteindexTotal();
- 
-  // Returns the total amount of results for a Google link-search for the object URL.
-  print $seostats->Google()->getBacklinksTotal();
-  
-  // Returns the total amount of results for a Google search.
-  print $seostats->Google()->getSearchResultsTotal("keyword");
 ```
 
 #### Google Pagespeed Service
  
-```php   
+```php
+<?php   
   // Returns an array, containing the resultset for a 'Google Pagespeed' analysis. 
   print_r( $SEOstats->Google->getPagespeedAnalysis() );
 
   // Returns the 'Google Pagespeed' analysis' total score.
-  print $SEOstats->Google->getPagespeedScore();  
-
-  // Returns the total amount of results for a Google site-search for the object URL.
-  print $seostats->Google()->getSiteindexTotal();
- 
-  // Returns the total amount of results for a Google link-search for the object URL.
-  print $seostats->Google()->getBacklinksTotal();
-  
-  // Returns the total amount of results for a Google search.
-  print $seostats->Google()->getSearchResultsTotal("keyword");
+  print $SEOstats->Google->getPagespeedScore();
 ```
 
 #### Google Websearch Index
  
-```php   
+```php
+<?php    
   // Returns the total amount of results for a Google site-search for the object URL.
   print $seostats->Google()->getSiteindexTotal();
  
