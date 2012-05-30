@@ -24,3 +24,7 @@ catch (SEOstatsException $e)
   die($e->getMessage());
 }
 ```
+
+(c) 2012, Stephan Schmitz <eyecatchup@gmail.com>     
+License: http://eyecatchup.mit-license.org/   
+URL: https://github.com/eyecatchup/SEOstats   
