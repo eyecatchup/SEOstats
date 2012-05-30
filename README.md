@@ -4,6 +4,10 @@ SEOstats is a powerful open source tool to get a lot of SEO relevant data such a
 
 SEOstats offers over 50 different methods to request SEO relevant data for websites and gathers data from Google, Yahoo, Bing, SEMRush, SEOmoz, Alexa, Facebook and Twitter.
 
+## Download
+
+The latest stable version can be downloaded from the downloads tab, or using the following link:   
+https://github.com/downloads/eyecatchup/SEOstats/SEOstats-2.1.0.zip
 
 ## Usage
 
