@@ -4,6 +4,10 @@ SEOstats is a powerful open source tool to get a lot of SEO relevant data such a
 
 SEOstats offers over 50 different methods to request SEO relevant data for websites and gathers data from Google, Yahoo, Bing, SEOmoz, Alexa, Facebook and Twitter.
 
+## Note
+
+The dev branch code is a work in progress. To get the latest stable release, use the master branch https://github.com/eyecatchup/SEOstats/tree/master or the downloads tab https://github.com/eyecatchup/SEOstats/downloads.
+
 ## Usage
 
 ### Brief Example of Use
@@ -31,9 +35,9 @@ catch (SEOstatsException $e) {
 }
 ```
 
-### Google Stats
+## SEOstats Google Methods
 
-#### Google Toolbar PageRank
+### Google Toolbar PageRank
  
 ```php
 <?php  
@@ -41,7 +45,7 @@ catch (SEOstatsException $e) {
   print $SEOstats->Google->getPageRank();
 ```
 
-#### Google Pagespeed Service
+### Google Pagespeed Service
  
 ```php
 <?php   
@@ -52,16 +56,16 @@ catch (SEOstatsException $e) {
   print $SEOstats->Google->getPagespeedScore();
 ```
 
-#### Google Websearch Index
+### Google Websearch Index
  
 ```php
 <?php    
   // Returns the total amount of results for a Google site-search for the object URL.
-  print $seostats->Google()->getSiteindexTotal();
+  print $SEOstats->Google()->getSiteindexTotal();
  
   // Returns the total amount of results for a Google link-search for the object URL.
-  print $seostats->Google()->getBacklinksTotal();
+  print $SEOstats->Google()->getBacklinksTotal();
   
   // Returns the total amount of results for a Google search.
-  print $seostats->Google()->getSearchResultsTotal("keyword");
+  print $SEOstats->Google()->getSearchResultsTotal("keyword");
 ```
