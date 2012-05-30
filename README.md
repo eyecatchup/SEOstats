@@ -4,7 +4,6 @@ SEOstats is a powerful open source tool to get a lot of SEO relevant data such a
 
 SEOstats offers over 50 different methods to request SEO relevant data for websites and gathers data from Google, Yahoo, Bing, SEOmoz, Alexa, Facebook and Twitter.
 
-
 ## Usage
 
 ### Brief Example of Use
@@ -33,13 +32,11 @@ catch (SEOstatsException $e) {
 ```
 
 ### Google Stats
-```php
-<?php
-try {
-  $url = "http://www.nahklick.de";
-  $SEOstats = new SEOstats($url);
 
-  // Returns the Google Toolbar PageRank  
+#### Google Toolbar PageRank
+ 
+```php 
+  //  Returns the Google Toolbar PageRank.
   print $SEOstats->Google->getPageRank();
   
   // Returns an array, containing the resultset for a 'Google Pagespeed' analysis. 
@@ -56,9 +53,36 @@ try {
   
   // Returns the total amount of results for a Google search.
   print $seostats->Google()->getSearchResultsTotal("keyword");
+```
 
-} 
-catch (SEOstatsException $e) {
-  die($e->getMessage());
-}
+#### Google Pagespeed Service
+ 
+```php   
+  // Returns an array, containing the resultset for a 'Google Pagespeed' analysis. 
+  print_r( $SEOstats->Google->getPagespeedAnalysis() );
+
+  // Returns the 'Google Pagespeed' analysis' total score.
+  print $SEOstats->Google->getPagespeedScore();  
+
+  // Returns the total amount of results for a Google site-search for the object URL.
+  print $seostats->Google()->getSiteindexTotal();
+ 
+  // Returns the total amount of results for a Google link-search for the object URL.
+  print $seostats->Google()->getBacklinksTotal();
+  
+  // Returns the total amount of results for a Google search.
+  print $seostats->Google()->getSearchResultsTotal("keyword");
+```
+
+#### Google Websearch Index
+ 
+```php   
+  // Returns the total amount of results for a Google site-search for the object URL.
+  print $seostats->Google()->getSiteindexTotal();
+ 
+  // Returns the total amount of results for a Google link-search for the object URL.
+  print $seostats->Google()->getBacklinksTotal();
+  
+  // Returns the total amount of results for a Google search.
+  print $seostats->Google()->getSearchResultsTotal("keyword");
 ```
