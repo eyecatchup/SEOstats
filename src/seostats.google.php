@@ -22,6 +22,8 @@
      *  2012/01/29  Stephan Schmitz     Google_PR: Implemented alternative checksum calculation.
      *                                  performanceAnalysis: Updated request URL.
      *                                  pageSpeedScore: Updated request URL.
+     * 2012/05/25   Stephan Schmitz     Merged fix for left shift issue in genhash().
+     *                                  Fix provided by James Wade <hm2k@php.net>.
      */
 
 class SEOstats_Google extends SEOstats {
@@ -159,6 +161,8 @@ class SEOstats_Google extends SEOstats {
 			$ch ^= ord($seed{$i%87}) ^ ord($url{$i});
 			$ch = (($ch >> 23) & 0x1ff) | $ch << 9;
 		}
+		// On 64-bit platforms, mask and re-complement to 32-bit
+		if (PHP_INT_MAX != 2147483647) { $ch = -(~($ch & 0xFFFFFFFF) + 1); }
 		return sprintf('8%x', $ch);
 	}	
 	
@@ -181,6 +185,8 @@ class SEOstats_Google extends SEOstats {
             $c = $c ^ (ord($hashpieces[$d]) ^ ord($urlpieces[$d]));
             $c = self::zerofill($c, 23) | $c << 9;
         }
+	// On 64-bit platforms, mask and re-complement to 32-bit
+	if (PHP_INT_MAX != 2147483647) { $c = -(~($c & 0xFFFFFFFF) + 1); }
         return '8' . self::hexencode($c);
     }
 

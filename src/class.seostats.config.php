@@ -39,4 +39,7 @@
         'member-881a55bcfb');
     define('SEOMOZ_SECRET_KEY',
         '7145d56a1279285be92e6e4875bba8ee');
+
+    define('ERR_LOG_ENABLED', true);
+    define('ERR_LOG_PATH', 'errlog.txt');
 ?>
