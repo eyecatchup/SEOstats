@@ -3,14 +3,15 @@
  *  Default User Settings
  *
  *  @package	SEOstats
- *  @updated	2012/05/13
+ *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
+ *  @updated	2012/05/30
  */
 
 	interface default_settings
 	{
 		const GOOGLE_TLD = 'com';
-		const USE_PAGERANK_CHECKSUM_API = '0';
-		const USE_PAGERANK_CHECKSUM_ALT = '0';
+		const ERROR_LOGS = '0';
+		const ERRLOG_DIR = 'log/';
 		const EXPORT_DIR = 'data/';
 	}
 

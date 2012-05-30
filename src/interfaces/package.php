@@ -3,17 +3,17 @@
  *  SEOstats package Vars
  *
  *  @package	SEOstats
- *  @updated	2012/05/13
+ *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
+ *  @updated	2012/05/30
  */
 
 	interface package
 	{
-		const VERSION_CODE = '2.1.1';
-		const LICENSE_TYPE = 'Creative Commons Attribution 3.0 Licence';
-		const LICENSE_URL = 'Creative Commons Attribution 3.0 Licence';
+		const VERSION_CODE = '2.5.0';
+		const LICENSE_TYPE = 'MIT Licence';
+		const LICENSE_URL = 'http://eyecatchup.mit-license.org/';
 		const AUTHOR_NAME = 'Stephan Schmitz';
 		const AUTHOR_MAIL = 'eyecatchup@gmail.com';
-		const PAGERANK_CHECKSUM_API_URI = 'http://www.nahklick.de/api/pagerank/prch.php?url=';
 	}
 
 /* End of file package.php */

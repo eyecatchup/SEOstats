@@ -3,7 +3,8 @@
  *  SEOstats provider list
  *
  *  @package	SEOstats
- *  @updated	2012/05/13
+ *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
+ *  @updated	2012/05/30
  */
 
     // JSON encoded array of SEOstats modules.

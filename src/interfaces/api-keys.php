@@ -3,7 +3,8 @@
  *  Credentials for service provider APIs
  *
  *  @package	SEOstats
- *  @updated	2012/05/13
+ *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
+ *  @updated	2012/05/30
  */
 
 	interface api_keys
