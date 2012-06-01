@@ -75,6 +75,6 @@ catch (SEOstatsException $e) {
 
 ## License
 
-(c) 2012, Stephan Schmitz eyecatchup@gmail.com   
+(c) 2010 - 2012, Stephan Schmitz eyecatchup@gmail.com   
 License: MIT, http://eyecatchup.mit-license.org   
 URL: https://github.com/eyecatchup/SEOstats   
