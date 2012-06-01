@@ -15,20 +15,23 @@ You have several methods to define the URL to request data for.
 ```php
 <?php
 try {
-  $url = "http://www.nahklick.de";
+  $url1 = "http://www.nahklick.de";
+  $url2 = "http://www.bing.com";
+  $url3 = "http://www.google.com";
 
-  // Define object URL on init
-  $SEOstats = new SEOstats($url);  
-  print $SEOstats->Google()->getPageRank();
+  // Set a URL using the constructor function.
+  $SEOstats = new SEOstats($url1);  
+  print $SEOstats->Google()->getPageRank(); // prints 4
 
-  // Define object URL using the setter function
-  $SEOstats = new SEOstats();
-  $SEOstats->setUrl($url); 
-  print $SEOstats->Google()->getPageRank();
+  // Set a URL using the `setUrl` function (overwrites any previously set URL). Eg:
+  $SEOstats = new SEOstats($url1);
+  $SEOstats->setUrl($url2);
+  print $SEOstats->Google()->getPageRank(); // prints 8
 
-  // Define request URL on function call
-  $SEOstats = new SEOstats();  
-  print $SEOstats->Google()->getPageRank($url);  
+  // Set a URL using optional parameter calls (overwrites any previously set URL). Eg:
+  $SEOstats = new SEOstats($url1);
+  $SEOstats->setUrl($url2); 
+  print $SEOstats->Google()->getPageRank($url3); // prints 9  
 } 
 catch (SEOstatsException $e) {
   die($e->getMessage());
@@ -70,5 +73,8 @@ catch (SEOstatsException $e) {
   print $SEOstats->Google()->getSearchResultsTotal("keyword");
 ```
 
-(c) 2012, Stephan Schmitz <eyecatchup@gmail.com>,   
-URL: https://github.com/eyecatchup/SEOstats
+## License
+
+(c) 2012, Stephan Schmitz eyecatchup@gmail.com   
+License: MIT, http://eyecatchup.mit-license.org   
+URL: https://github.com/eyecatchup/SEOstats   
