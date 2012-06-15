@@ -170,6 +170,32 @@ catch (SEOstatsException $e) {
   print $seostats->Social()->getTwitterShares();
 ```
 
+### Other Shares
+
+```php
+<?php
+  // Returns the total count of URL shares via Delicious
+  print $seostats->Social()->getDeliciousShares();
+  
+  // Returns array of top ten delicious tags for a URL
+  print_r ( $seostats->Social()->getDeliciousTopTags() );
+  
+  // Returns the total count of URL shares via Digg
+  print $seostats->Social()->getDiggShares();
+  
+  // Returns the total count of URL shares via LinkedIn
+  print $seostats->Social()->getLinkedInShares();
+  
+  // Returns the total count of URL shares via Pinterest
+  print $seostats->Social()->getPinterestShares();
+  
+  // Returns the total count of URL shares via StumbleUpon
+  print $seostats->Social()->getStumbleUponShares();
+  
+  // Returns the total count of URL shares via VKontakte
+  print $seostats->Social()->getVKontakteShares();
+```
+
 ## License
 
 (c) 2010 - 2012, Stephan Schmitz eyecatchup@gmail.com   

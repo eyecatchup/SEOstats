@@ -26,6 +26,27 @@ interface services
 	// Url to get Twitter mentions from
 	// @link https://dev.twitter.com/discussions/5653#comment-11514
 	const TWEETCOUNT_URL = 'http://cdn.api.twitter.com/1/urls/count.json?url=%s';
+	
+	// Url to get share count via Delicious from
+	const DELICIOUS_INFO_URL = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=%s';
+	
+	// Url to get share count via Digg from
+	// @link http://widgets.digg.com/buttons.js
+	const DIGG_INFO_URL = 'http://widgets.digg.com/buttons/count?url=%s&cb=_';
+	
+	// Url to get share count via LinkedIn from
+	// Replaces deprecated share count Url "http://www.linkedin.com/cws/share-count?url=%s".
+	// @link http://developer.linkedin.com/forum/discrepancies-between-share-counts
+	const LINKEDIN_INFO_URL = 'http://www.linkedin.com/countserv/count/share?url=%s&callback=_';
+	
+	// Url to get share count via Pinterest from
+	const PINTEREST_INFO_URL = 'http://api.pinterest.com/v1/urls/count.json?url=%s&callback=_';
+	
+	// Url to get share count via StumbleUpon from
+	const STUMBLEUPON_INFO_URL = 'http://www.stumbleupon.com/services/1.01/badge.getinfo?url=%s';
+	
+	// Url to get share count via VKontakte from
+	const VKONTAKTE_INFO_URL = 'http://vk.com/share.php?act=count&index=1&url=%s';
 }
 
 /* End of file services.php */
