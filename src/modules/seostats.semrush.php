@@ -71,7 +71,7 @@ class SEOstats_SEMRush extends SEOstats
      */
     public function getDomainRank($url = false, $db = false)
     {
-		$db = false != $db ? $db = default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'domain_rank';
         $semrushUrl = self::getBackendUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -85,7 +85,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getDomainRankHistory($url = false, $db = false)
     {
-		$db = false != $db ? $db = default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'domain_rank_history';
         $semrushUrl = self::getBackendUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -99,7 +99,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getOrganicKeywords($url = false, $db = false)
     {
-		$db = false != $db ? $db = default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'organic';
         $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -108,7 +108,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getCompetitors($url = false, $db = false)
     {
-		$db = false != $db ? $db = default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'organic_organic';
         $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -117,7 +117,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-		$db = false != $db ? $db = default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $url = false != $url ? $url : self::getUrl();
         $domain   = UrlHelper::getHost($url);
         $database = self::checkDatabase($db);
