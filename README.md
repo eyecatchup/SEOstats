@@ -22,7 +22,9 @@ The dev branch code is a work in progress. To get the latest stable release, use
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
-* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>   
+* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>  
+ * <a href='#sistrix-visibility-index'>Visibility Index</a>   
+ * <a href='#sistrix-openlinkgraph-metrics'>OpenLinkGraph Metrics</a>  
 * <a href='#seostats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
@@ -160,11 +162,20 @@ catch (SEOstatsException $e) {
 
 ## SEOstats Sistrix Methods
 
+### Sistrix Visibility Index
+
 ```php
 <?php
   // Returns the Sistrix visibility index
   // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
   print $seostats->Sistrix()->getVisibilityIndex();
+```
+
+### Sistrix OpenLinkGraph Metrics
+```php
+<?php
+  // Returns the Sistrix OpenLinkGraph metrics summary
+  print $seostats->Sistrix()->OpenLinkGraph()->getSummary();
 ```
 <hr>
 

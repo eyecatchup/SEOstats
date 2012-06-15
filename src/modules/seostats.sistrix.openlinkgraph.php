@@ -9,7 +9,7 @@
 
 class SEOstats_OpenLinkGraph extends SEOstats_Sistrix implements services
 {
-	public function test()
+	public function getSummary()
 	{
 		return "hello";
 	}

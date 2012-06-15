@@ -23,6 +23,9 @@ interface services
     // Open Site Explorer base Url
     const OPENSITEEXPLORER_URL = 'http://www.opensiteexplorer.org/%s.html?group=0&page=%s&site=%s&sort=';
 
+	// Open Link Graph base Url
+    const OPENLINKGRAPH_URL = 'http://beta.openlinkgraph.net/openlinkgraph/overview/domain/%s';
+
     // Url to get Facebook link stats from
     const FB_LINKSTATS_URL = 'https://api.facebook.com/method/fql.query?query=%s&format=json';
 

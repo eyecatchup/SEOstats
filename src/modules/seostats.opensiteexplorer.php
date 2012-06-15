@@ -21,10 +21,10 @@ class SEOstats_OpenSiteExplorer extends SEOstats implements services
 		$data = @$xpath->query("//table[@id='page-metrics']/tr[2]/td");
 
 		return array(
-			'pageAuthority' => trim(strip_tags(@$data->item(0)->textContent)),
-			'domainAuthority' => trim(strip_tags(@$data->item(1)->textContent)),
+			'pageAuthority'      => trim(strip_tags(@$data->item(0)->textContent)),
+			'domainAuthority'    => trim(strip_tags(@$data->item(1)->textContent)),
 			'linkingRootDomains' => trim(strip_tags(@$data->item(2)->textContent)),
-			'totalInboundLinks' => trim(strip_tags(@$data->item(3)->textContent))		
+			'totalInboundLinks'  => trim(strip_tags(@$data->item(3)->textContent))		
 		);
 	}
 }
