@@ -26,6 +26,18 @@ class SEOstats_Sistrix extends SEOstats implements services
         preg_match_all('#<h3>(.*?)<\/h3>#si', $htmlData, $matches);
         return isset($matches[1][0]) ? $matches[1][0] : intval('0');
     }
+
+    public function OpenLinkGraph()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.sistrix.openlinkgraph.php');
+        return new SEOstats_OpenLinkGraph();
+    }
+
+    public function OpenSiteExplorer()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.sistrix.opensiteexplorer.php');
+        return new SEOstats_OpenSiteExplorer();
+    }
 }
 
 /* End of file seostats.sistrix.php */

@@ -130,12 +130,6 @@ class SEOstats implements default_settings, services, api_keys, package
         return new SEOstats_Google();
     }
 
-    public function OpenSiteExplorer()
-    {
-        require_once(SEOSTATSPATH . 'modules/seostats.opensiteexplorer.php');
-        return new SEOstats_OpenSiteExplorer();
-    }
-
     public function SEMRush()
     {
         require_once(SEOSTATSPATH . 'modules/seostats.semrush.php');
