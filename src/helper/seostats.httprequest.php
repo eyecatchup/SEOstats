@@ -4,7 +4,7 @@
  *
  *  @package	SEOstats
  *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated	2012/06/07
+ *  @updated	2012/06/15
  */
 
 class HttpRequest extends SEOstats
@@ -12,31 +12,40 @@ class HttpRequest extends SEOstats
     /**
 	 *  HTTP GET/POST request with curl.
 	 *  @access    public
-	 *  @param     String      $a        The Request URL
-	 *  @param     Array       $b        Optional: POST data array to be send.
-	 *  @return    Mixed                 On success, returns the response string. 
-	 *                                   Else, the the HTTP status code received 
-	 *                                   in reponse to the request.
+	 *  @param     String      $url        The Request URL
+	 *  @param     Array       $postData   Optional: POST data array to be send.
+	 *  @return    Mixed                   On success, returns the response string. 
+	 *                                     Else, the the HTTP status code received 
+	 *                                     in reponse to the request.
 	 */	
-    public static function sendRequest($a, $b=FALSE)
+    public static function sendRequest($url, $postData = false, $postJson = false)
     {
-        $ch = curl_init($a);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'SEOstats '. SEOstats::BUILD_NO .' 
-			https://github.com/eyecatchup/SEOstats');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);		
-		if (FALSE !== $b) {
-			// Parameter key value pair array expected
-			// eg array('param' => 'value', 'filter' => 'none')
+        $ch = curl_init($url);
+		curl_setopt_array($ch, array(
+			CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_CONNECTTIMEOUT  => 30,
+			CURLOPT_FOLLOWLOCATION  => 1,
+			CURLOPT_MAXREDIRS       => 2,
+			CURLOPT_SSL_VERIFYPEER  => 0
+		));	
+		
+		if (false != $postData) {
+			if (false != $postJson) {
+				curl_setopt($ch, CURLOPT_HTTPHEADER, 
+					array('Content-type: application/json'));
+				$data = json_encode($postData);
+			} else {
+				$data = http_build_query($postData);
+			}
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($b));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		}
+		
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+		
         if($httpCode == 200) {
             return $response;
         }
@@ -54,32 +63,42 @@ class HttpRequest extends SEOstats
     public static function getHttpCode($url)
     {
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'SEOstats '. SEOstats::BUILD_NO .' 
-			https://github.com/eyecatchup/SEOstats');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_NOBODY, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt_array($ch, array(
+			CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_CONNECTTIMEOUT  => 10,
+			CURLOPT_FOLLOWLOCATION  => 1,
+			CURLOPT_MAXREDIRS       => 2,
+			CURLOPT_SSL_VERIFYPEER  => 0,
+			CURLOPT_NOBODY          => 1
+		));			
+		
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        return (int) $httpCode;
+        
+		return (int) $httpCode;
     }
 	
 	public function getFile($url, $file)
 	{
 		$fp = fopen("$file", 'w');
-		$ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'SEOstats '. SEOstats::BUILD_NO .' 
-			https://github.com/eyecatchup/SEOstats');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_FILE, $fp);	
+		
+        $ch = curl_init($url);
+		curl_setopt_array($ch, array(
+			CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_CONNECTTIMEOUT  => 30,
+			CURLOPT_FOLLOWLOCATION  => 1,
+			CURLOPT_MAXREDIRS       => 2,
+			CURLOPT_SSL_VERIFYPEER  => 0,
+			CURLOPT_FILE            => $fp
+		));	
+			
 		curl_exec($ch);
-		curl_close($ch);
+		curl_close($ch);		
 		fclose($fp);
+		
 		clearstatcache();
 		return (bool) FALSE !== stat($file);
 	}	

@@ -21,7 +21,7 @@ The dev branch code is a work in progress. To get the latest stable release, use
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
-* <a href='#seostats-facebook-methods'>Facebook Methods</a>  
+* <a href='#seostats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
  
@@ -144,17 +144,30 @@ catch (SEOstatsException $e) {
   print $seostats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
 
-## SEOstats Facebook Methods
+## SEOstats Social Media Methods
 
-### Facebook URL Statistics
+### Google+ PlusOnes
 
 ```php
 <?php
-  // Returns an array of URL's total Facebook-interactions count, share count, like count, comments count and click count.
-  print_r ( $seostats->Facebook()->getUrlStats() );
+  // Returns integer PlusOne count
+  print $seostats->Social()->getGoogleShares();
+```
 
-  // Returns the integer unique ID that FB assigned to the specific domain, or 0 (zero) if none exists.
-  print $seostats->Facebook()->getDomainId();
+### Facebook Interactions
+
+```php
+<?php
+  // Returns an array of total counts for overall Facebook interactions count, shares, likes, comments and clicks.
+  print_r ( $seostats->Social()->getFacebookShares() );
+```
+
+### Twitter Mentions
+
+```php
+<?php
+  // Returns integer tweet count for URL mentions
+  print $seostats->Social()->getTwitterShares();
 ```
 
 ## License
