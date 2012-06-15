@@ -18,6 +18,7 @@ The dev branch code is a work in progress. To get the latest stable release, use
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
  * <a href='#google-websearch-index'>Websearch Index</a>   
  * <a href='#google-serp-details'>SERP Details</a>   
+* <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
@@ -102,6 +103,14 @@ catch (SEOstatsException $e) {
   // Returns an array of URLs, titles and position in SERPS for occurrences of $url
   // within the first 1000 results for a Google web search for 'keyword'.
   print_r ( $seostats->Google()->getSerps('keyword', 1000, $url) );
+```
+
+## SEOstats Open Site Explorer Methods
+
+```php
+<?php
+  // Returns basic SEOmoz page metrics (Page-Authority, Domain Authority, Domain-Inlinks, total Inlinks).
+  print_r ( $seostats->OpenSiteExplorer()->getPageMetrics() );
 ```
 
 ## SEOstats SEMRush Methods

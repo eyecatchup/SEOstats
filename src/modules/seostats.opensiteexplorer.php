@@ -9,9 +9,23 @@
 
 class SEOstats_OpenSiteExplorer extends SEOstats implements services
 {
-	public function test()
+	public function getPageMetrics($url = false)
 	{
-		return "hello";
+	    $url = false != $url ? $url : self::getUrl();
+		$apiUrl = sprintf(services::OPENSITEEXPLORER_URL, 'links', '1', $url);
+		$htmlData = HttpRequest::sendRequest($apiUrl);
+		
+		$html = new DOMDocument();
+		@$html->loadHtml($htmlData);
+		$xpath = new DOMXPath($html);
+		$data = @$xpath->query("//table[@id='page-metrics']/tr[2]/td");
+
+		return array(
+			'pageAuthority' => trim(strip_tags(@$data->item(0)->textContent)),
+			'domainAuthority' => trim(strip_tags(@$data->item(1)->textContent)),
+			'linkingRootDomains' => trim(strip_tags(@$data->item(2)->textContent)),
+			'totalInboundLinks' => trim(strip_tags(@$data->item(3)->textContent))		
+		);
 	}
 }
 
