@@ -142,6 +142,12 @@ class SEOstats implements default_settings, services, api_keys, package
         return new SEOstats_SEOmoz(); 
 	}
 
+    public function Sistrix() 
+	{
+		require_once(SEOSTATSPATH . 'modules/seostats.sistrix.php');
+        return new SEOstats_Sistrix(); 
+	}
+
     public function Yahoo() 
 	{
 		require_once(SEOSTATSPATH . 'modules/seostats.yahoo.php');

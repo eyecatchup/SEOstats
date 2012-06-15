@@ -21,6 +21,7 @@ The dev branch code is a work in progress. To get the latest stable release, use
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
+* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>   
 * <a href='#seostats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
@@ -142,6 +143,15 @@ catch (SEOstatsException $e) {
   // Returns HTML code for the 'adwords traffic price '-graph, using explicitly SEMRush's german database,
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
   print $seostats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
+```
+
+## SEOstats Sistrix Methods
+
+```php
+<?php
+  // Returns the Sistrix visibility index
+  // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
+  print $seostats->Sistrix()->getVisibilityIndex();
 ```
 
 ## SEOstats Social Media Methods

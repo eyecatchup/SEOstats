@@ -47,6 +47,10 @@ interface services
 	
 	// Url to get share count via VKontakte from
 	const VKONTAKTE_INFO_URL = 'http://vk.com/share.php?act=count&index=1&url=%s';
+	
+	// Url to get the Sistrix visibility index from
+	// @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
+	const SISTRIX_VI_URL = 'http://www.sichtbarkeitsindex.de/%s';
 }
 
 /* End of file services.php */
