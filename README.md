@@ -10,6 +10,21 @@ The dev branch code is a work in progress. To get the latest stable release, use
 
 ## Usage
 
+### TOC
+
+* <a href='#brief-example-of-use'>Brief Example of Use</a>  
+* <a href='#seostats-google-methods'>Google Methods</a>   
+ * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
+ * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
+ * <a href='#google-websearch-index'>Websearch Index</a>   
+ * <a href='#google-serp-details'>SERP Details</a>   
+* <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
+ * <a href='#semrush-domain-reports'>Domain Reports</a>   
+ * <a href='#semrush-graphs'>Graphs</a>   
+* <a href='#seostats-facebook-methods'>Facebook Methods</a>  
+
+<hr>   
+ 
 ### Brief Example of Use
 You have several methods to define the URL to request data for.
 ```php
@@ -144,6 +159,6 @@ catch (SEOstatsException $e) {
 
 ## License
 
-(c) 2010 - 2012, Stephan Schmitz eyecatchup@gmail.com
-License: MIT, http://eyecatchup.mit-license.org
-URL: https://github.com/eyecatchup/SEOstats
+(c) 2010 - 2012, Stephan Schmitz eyecatchup@gmail.com   
+License: MIT, http://eyecatchup.mit-license.org   
+URL: https://github.com/eyecatchup/SEOstats   
