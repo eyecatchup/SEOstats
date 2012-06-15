@@ -13,19 +13,19 @@ The dev branch code is a work in progress. To get the latest stable release, use
 ### TOC
 
 * <a href='#brief-example-of-use'>Brief Example of Use</a>  
-* <a href='#seostats-google-methods'>Google Methods</a>   
+* <a href='#SEOstats-google-methods'>Google Methods</a>   
  * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
  * <a href='#google-websearch-index'>Websearch Index</a>   
  * <a href='#google-serp-details'>SERP Details</a>   
-* <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
-* <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
+* <a href='#SEOstats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
+* <a href='#SEOstats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
-* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>  
+* <a href='#SEOstats-sistrix-methods'>Sistrix Methods</a>  
  * <a href='#sistrix-visibility-index'>Visibility Index</a>   
  * <a href='#sistrix-openlinkgraph-metrics'>OpenLinkGraph Metrics</a>  
-* <a href='#seostats-social-media-methods'>Social Media Methods</a>  
+* <a href='#SEOstats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
  
@@ -98,14 +98,14 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array of URLs and titles for the first 100 results for a Google web search for 'keyword'.
-  print_r ( $seostats->Google()->getSerps('keyword') );
+  print_r ( $SEOstats->Google()->getSerps('keyword') );
 
   // Returns an array of URLs and titles for the first 200 results for a Google site-search for $url.
-  print_r ( $seostats->Google()->getSerps("site:$url", 200) );
+  print_r ( $SEOstats->Google()->getSerps("site:$url", 200) );
 
   // Returns an array of URLs, titles and position in SERPS for occurrences of $url
   // within the first 1000 results for a Google web search for 'keyword'.
-  print_r ( $seostats->Google()->getSerps('keyword', 1000, $url) );
+  print_r ( $SEOstats->Google()->getSerps('keyword', 1000, $url) );
 ```
 <hr>
 
@@ -114,7 +114,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns basic SEOmoz page metrics (Page-Authority, Domain Authority, Domain-Inlinks, total Inlinks).
-  print_r ( $seostats->OpenSiteExplorer()->getPageMetrics() );
+  print_r ( $SEOstats->OpenSiteExplorer()->getPageMetrics() );
 ```
 <hr>
 
@@ -125,16 +125,16 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array containing the SEMRush main report (includes DomainRank, Traffic- & Ads-Data)
-  print_r ( $seostats->SEMRush()->getDomainRank() );
+  print_r ( $SEOstats->SEMRush()->getDomainRank() );
 
   // Returns an array containing the domain rank history.
-  print_r ( $seostats->SEMRush()->getDomainRankHistory() );
+  print_r ( $SEOstats->SEMRush()->getDomainRankHistory() );
 
   // Returns an array containing data for competeing (auto-detected) websites.
-  print_r ( $seostats->SEMRush()->getCompetitors() );
+  print_r ( $SEOstats->SEMRush()->getCompetitors() );
 
   // Returns an array containing data about organic search engine traffic, using explicitly SEMRush's german database.
-  print_r ( $seostats->SEMRush()->getOrganicKeywords(0, 'de') );
+  print_r ( $SEOstats->SEMRush()->getOrganicKeywords(0, 'de') );
 ```
 
 ### SEMRush Graphs
@@ -142,21 +142,21 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns HTML code for the 'search engine traffic'-graph.
-  print $seostats->SEMRush()->getDomainGraph(1);
+  print $SEOstats->SEMRush()->getDomainGraph(1);
 
   // Returns HTML code for the 'search engine traffic price'-graph.
-  print $seostats->SEMRush()->getDomainGraph(2);
+  print $SEOstats->SEMRush()->getDomainGraph(2);
 
   // Returns HTML code for the 'number of adwords ads'-graph, using explicitly SEMRush's german database.
-  print $seostats->SEMRush()->getDomainGraph(3, 0, 'de');
+  print $SEOstats->SEMRush()->getDomainGraph(3, 0, 'de');
 
   // Returns HTML code for the 'adwords traffic'-graph, using explicitly SEMRush's german database and
   // specific graph dimensions of 320*240 px.
-  print $seostats->SEMRush()->getDomainGraph(4, 0, 'de', 320, 240);
+  print $SEOstats->SEMRush()->getDomainGraph(4, 0, 'de', 320, 240);
 
   // Returns HTML code for the 'adwords traffic price '-graph, using explicitly SEMRush's german database,
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
-  print $seostats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
+  print $SEOstats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
 <hr>
 
@@ -168,14 +168,14 @@ catch (SEOstatsException $e) {
 <?php
   // Returns the Sistrix visibility index
   // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
-  print $seostats->Sistrix()->getVisibilityIndex();
+  print $SEOstats->Sistrix()->getVisibilityIndex();
 ```
 
 ### Sistrix OpenLinkGraph Metrics
 ```php
 <?php
   // Returns the Sistrix OpenLinkGraph metrics summary
-  print $seostats->Sistrix()->OpenLinkGraph()->getSummary();
+  print $SEOstats->Sistrix()->OpenLinkGraph()->getSummary();
 ```
 <hr>
 
@@ -186,7 +186,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns integer PlusOne count
-  print $seostats->Social()->getGoogleShares();
+  print $SEOstats->Social()->getGoogleShares();
 ```
 
 ### Facebook Interactions
@@ -194,7 +194,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array of total counts for overall Facebook interactions count, shares, likes, comments and clicks.
-  print_r ( $seostats->Social()->getFacebookShares() );
+  print_r ( $SEOstats->Social()->getFacebookShares() );
 ```
 
 ### Twitter Mentions
@@ -202,7 +202,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns integer tweet count for URL mentions
-  print $seostats->Social()->getTwitterShares();
+  print $SEOstats->Social()->getTwitterShares();
 ```
 
 ### Other Shares
@@ -210,25 +210,25 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns the total count of URL shares via Delicious
-  print $seostats->Social()->getDeliciousShares();
+  print $SEOstats->Social()->getDeliciousShares();
   
   // Returns array of top ten delicious tags for a URL
-  print_r ( $seostats->Social()->getDeliciousTopTags() );
+  print_r ( $SEOstats->Social()->getDeliciousTopTags() );
   
   // Returns the total count of URL shares via Digg
-  print $seostats->Social()->getDiggShares();
+  print $SEOstats->Social()->getDiggShares();
   
   // Returns the total count of URL shares via LinkedIn
-  print $seostats->Social()->getLinkedInShares();
+  print $SEOstats->Social()->getLinkedInShares();
   
   // Returns the total count of URL shares via Pinterest
-  print $seostats->Social()->getPinterestShares();
+  print $SEOstats->Social()->getPinterestShares();
   
   // Returns the total count of URL shares via StumbleUpon
-  print $seostats->Social()->getStumbleUponShares();
+  print $SEOstats->Social()->getStumbleUponShares();
   
   // Returns the total count of URL shares via VKontakte
-  print $seostats->Social()->getVKontakteShares();
+  print $SEOstats->Social()->getVKontakteShares();
 ```
 <hr>
 
