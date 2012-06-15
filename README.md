@@ -13,19 +13,19 @@ The dev branch code is a work in progress. To get the latest stable release, use
 ### TOC
 
 * <a href='#brief-example-of-use'>Brief Example of Use</a>  
-* <a href='#SEOstats-google-methods'>Google Methods</a>   
+* <a href='#seostats-google-methods'>Google Methods</a>   
  * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
  * <a href='#google-websearch-index'>Websearch Index</a>   
  * <a href='#google-serp-details'>SERP Details</a>   
-* <a href='#SEOstats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
-* <a href='#SEOstats-semrush-methods'>SEMRush Methods</a>   
+* <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
+* <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
  * <a href='#semrush-domain-reports'>Domain Reports</a>   
  * <a href='#semrush-graphs'>Graphs</a>   
-* <a href='#SEOstats-sistrix-methods'>Sistrix Methods</a>  
+* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>  
  * <a href='#sistrix-visibility-index'>Visibility Index</a>   
  * <a href='#sistrix-openlinkgraph-metrics'>OpenLinkGraph Metrics</a>  
-* <a href='#SEOstats-social-media-methods'>Social Media Methods</a>  
+* <a href='#seostats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
  
