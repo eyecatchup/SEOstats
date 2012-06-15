@@ -32,12 +32,6 @@ class SEOstats_Sistrix extends SEOstats implements services
         require_once(SEOSTATSPATH . 'modules/seostats.sistrix.openlinkgraph.php');
         return new SEOstats_OpenLinkGraph();
     }
-
-    public function OpenSiteExplorer()
-    {
-        require_once(SEOSTATSPATH . 'modules/seostats.sistrix.opensiteexplorer.php');
-        return new SEOstats_OpenSiteExplorer();
-    }
 }
 
 /* End of file seostats.sistrix.php */

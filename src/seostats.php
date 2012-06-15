@@ -130,28 +130,22 @@ class SEOstats implements default_settings, services, api_keys, package
         return new SEOstats_Google();
     }
 
+    public function OpenSiteExplorer()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.opensiteexplorer.php');
+        return new SEOstats_OpenSiteExplorer();
+    }
+
     public function SEMRush()
     {
         require_once(SEOSTATSPATH . 'modules/seostats.semrush.php');
         return new SEOstats_SEMRush();
     }
 
-    public function SEOmoz()
-    {
-        require_once(SEOSTATSPATH . 'modules/seostats.seomoz.php');
-        return new SEOstats_SEOmoz();
-    }
-
     public function Sistrix()
     {
         require_once(SEOSTATSPATH . 'modules/seostats.sistrix.php');
         return new SEOstats_Sistrix();
-    }
-
-    public function Yahoo()
-    {
-        require_once(SEOSTATSPATH . 'modules/seostats.yahoo.php');
-        return new SEOstats_Yahoo();
     }
 
     public function Social()
