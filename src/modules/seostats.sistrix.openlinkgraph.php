@@ -9,6 +9,18 @@
 
 class SEOstats_OpenLinkGraph extends SEOstats_Sistrix implements services
 {
+    /**
+     * Returns the backlink metrics summary from Sistrix' OpenLinkGraph.
+     *
+     * @access        public
+     * @param   url   string     The URL to check.
+     * @return        array      Returns an array of integer total values for
+     *                           1. the total amount of incoming links,
+     *                           2. the total amount of inlinking hosts,
+     *                           3. the total amount of inlinking domains,
+     *                           4. the total amount of inlinking IPs,
+     *                           5. the total amount of inlinking /24 Subnetworks.
+     */
     public function getSummary($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
