@@ -29,6 +29,8 @@
         const USE_PAGERANK_CHECKSUM_API = '0';
 
         const USE_PAGERANK_CHECKSUM_ALT = '0';
+		
+		const SEMRUSH_DB = 'de';
 
         const EXPORT_DIR = 'data/';
     }

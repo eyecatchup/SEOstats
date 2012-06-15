@@ -128,13 +128,13 @@ catch (SEOstatsException $e) {
   print_r ( $seostats->SEMRush()->getDomainRank() );
 
   // Returns an array containing the domain rank history.
-  print_r ( $seostats->SEMRush()->getRankHistory() );
+  print_r ( $seostats->SEMRush()->getDomainRankHistory() );
 
   // Returns an array containing data for competeing (auto-detected) websites.
   print_r ( $seostats->SEMRush()->getCompetitors() );
 
   // Returns an array containing data about organic search engine traffic, using explicitly SEMRush's german database.
-  print_r ( $seostats->SEMRush()->getOrganics(0, 'de') );
+  print_r ( $seostats->SEMRush()->getOrganicKeywords(0, 'de') );
 ```
 
 ### SEMRush Graphs
