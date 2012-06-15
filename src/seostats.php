@@ -2,8 +2,8 @@
 /** SEOstats
  *  ================================================================================
  *  PHP class package to request a bunch of SEO-related data, such as looking up the
- *  visibilty of a URL within organic search results, Pagespeed analysis, the  
- *  Google Toolbar PageRank, Page-Authority, Backlink-Details, Traffic Statistics,  
+ *  visibilty of a URL within organic search results, Pagespeed analysis, the
+ *  Google Toolbar PageRank, Page-Authority, Backlink-Details, Traffic Statistics,
  *  social media relevance, comparing competing websites and a lot more.
  *  ================================================================================
  *  @category
@@ -73,92 +73,98 @@ require(SEOSTATSPATH . 'interfaces/package.php');
  * Example Usage:
  * <code>
  * ...
- * $url = new SEOstats(); 
+ * $url = new SEOstats();
  * $url->setUrl('http://www.domain.tld'); //or explicitly new SEOstats('http://www.domain.tld')
  *
  * $url->Google()->getPageRank(); //returns the Google Toolbar PageRank value
- 
+
  * $url->Google()->getSerps('query string'); //returns the first 100 results for a Google search for 'query string'
  * $url->Google()->getSerps('query string', 500); //returns the first 500 results for a Google search for 'query string'
  *
  * //checks the first 500 results for a Google search for 'query string' for occurrences of the given domain name
  * //and returns an array of matching URL's and their position within serps.
- * $url->Google()->getSerps('query string', 500, 'http://www.domain.tld'); 
+ * $url->Google()->getSerps('query string', 500, 'http://www.domain.tld');
  *
  * ...
  * </code>
  *
  */
 class SEOstats implements default_settings, services, api_keys, package
-{	
+{
     const BUILD_NO = package::VERSION_CODE;
 
-	protected static $_url;
-	
-    public function __construct($url = false) 
-	{
+    protected static $_url;
+
+    public function __construct($url = false)
+    {
         if (false !== $url) {
             self::setUrl($url);
         }
     }
 
-    public function getUrl() 
-	{
-        return self::$_url; 
-	}
-	
-    public function setUrl($url) 
-	{
-        self::$_url = $url; 
-	}
+    public function getUrl()
+    {
+        return self::$_url;
+    }
 
-    public function Alexa() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.alexa.php');
-        return new SEOstats_Alexa(); 
-	}
+    public function setUrl($url)
+    {
+        self::$_url = $url;
+    }
 
-    public function Bing() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.bing.php');
-        return new SEOstats_Bing(); 
-	}
+    public function Alexa()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.alexa.php');
+        return new SEOstats_Alexa();
+    }
 
-    public function Google() 
-	{		
-		require_once(SEOSTATSPATH . 'modules/seostats.google.php');		
-		return new SEOstats_Google(); 	
-	}
+    public function Bing()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.bing.php');
+        return new SEOstats_Bing();
+    }
 
-    public function SEMRush() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.semrush.php');
-        return new SEOstats_SEMRush(); 
-	}
+    public function Google()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.google.php');
+        return new SEOstats_Google();
+    }
 
-    public function SEOmoz() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.seomoz.php');
-        return new SEOstats_SEOmoz(); 
-	}
+    public function OpenSiteExplorer()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.opensiteexplorer.php');
+        return new SEOstats_OpenSiteExplorer();
+    }
 
-    public function Sistrix() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.sistrix.php');
-        return new SEOstats_Sistrix(); 
-	}
+    public function SEMRush()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.semrush.php');
+        return new SEOstats_SEMRush();
+    }
 
-    public function Yahoo() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.yahoo.php');
-        return new SEOstats_Yahoo(); 
-	}
+    public function SEOmoz()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.seomoz.php');
+        return new SEOstats_SEOmoz();
+    }
 
-    public function Social() 
-	{
-		require_once(SEOSTATSPATH . 'modules/seostats.social.php');
-        return new SEOstats_Social(); 
-	}
+    public function Sistrix()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.sistrix.php');
+        return new SEOstats_Sistrix();
+    }
+
+    public function Yahoo()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.yahoo.php');
+        return new SEOstats_Yahoo();
+    }
+
+    public function Social()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.social.php');
+        return new SEOstats_Social();
+    }
 }
 
 // URL-String Helper Class
