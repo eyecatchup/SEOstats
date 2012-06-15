@@ -1,19 +1,21 @@
 <?php
-/** PHP Class SEOstats
+/** SEOstats
  *  ================================================================================
- *  PHP class to request a bunch of SEO data, such as Backlinkdetails,
- *  Traffic Statistics, Pageauthority the PageRank and much more.
+ *  PHP class package to request a bunch of SEO-related data, such as looking up the
+ *  visibilty of a URL within organic search results, Pagespeed analysis, the
+ *  Google Toolbar PageRank, Page-Authority, Backlink-Details, Traffic Statistics,
+ *  social media relevance, comparing competing websites and a lot more.
  *  ================================================================================
  *  @category
  *  @package     SEOstats
- *  @version     CVS: $Id: SEOstats.php,v 2.5.0 2012/05/28 17:01:17 ssc Exp $
- *  @author      Stephan Schmitz <eyecatchup@gmail.com>
  *  @copyright   2010 - present, Stephan Schmitz
  *  @license     http://eyecatchup.mit-license.org
+ *  @version     CVS: $Id: SEOstats.php, v2.5.0 Rev 31 2012/06/15 10:52:17 ssc Exp $
+ *  @author      Stephan Schmitz <eyecatchup@gmail.com>
  *  @link        https://github.com/eyecatchup/SEOstats/
  *  ================================================================================
  *  LICENSE: Permission is hereby granted, free of charge, to any person obtaining
- *  a copy of this software and associated documentation files (the "Software"),
+ *  a copy of this software and associated documentation files (the "Software'),
  *  to deal in the Software without restriction, including without limitation the
  *  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  *  copies of the Software, and to permit persons to whom the Software is furnished
@@ -35,7 +37,7 @@
  *---------------------------------------------------------------
  *  SEOSTATS BASE PATH
  *---------------------------------------------------------------
- *  Resolve the system path for increased reliability.
+ *  For increased reliability, resolve os-specific system path.
  */
 
 $base_path = __DIR__;
@@ -43,7 +45,8 @@ if (realpath( $base_path ) !== false) {
     $base_path = realpath($base_path).'/';
 }
 $base_path = rtrim($base_path, '/').'/';
-$base_path = str_replace("\\", "/", $base_path);
+$base_path = str_replace('\\', '/', $base_path);
+
 define('SEOSTATSPATH', $base_path);
 
 /*
@@ -51,11 +54,11 @@ define('SEOSTATSPATH', $base_path);
  *  SEOSTATS INTERFACES
  *---------------------------------------------------------------
  */
-
-require(SEOSTATSPATH ."interfaces/default-settings.php");
-require(SEOSTATSPATH ."interfaces/services.php");
-require(SEOSTATSPATH ."interfaces/api-keys.php");
-require(SEOSTATSPATH ."interfaces/package.php");
+// Doesn't follow typical include path conventions, but is more convenient for users.
+require(SEOSTATSPATH . 'interfaces/default-settings.php');
+require(SEOSTATSPATH . 'interfaces/services.php');
+require(SEOSTATSPATH . 'interfaces/api-keys.php');
+require(SEOSTATSPATH . 'interfaces/package.php');
 
 /*
  *---------------------------------------------------------------
@@ -63,77 +66,107 @@ require(SEOSTATSPATH ."interfaces/package.php");
  *---------------------------------------------------------------
  */
 
+/**
+ * Starting point for the SEOstats class library. Represents a URL resource and has
+ * methods for pinging, adding, deleting, committing, optimizing and searching.
+ *
+ * Example Usage:
+ * <code>
+ * ...
+ * $url = new SEOstats();
+ * $url->setUrl('http://www.domain.tld'); //or explicitly new SEOstats('http://www.domain.tld')
+ *
+ * $url->Google()->getPageRank(); //returns the Google Toolbar PageRank value
+
+ * $url->Google()->getSerps('query string'); //returns the first 100 results for a Google search for 'query string'
+ * $url->Google()->getSerps('query string', 500); //returns the first 500 results for a Google search for 'query string'
+ *
+ * //checks the first 500 results for a Google search for 'query string' for occurrences of the given domain name
+ * //and returns an array of matching URL's and their position within serps.
+ * $url->Google()->getSerps('query string', 500, 'http://www.domain.tld');
+ *
+ * ...
+ * </code>
+ *
+ */
 class SEOstats implements default_settings, services, api_keys, package
 {
     const BUILD_NO = package::VERSION_CODE;
 
-    function __construct($a=NULL) {
-        $this->url = NULL;
-        if (NULL !== $a) {
-            self::setUrl($a);
+    protected static $_url;
+
+    public function __construct($url = false)
+    {
+        if (false !== $url) {
+            self::setUrl($url);
         }
     }
 
-    public function getUrl() {
-        return $this->url; }
-    public function setUrl($a) {
-        $this->url = $a; }
+    public function getUrl()
+    {
+        return self::$_url;
+    }
 
-    # return alexa object
-    public function Alexa() {
-        return new SEOstats_Alexa(); }
+    public function setUrl($url)
+    {
+        self::$_url = $url;
+    }
 
-    # return bing object
-    public function Bing() {
-        return new SEOstats_Bing(); }
+    public function Alexa()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.alexa.php');
+        return new SEOstats_Alexa();
+    }
 
-    # return facebook object
-    public function Facebook() {
-        return new SEOstats_Facebook(); }
+    public function Bing()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.bing.php');
+        return new SEOstats_Bing();
+    }
 
-    # return google object
-    public function Google() {
-        return new SEOstats_Google(self::getUrl()); }
+    public function Facebook()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.facebook.php');
+        return new SEOstats_Facebook();
+    }
 
-    # return semrush object
-    public function SEMRush() {
-        return new SEOstats_SEMRush(); }
+    public function Google()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.google.php');
+        return new SEOstats_Google();
+    }
 
-    # return seomoz object
-    public function SEOmoz() {
-        return new SEOstats_SEOmoz(); }
+    public function SEMRush()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.semrush.php');
+        return new SEOstats_SEMRush();
+    }
 
-    # return twitter object
-    public function Twitter() {
-        return new SEOstats_Twitter(); }
+    public function SEOmoz()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.seomoz.php');
+        return new SEOstats_SEOmoz();
+    }
 
-    # return yahoo object
-    public function Yahoo() {
-        return new SEOstats_Yahoo(); }
+    public function Twitter()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.twitter.php');
+        return new SEOstats_Twitter();
+    }
+
+    public function Yahoo()
+    {
+        require_once(SEOSTATSPATH . 'modules/seostats.yahoo.php');
+        return new SEOstats_Yahoo();
+    }
 }
 
-/**
- *  HTTP Request Helper Class
- */
-require(SEOSTATSPATH ."helper/seostats.httprequest.php");
-/**
- *  Custom Exception Class
- */
-require(SEOSTATSPATH ."helper/seostats.exception.php");
+// URL-String Helper Class
+require(SEOSTATSPATH . 'helper/seostats.urlhelper.php');
+// HTTP Request Helper Class
+require(SEOSTATSPATH . 'helper/seostats.httprequest.php');
+// Custom Exception Class
+require(SEOSTATSPATH . 'helper/seostats.exception.php');
 
-/*
- *---------------------------------------------------------------
- *  SEOSTATS CHILD CLASS
- *---------------------------------------------------------------
- */
-
-require(SEOSTATSPATH ."modules/seostats.alexa.php");
-require(SEOSTATSPATH ."modules/seostats.bing.php");
-require(SEOSTATSPATH ."modules/seostats.facebook.php");
-require(SEOSTATSPATH ."modules/seostats.google.php");
-require(SEOSTATSPATH ."modules/seostats.semrush.php");
-require(SEOSTATSPATH ."modules/seostats.seomoz.php");
-require(SEOSTATSPATH ."modules/seostats.twitter.php");
-require(SEOSTATSPATH ."modules/seostats.yahoo.php");
-
-?>
+/* End of file seostats.php */
+/* Location: ./src/seostats.php */

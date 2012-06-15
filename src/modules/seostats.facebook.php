@@ -21,34 +21,26 @@
      *  2011/09/15  Stephan Schmitz     Updated SEOstats_Facebook::getFacebookShares
      */
 
-class SEOstats_Facebook extends SEOstats {
-
+class SEOstats_Facebook extends SEOstats 
+{
     /**
      * Returns the total amount of Facebook Shares for a single page
      *
      * @access        public
-     * @link          https://graph.facebook.com/
-     * @param   q     string     The URL to check.
-     * @return        integer    Returns the total amount of Facebook
+     * @link          http://developers.facebook.com/docs/reference/fql/link_stat/
+     * @param   url   string     The URL to check.
+     * @return        integer    Returns the total amount of Facebook interactions.
 	 */
-    public static function getFacebookShares($q)
-    {
-        $url = 'http://graph.facebook.com/?id=';
+	public function getUrlStats($url = false)
+	{
+		$url = false != $url ? $url : self::getUrl();
+		$fqlQuery = sprintf('SELECT total_count, share_count, like_count, comment_count, commentsbox_count, click_count FROM link_stat WHERE url="%s"', $url);
+		$apiUrl   = sprintf('https://api.facebook.com/method/fql.query?query=%s&format=json', rawurlencode($fqlQuery));
+		$jsonData = HttpRequest::sendRequest($apiUrl);
+		$phpArray = json_decode($jsonData, true);
+		return isset($phpArray[0]) ? $phpArray[0] : false;
+	}
 
-        // Parameters
-        $url .= urlencode($q);
-
-        //Execution and result of Json in $str
-        $str  = SEOstats::cURL($url);
-
-        //Decode Json object
-        $data = json_decode($str);
-
-        //Return only number of facebook shares
-        $r = $data->shares;
-        return ($r != NULL) ? $r : intval('0');
-    }
-	
 	/**
 	 * Returns the internal ID, the Facebook Graph API registers to - and uses for identifying - a Domain.
 	 *
@@ -57,14 +49,17 @@ class SEOstats_Facebook extends SEOstats {
 	 * @param   host  string  	 The URL to get the ID for.
 	 * @return        integer    Returns 0, or the unique Domain-ID.
 	 */
-	public static function fbGraphApiIdByHost($host)
+	public function getDomainId($url = false)
 	{
-	    $url = 'http://graph.facebook.com/?domain=' . $host;
-		$str = SEOstats::cURL($url);
-		
-		$obj = json_decode($str);
-		
-		return (isset($obj->id) && $obj->id != NULL) ? $obj->id : intval('0');
+		$url = false != $url ? $url : self::getUrl();
+		$host = UrlHelper::getHost($url);
+		if (FALSE === $host) {
+			return FALSE; } 
+		else {
+			$url = 'http://graph.facebook.com/?domain=' . $host;
+			$jsonData = HttpRequest::sendRequest($url);		
+			$phpArray = json_decode($jsonData, true);		
+			return isset($phpArray['id']) ? $phpArray['id'] : '';
+		}
 	}
 }
-?>

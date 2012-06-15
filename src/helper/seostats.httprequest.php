@@ -4,7 +4,7 @@
  *
  *  @package	SEOstats
  *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated	2012/05/28
+ *  @updated	2012/06/07
  */
 
 class HttpRequest extends SEOstats
@@ -51,9 +51,9 @@ class HttpRequest extends SEOstats
      * @return        Integer                 Returns the HTTP status code received in 
 	 *                                        response to a GET request of the input URL.
      */
-    public static function getHttpCode($a)
+    public static function getHttpCode($url)
     {
-        $ch = curl_init($a);
+        $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_USERAGENT, 'SEOstats '. SEOstats::BUILD_NO .' 
 			https://github.com/eyecatchup/SEOstats');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -64,8 +64,26 @@ class HttpRequest extends SEOstats
         curl_close($ch);
         return (int) $httpCode;
     }
+	
+	public function getFile($url, $file)
+	{
+		$fp = fopen("$file", 'w');
+		$ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'SEOstats '. SEOstats::BUILD_NO .' 
+			https://github.com/eyecatchup/SEOstats');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_FILE, $fp);	
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+		clearstatcache();
+		return (bool) FALSE !== stat($file);
+	}	
 }
 
 /* End of file seostats.httprequest.php */
 /* Location: ./src/helper/seostats.httprequest.php */
-?>
