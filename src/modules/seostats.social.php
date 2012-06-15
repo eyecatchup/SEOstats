@@ -59,7 +59,7 @@ class SEOstats_Social extends SEOstats implements services
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode($jsonData, true);
         return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
-    }	
+    }
 
     /**
      * Returns the total count of URL shares via Delicious
@@ -67,14 +67,14 @@ class SEOstats_Social extends SEOstats implements services
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */		
+     */
     public function getDeliciousShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode($jsonData, true);
-		return isset($phpArray[0]['total_posts']) ? intval($phpArray[0]['total_posts']) : intval('0');
+        return isset($phpArray[0]['total_posts']) ? intval($phpArray[0]['total_posts']) : intval('0');
     }
 
     /**
@@ -83,101 +83,101 @@ class SEOstats_Social extends SEOstats implements services
      * @access        public
      * @param   url   string     The URL to check.
      * @return        array      Returns the top ten delicious tags for a URL (if exist; else an empty array).
-     */	
+     */
     public function getDeliciousTopTags($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode($jsonData, true);
-		$ret = array();
-		if (isset($phpArray[0]['top_tags']) && 0 < sizeof($phpArray[0]['top_tags'])) {
-			foreach($phpArray[0]['top_tags'] as $k => $v) {
-				$ret[] = $k;
-			}
-		}
-		return $ret;
+        $ret = array();
+        if (isset($phpArray[0]['top_tags']) && 0 < sizeof($phpArray[0]['top_tags'])) {
+            foreach($phpArray[0]['top_tags'] as $k => $v) {
+                $ret[] = $k;
+            }
+        }
+        return $ret;
     }
-	
+
     /**
      * Returns the total count of URL shares via Digg
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */		
+     */
     public function getDiggShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::DIGG_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode(substr($jsonData, 2, -2), true);
-		return isset($phpArray['diggs']) ? intval($phpArray['diggs']) : intval('0');
+        return isset($phpArray['diggs']) ? intval($phpArray['diggs']) : intval('0');
     }
-	
+
     /**
      * Returns the total count of URL shares via LinkedIn
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */		
+     */
     public function getLinkedInShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::LINKEDIN_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode(substr($jsonData, 2, -2), true);
-		return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
+        return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
     }
-	
+
     /**
      * Returns the total count of URL shares via Pinterest
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */		
+     */
     public function getPinterestShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::PINTEREST_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode(substr($jsonData, 2, -1), true);
-		return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
+        return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
     }
-	
+
     /**
      * Returns the total count of URL shares via StumpleUpon
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */	
+     */
     public function getStumbleUponShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::STUMBLEUPON_INFO_URL, urlencode($url));
         $jsonData = HttpRequest::sendRequest($apiUrl);
         $phpArray = json_decode($jsonData, true);
-		return isset($phpArray['result']['in_index']) && true == $phpArray['result']['in_index']
-			? intval($phpArray['result']['views']) : intval('0');
+        return isset($phpArray['result']['in_index']) && true == $phpArray['result']['in_index']
+            ? intval($phpArray['result']['views']) : intval('0');
     }
-	
+
     /**
      * Returns the total count of URL shares via VKontakte
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of URL shares.
-     */		
+     */
     public function getVKontakteShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
         $apiUrl = sprintf(services::VKONTAKTE_INFO_URL, urlencode($url));
         $htmlData = HttpRequest::sendRequest($apiUrl);
-		preg_match_all('#^VK\.Share\.count\(1, (\d+)\);$#si', $htmlData, $matches);
-		return isset($matches[1][0]) ? intval($matches[1][0]) : intval('0');
+        preg_match_all('#^VK\.Share\.count\(1, (\d+)\);$#si', $htmlData, $matches);
+        return isset($matches[1][0]) ? intval($matches[1][0]) : intval('0');
     }
 }
 
