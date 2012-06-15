@@ -1,6 +1,6 @@
 <?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
 /**
- *  SEOstats provider list
+ *  SEOstats provider list and service URLs
  *
  *  @package    SEOstats
  *  @author     Stephan Schmitz <eyecatchup@gmail.com>
@@ -23,8 +23,9 @@ interface services
     // Open Site Explorer base Url
     const OPENSITEEXPLORER_URL = 'http://www.opensiteexplorer.org/%s.html?group=0&page=%s&site=%s&sort=';
 
-	// Open Link Graph base Url
+	// Open Link Graph base Urls
     const OPENLINKGRAPH_URL = 'http://beta.openlinkgraph.net/openlinkgraph/overview/domain/%s';
+    const OPENLINKGRAPH_TOTALS_URL = 'http://beta.openlinkgraph.net/openlinkgraph/_get_link_count/domain/%s/type/%s';
 
     // Url to get Facebook link stats from
     const FB_LINKSTATS_URL = 'https://api.facebook.com/method/fql.query?query=%s&format=json';
