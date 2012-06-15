@@ -54,6 +54,7 @@ catch (SEOstatsException $e) {
   die($e->getMessage());
 }
 ```
+<hr>
 
 ## SEOstats Google Methods
 
@@ -104,6 +105,7 @@ catch (SEOstatsException $e) {
   // within the first 1000 results for a Google web search for 'keyword'.
   print_r ( $seostats->Google()->getSerps('keyword', 1000, $url) );
 ```
+<hr>
 
 ## SEOstats Open Site Explorer Methods
 
@@ -112,6 +114,7 @@ catch (SEOstatsException $e) {
   // Returns basic SEOmoz page metrics (Page-Authority, Domain Authority, Domain-Inlinks, total Inlinks).
   print_r ( $seostats->OpenSiteExplorer()->getPageMetrics() );
 ```
+<hr>
 
 ## SEOstats SEMRush Methods
 
@@ -153,6 +156,7 @@ catch (SEOstatsException $e) {
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
   print $seostats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
+<hr>
 
 ## SEOstats Sistrix Methods
 
@@ -162,6 +166,7 @@ catch (SEOstatsException $e) {
   // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
   print $seostats->Sistrix()->getVisibilityIndex();
 ```
+<hr>
 
 ## SEOstats Social Media Methods
 
@@ -214,6 +219,7 @@ catch (SEOstatsException $e) {
   // Returns the total count of URL shares via VKontakte
   print $seostats->Social()->getVKontakteShares();
 ```
+<hr>
 
 ## License
 
