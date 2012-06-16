@@ -14,6 +14,8 @@ The dev branch code is a work in progress. To get the latest stable release, use
 
 * <a href='#brief-example-of-use'>Brief Example of Use</a>  
 * <a href='#seostats-alexa-methods'>Alexa Methods</a>   
+ * <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>   
+ * <a href='#alexa-traffic-graphs'>Alexa Traffic Graphs</a>   
 * <a href='#seostats-google-methods'>Google Methods</a>   
  * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
@@ -61,6 +63,7 @@ catch (SEOstatsException $e) {
 
 ## SEOstats Alexa Methods
 
+### Alexa Traffic Metrics
 ```php
 <?php
   // Returns the global Alexa Page-Rank.
@@ -74,6 +77,29 @@ catch (SEOstatsException $e) {
 
   // Returns pageload time information based on measurements by Alexa's crawler.
   print $SEOstats->Alexa()->getPageLoadTime();
+```
+
+### Alexa Traffic Graphs
+
+```php
+<?php
+  // Returns HTML code for the 'daily traffic trend'-graph.
+  print $SEOstats->Alexa()->getTrafficGraph(1);
+
+  // Returns HTML code for the 'daily pageviews (percent)'-graph.
+  print $SEOstats->Alexa()->getTrafficGraph(2);
+
+  // Returns HTML code for the 'daily pageviews per user'-graph.
+  print $SEOstats->Alexa()->getTrafficGraph(3);
+
+  // Returns HTML code for the 'time on site (in minutes)'-graph.
+  print $SEOstats->Alexa()->getTrafficGraph(4);
+  
+  // Returns HTML code for the 'bounce rate (percent)'-graph.
+  print $SEOstats->Alexa()->getTrafficGraph(5);
+  
+  // Returns HTML code for the 'search visits'-graph, using specific graph dimensions of 320*240 px.
+  print $SEOstats->Alexa()->getTrafficGraph(6, 0, 320, 240);
 ```
 <hr>
 

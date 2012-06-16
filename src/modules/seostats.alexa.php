@@ -69,6 +69,39 @@ class SEOstats_Alexa extends SEOstats implements services
 
         return strip_tags($nodes->item(0)->nodeValue);
     }
+	
+    /**
+     * @access        public
+     * @param         integer    $type      Specifies the graph type. Valid values are 1 to 6.
+     * @param         integer    $width     Specifies the graph width (in px).
+     * @param         integer    $height    Specifies the graph height (in px).
+     * @param         integer    $period    Specifies the displayed time period. Valid values are 1 to 12.
+     * @return        string                Returns a string, containing the HTML code of an image, showing Alexa Statistics as Graph.
+     */
+    public function getTrafficGraph($type = 1, $url = false, $w = 660, $h = 330, $period = 1, $html = true)
+    {
+        $url = false != $url ? $url : self::getUrl();
+        $domain = UrlHelper::getHost($url);
+		
+        switch($type)
+        {
+            case 1: $gtype = 't'; break;
+            case 2: $gtype = 'p'; break;
+            case 3: $gtype = 'u'; break;
+            case 4: $gtype = 's'; break;
+            case 5: $gtype = 'b'; break;
+            case 6: $gtype = 'q'; break;
+            default:break;
+        }
+
+		$imgUrl = sprintf(services::ALEXA_GRAPH_URL, $gtype, $w, $h, $period, $domain);
+		if (true != $html) {
+			return $imgUrl;
+		} else {
+			$imgTag = '<img src="%s" width="%s" height="%s" alt="Alexa Statistics Graph for %s"/>';
+			return sprintf($imgTag, $imgUrl, $w, $h, $domain);
+		}
+    }
 
     private function _alexa($url)
     {

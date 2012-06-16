@@ -4,7 +4,7 @@
  *
  *  @package    SEOstats
  *  @author     Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated    2012/06/15
+ *  @updated    2012/06/16
  */
 
 class SEOstats_SEMRush extends SEOstats
@@ -71,7 +71,7 @@ class SEOstats_SEMRush extends SEOstats
      */
     public function getDomainRank($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'domain_rank';
         $semrushUrl = self::getBackendUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -85,7 +85,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getDomainRankHistory($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'domain_rank_history';
         $semrushUrl = self::getBackendUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -99,7 +99,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getOrganicKeywords($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'organic';
         $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -108,7 +108,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getCompetitors($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $reportType = 'organic_organic';
         $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
         $data       = self::getApiData($semrushUrl);
@@ -117,7 +117,7 @@ class SEOstats_SEMRush extends SEOstats
 
     public function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $url = false != $url ? $url : self::getUrl();
         $domain   = UrlHelper::getHost($url);
         $database = self::checkDatabase($db);
@@ -141,8 +141,7 @@ class SEOstats_SEMRush extends SEOstats
             self::exc('You must specify a valid language code.');
         }
         else {
-            $imgUrl = 'http://semrush.com/archive/graphs.php?domain=%s&db=%s&type=%s&w=%s&h=%s&lc=%s&dc=%s&l=%s';
-            $imgUrl = sprintf($imgUrl, $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
+            $imgUrl = sprintf(services::SEMRUSH_GRAPH_URL, $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
             if (true != $html) {
                 return $imgUrl;
             } else {
@@ -169,7 +168,7 @@ class SEOstats_SEMRush extends SEOstats
         else if (false === $database) {
             self::exc('db'); }
         else {
-            $backendUrl = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';
+            $backendUrl = services::SEMRUSH_BE_URL;
             return sprintf($backendUrl, $database, $reportType, $domain);
         }
     }
@@ -185,7 +184,7 @@ class SEOstats_SEMRush extends SEOstats
         else if (false === $database) {
             self::exc('db'); }
         else {
-            $widgetUrl = 'http://widget.semrush.com/widget.php?action=report&type=%s&db=%s&domain=%s';
+            $widgetUrl = services::SEMRUSH_WIDGET_URL;
             return sprintf($widgetUrl, $reportType, $database, $domain);
         }
     }
