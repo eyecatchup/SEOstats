@@ -2,20 +2,20 @@
 /**
  *  Custom Exception Class
  *
- *  @package	SEOstats
- *  @author	    Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated	2012/05/13
+ *  @package    SEOstats
+ *  @author        Stephan Schmitz <eyecatchup@gmail.com>
+ *  @updated    2012/05/13
  */
 
-class SEOstatsException extends Exception {}	 
-	 
+class SEOstatsException extends Exception {}
+
 if (!function_exists('curl_init'))
 {
-	throw new SEOstatsException('SEOstats requires the PHP CURL extension.');
+    throw new SEOstatsException('SEOstats requires the PHP CURL extension.');
 }
 if (!function_exists('json_decode'))
 {
-	throw new SEOstatsException('SEOstats requires the PHP JSON extension.');
+    throw new SEOstatsException('SEOstats requires the PHP JSON extension.');
 }
 
 /* End of file seostats.exception.php */

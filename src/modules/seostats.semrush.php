@@ -71,53 +71,59 @@ class SEOstats_SEMRush extends SEOstats
      */
     public function getDomainRank($url = false, $db = false)
     {
-		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
-        $reportType = 'domain_rank';
-        $semrushUrl = self::getBackendUrl($url, $db, $reportType);
-        $data       = self::getApiData($semrushUrl);
+        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank');
+
+        $data = self::getApiData($dataUrl);
+
         if (!is_array($data)) {
-            $data = self::getApiData( str_replace('.backend.','.api.',$semrushUrl) );
+            $data = self::getApiData( str_replace('.backend.', '.api.', $dataUrl) );
             if (!is_array($data)) {
-                return false; }
+                return false;
+            }
         }
         return $data['rank']['data'][0];
     }
 
     public function getDomainRankHistory($url = false, $db = false)
     {
-		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
-        $reportType = 'domain_rank_history';
-        $semrushUrl = self::getBackendUrl($url, $db, $reportType);
-        $data       = self::getApiData($semrushUrl);
+        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank_history');
+
+        $data = self::getApiData($dataUrl);
+
         if (!is_array($data)) {
-            $data = self::getApiData( str_replace('.backend.','.api.',$semrushUrl) );
+            $data = self::getApiData( str_replace('.backend.', '.api.', $dataUrl) );
             if (!is_array($data)) {
-                return false; }
+                return false;
+            }
         }
         return $data['rank_history'];
     }
 
     public function getOrganicKeywords($url = false, $db = false)
     {
-		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
-        $reportType = 'organic';
-        $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
-        $data       = self::getApiData($semrushUrl);
-        return ! is_array($data) ? false : $data[$reportType];
+        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $dataUrl = self::getWidgetUrl($url, $db, 'organic');
+
+        $data = self::getApiData($dataUrl);
+
+        return ! is_array($data) ? false : $data['organic'];
     }
 
     public function getCompetitors($url = false, $db = false)
     {
-		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
-        $reportType = 'organic_organic';
-        $semrushUrl = self::getWidgetUrl($url, $db, $reportType);
-        $data       = self::getApiData($semrushUrl);
-        return ! is_array($data) ? false : $data[$reportType];
+        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $dataUrl = self::getWidgetUrl($url, $db, 'organic_organic');
+
+        $data = self::getApiData($dataUrl);
+
+        return ! is_array($data) ? false : $data['organic_organic'];
     }
 
     public function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-		$db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
         $url = false != $url ? $url : self::getUrl();
         $domain   = UrlHelper::getHost($url);
         $database = self::checkDatabase($db);

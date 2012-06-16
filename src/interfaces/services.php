@@ -11,15 +11,15 @@ interface services
 {
     const PROVIDER = '["alexa","bing","google","ose","semrush","seomoz","sistrix","social","yahoo"]';
 
-	// Url to get Alexa stats from
+    // Url to get Alexa stats from
     const ALEXA_SITEINFO_URL = 'http://www.alexa.com/siteinfo/%s';
-	const ALEXA_GRAPH_URL = 'http://traffic.alexa.com/graph?&o=f&c=1&y=%s&b=ffffff&n=666666&w=%s&h=%s&r=%sm&u=%s';	
+    const ALEXA_GRAPH_URL = 'http://traffic.alexa.com/graph?&o=f&c=1&y=%s&b=ffffff&n=666666&w=%s&h=%s&r=%sm&u=%s';
 
     // Url to get the Sistrix visibility index from
     // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
     const SISTRIX_VI_URL = 'http://www.sichtbarkeitsindex.de/%s';
-	
-    const SEMRUSH_BE_URL = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';	
+
+    const SEMRUSH_BE_URL = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';
     const SEMRUSH_GRAPH_URL = 'http://semrush.com/archive/graphs.php?domain=%s&db=%s&type=%s&w=%s&h=%s&lc=%s&dc=%s&l=%s';
     const SEMRUSH_WIDGET_URL = 'http://widget.semrush.com/widget.php?action=report&type=%s&db=%s&domain=%s';
 
@@ -35,7 +35,7 @@ interface services
     // Open Site Explorer base Url
     const OPENSITEEXPLORER_URL = 'http://www.opensiteexplorer.org/%s.html?group=0&page=%s&site=%s&sort=';
 
-	// Open Link Graph base Urls
+    // Open Link Graph base Urls
     const OPENLINKGRAPH_URL = 'http://beta.openlinkgraph.net/openlinkgraph/overview/domain/%s';
     const OPENLINKGRAPH_TOTALS_URL = 'http://beta.openlinkgraph.net/openlinkgraph/_get_link_count/domain/%s/type/%s';
 

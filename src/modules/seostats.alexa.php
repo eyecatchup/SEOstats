@@ -69,7 +69,7 @@ class SEOstats_Alexa extends SEOstats implements services
 
         return strip_tags($nodes->item(0)->nodeValue);
     }
-	
+
     /**
      * @access        public
      * @param         integer    $type      Specifies the graph type. Valid values are 1 to 6.
@@ -82,7 +82,7 @@ class SEOstats_Alexa extends SEOstats implements services
     {
         $url = false != $url ? $url : self::getUrl();
         $domain = UrlHelper::getHost($url);
-		
+
         switch($type)
         {
             case 1: $gtype = 't'; break;
@@ -94,20 +94,24 @@ class SEOstats_Alexa extends SEOstats implements services
             default:break;
         }
 
-		$imgUrl = sprintf(services::ALEXA_GRAPH_URL, $gtype, $w, $h, $period, $domain);
-		if (true != $html) {
-			return $imgUrl;
-		} else {
-			$imgTag = '<img src="%s" width="%s" height="%s" alt="Alexa Statistics Graph for %s"/>';
-			return sprintf($imgTag, $imgUrl, $w, $h, $domain);
-		}
+        $imgUrl = sprintf(services::ALEXA_GRAPH_URL, $gtype, $w, $h, $period, $domain);
+
+        if (true != $html) {
+            return $imgUrl;
+        }
+        else {
+            $imgTag = '<img src="%s" width="%s" height="%s" alt="Alexa Statistics Graph for %s"/>';
+            return sprintf($imgTag, $imgUrl, $w, $h, $domain);
+        }
     }
 
     private function _alexa($url)
     {
         $url = false != $url ? $url : self::getUrl();
         $domain = UrlHelper::getHost($url);
+
         $dataUrl = sprintf(services::ALEXA_SITEINFO_URL, $domain);
+
         return HttpRequest::sendRequest($dataUrl);
     }
 
@@ -115,6 +119,7 @@ class SEOstats_Alexa extends SEOstats implements services
     {
         $strim = trim(str_replace(',', '', $str));
         $intStr = 0 < strlen($strim) ? $strim : '0';
+
         return intval($intStr);
     }
 }

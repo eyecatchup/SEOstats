@@ -17,9 +17,11 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      */
     public function getPageRank($url = false)
     {
+        require_once(SEOSTATSPATH . '3rdparty/GTB_PageRank.php');
+
         $url = false != $url ? $url : self::getUrl();
-        require_once(SEOSTATSPATH ."3rdparty/GTB_PageRank.php");
         $gtb = new GTB_PageRank($url);
+
         return $gtb->getPageRank();
     }
 
@@ -33,6 +35,7 @@ class SEOstats_Google extends SEOstats implements services, default_settings
     {
         $url = false != $url ? $url : self::getUrl();
         $query = urlencode("site:$url");
+
         return self::getSearchResultsTotal($query);
     }
 
@@ -46,6 +49,7 @@ class SEOstats_Google extends SEOstats implements services, default_settings
     {
         $url = false != $url ? $url : self::getUrl();
         $query = urlencode("link:$url");
+
         return self::getSearchResultsTotal($query);
     }
 
@@ -60,7 +64,9 @@ class SEOstats_Google extends SEOstats implements services, default_settings
     {
         $url = false != $url ? $url : self::getUrl();
         $url = sprintf(services::GOOGLE_APISEARCH_URL, 1, $url);
+
         $ret = HttpRequest::sendRequest($url);
+
         $obj = json_decode($ret);
         return ! isset($obj->responseData->cursor->estimatedResultCount)
                ? '0'
@@ -78,7 +84,9 @@ class SEOstats_Google extends SEOstats implements services, default_settings
     {
         $url = false != $url ? $url : self::getUrl();
         $url = sprintf(services::GOOGLE_PAGESPEED_URL, $url);
+
         $ret = HttpRequest::sendRequest($url);
+
         return json_decode($ret);
     }
 
@@ -86,6 +94,7 @@ class SEOstats_Google extends SEOstats implements services, default_settings
     {
         $url = false != $url ? $url : self::getUrl();
         $ret = self::getPagespeedAnalysis($url);
+
         return intval($ret->results->score);
     }
 

@@ -20,10 +20,13 @@ class SEOstats_Sistrix extends SEOstats implements services
     public function getVisibilityIndex($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $domain = preg_replace('#^https?://#', '', UrlHelper::getHost($url));
-        $apiUrl = sprintf(services::SISTRIX_VI_URL, urlencode($domain));
-        $htmlData = HttpRequest::sendRequest($apiUrl);
-        preg_match_all('#<h3>(.*?)<\/h3>#si', $htmlData, $matches);
+        $domain = UrlHelper::getHost($url);
+        $dataUrl = sprintf(services::SISTRIX_VI_URL, urlencode($domain));
+
+        $html = HttpRequest::sendRequest($dataUrl);
+
+        preg_match_all('#<h3>(.*?)<\/h3>#si', $html, $matches);
+
         return isset($matches[1][0]) ? $matches[1][0] : intval('0');
     }
 

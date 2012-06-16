@@ -19,9 +19,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getGoogleShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::GOOGLE_PLUSONE_URL, urlencode($url));
-        $htmlData = HttpRequest::sendRequest($apiUrl);
-        preg_match_all('#c: (.*?)\.0#si', $htmlData, $matches);
+        $dataUrl = sprintf(services::GOOGLE_PLUSONE_URL, urlencode($url));
+
+        $html = HttpRequest::sendRequest($dataUrl);
+        preg_match_all('#c: (.*?)\.0#si', $html, $matches);
+
         return isset($matches[1][0]) ? intval($matches[1][0]) : intval('0');
     }
 
@@ -37,10 +39,12 @@ class SEOstats_Social extends SEOstats implements services
     public function getFacebookShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $fqlQuery = sprintf('SELECT total_count, share_count, like_count, comment_count, commentsbox_count, click_count FROM link_stat WHERE url="%s"', $url);
-        $apiUrl   = sprintf(services::FB_LINKSTATS_URL, rawurlencode($fqlQuery));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $fql = sprintf('SELECT total_count, share_count, like_count, comment_count, commentsbox_count, click_count FROM link_stat WHERE url="%s"', $url);
+        $dataUrl = sprintf(services::FB_LINKSTATS_URL, rawurlencode($fql));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode($jsonData, true);
+
         return isset($phpArray[0]) ? $phpArray[0] : intval('0');
     }
 
@@ -55,9 +59,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getTwitterShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::TWEETCOUNT_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::TWEETCOUNT_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode($jsonData, true);
+
         return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
     }
 
@@ -71,9 +77,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getDeliciousShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode($jsonData, true);
+
         return isset($phpArray[0]['total_posts']) ? intval($phpArray[0]['total_posts']) : intval('0');
     }
 
@@ -87,9 +95,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getDeliciousTopTags($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::DELICIOUS_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode($jsonData, true);
+
         $ret = array();
         if (isset($phpArray[0]['top_tags']) && 0 < sizeof($phpArray[0]['top_tags'])) {
             foreach($phpArray[0]['top_tags'] as $k => $v) {
@@ -109,9 +119,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getDiggShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::DIGG_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::DIGG_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode(substr($jsonData, 2, -2), true);
+
         return isset($phpArray['diggs']) ? intval($phpArray['diggs']) : intval('0');
     }
 
@@ -125,9 +137,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getLinkedInShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::LINKEDIN_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::LINKEDIN_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode(substr($jsonData, 2, -2), true);
+
         return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
     }
 
@@ -141,9 +155,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getPinterestShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::PINTEREST_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::PINTEREST_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode(substr($jsonData, 2, -1), true);
+
         return isset($phpArray['count']) ? intval($phpArray['count']) : intval('0');
     }
 
@@ -157,9 +173,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getStumbleUponShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::STUMBLEUPON_INFO_URL, urlencode($url));
-        $jsonData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::STUMBLEUPON_INFO_URL, urlencode($url));
+
+        $jsonData = HttpRequest::sendRequest($dataUrl);
         $phpArray = json_decode($jsonData, true);
+
         return isset($phpArray['result']['in_index']) && true == $phpArray['result']['in_index']
             ? intval($phpArray['result']['views']) : intval('0');
     }
@@ -174,9 +192,11 @@ class SEOstats_Social extends SEOstats implements services
     public function getVKontakteShares($url = false)
     {
         $url = false != $url ? $url : self::getUrl();
-        $apiUrl = sprintf(services::VKONTAKTE_INFO_URL, urlencode($url));
-        $htmlData = HttpRequest::sendRequest($apiUrl);
+        $dataUrl = sprintf(services::VKONTAKTE_INFO_URL, urlencode($url));
+
+        $htmlData = HttpRequest::sendRequest($dataUrl);
         preg_match_all('#^VK\.Share\.count\(1, (\d+)\);$#si', $htmlData, $matches);
+
         return isset($matches[1][0]) ? intval($matches[1][0]) : intval('0');
     }
 }
