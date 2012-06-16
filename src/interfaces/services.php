@@ -11,6 +11,9 @@ interface services
 {
     const PROVIDER = '["alexa","bing","google","ose","semrush","seomoz","sistrix","social","yahoo"]';
 
+	// Url to get Alexa stats from
+    const ALEXA_SITEINFO_URL = 'http://www.alexa.com/siteinfo/%s';
+
     // Url to get Google search total counts from
     const GOOGLE_APISEARCH_URL = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=%s&q=%s';
 

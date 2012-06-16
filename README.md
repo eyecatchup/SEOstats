@@ -13,6 +13,7 @@ The dev branch code is a work in progress. To get the latest stable release, use
 ### TOC
 
 * <a href='#brief-example-of-use'>Brief Example of Use</a>  
+* <a href='#seostats-alexa-methods'>Alexa Methods</a>   
 * <a href='#seostats-google-methods'>Google Methods</a>   
  * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
@@ -55,6 +56,24 @@ try {
 catch (SEOstatsException $e) {
   die($e->getMessage());
 }
+```
+<hr>
+
+## SEOstats Alexa Methods
+
+```php
+<?php
+  // Returns the global Alexa Page-Rank.
+  print $SEOstats->Alexa()->getGlobalRank();
+
+  // Returns a country-specific Alexa Page-Rank.
+  print_r( $SEOstats->Alexa()->getCountryRank() );
+
+  // The total amount of backlinks returned by Alexa.
+  print $SEOstats->Alexa()->getBacklinkCount();
+
+  // Returns pageload time information based on measurements by Alexa's crawler.
+  print $SEOstats->Alexa()->getPageLoadTime();
 ```
 <hr>
 

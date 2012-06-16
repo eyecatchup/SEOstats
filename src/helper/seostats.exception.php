@@ -20,4 +20,3 @@ if (!function_exists('json_decode'))
 
 /* End of file seostats.exception.php */
 /* Location: ./src/helper/seostats.exception.php */
-?>
