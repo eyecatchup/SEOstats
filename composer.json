@@ -1,0 +1,8 @@
+{
+    "name": "seostats/seostats",
+    "description": "SEOstats to be handled with Composer",
+    "version": "2.1.0",
+    "require": {
+        "php": ">=5.2.3"
+    },
+}
