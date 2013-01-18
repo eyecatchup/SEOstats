@@ -9,6 +9,11 @@
 
 class SEOstats_Alexa extends SEOstats implements services
 {
+    /**
+     * The global rank is compute as an average over three months
+     * 
+     * @return int
+     */
     public function getGlobalRank($url = false)
     {
         $html = self::_alexa($url);
@@ -20,6 +25,44 @@ class SEOstats_Alexa extends SEOstats implements services
         $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[1]/div");
 
         return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+    
+    /**
+     * Get the average rank over the week
+     * @return int
+     */
+    public function getWeekRank($url = false)
+    {
+        $html = self::_alexa($url);
+
+        $doc = new DOMDocument();
+        @$doc->loadHtml($html);
+
+        $xpath = new DOMXPath($doc);
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[2]/td[1]");
+        
+        return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+    
+    /**
+     * Get the average rank over the week
+     * @return int
+     */
+    public function getMonthRank($url = false)
+    {
+        $html = self::_alexa($url);
+
+        $doc = new DOMDocument();
+        @$doc->loadHtml($html);
+
+        $xpath = new DOMXPath($doc);
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[3]/td[1]");
+        
+        return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+    
+    public function getQuarterRank($url = false) {
+        return $this->getGlobalRank($url);
     }
 
     public function getCountryRank($url = false)

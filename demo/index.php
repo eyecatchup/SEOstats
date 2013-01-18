@@ -15,6 +15,14 @@ try
 		<td>Global Domain-Rank</td>
 		<td><?php print $seostats->Alexa()->getGlobalRank(); ?></td>
 	</tr>
+	<tr>
+        <td>Week Domain-Rank</td>
+        <td><?php print $seostats->Alexa()->getWeekRank(); ?></td>
+    </tr>
+    <tr>
+        <td>Month Domain-Rank</td>
+        <td><?php print $seostats->Alexa()->getMonthRank(); ?></td>
+    </tr>
 	<tr><?php $ctryRk = $seostats->Alexa()->getCountryRank(); ?>
 		<td>Country-specific Domain-Rank</td>
 		<td><?php print $ctryRk['rank']; ?> (Rank in <?php print $ctryRk['country']; ?>)</td>
