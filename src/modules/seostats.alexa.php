@@ -16,15 +16,7 @@ class SEOstats_Alexa extends SEOstats implements services
      */
     public function getGlobalRank($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
-        $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[1]/div");
-
-        return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+        return $this->getQuarterRank();
     }
     
     /**
@@ -33,12 +25,7 @@ class SEOstats_Alexa extends SEOstats implements services
      */
     public function getWeekRank($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
+        $xpath = $this->_getXPath($url);
         $nodes = @$xpath->query("//*[@id='rank']/table/tr[2]/td[1]");
         
         return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
@@ -50,29 +37,23 @@ class SEOstats_Alexa extends SEOstats implements services
      */
     public function getMonthRank($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
+        $xpath = $this->_getXPath($url);
         $nodes = @$xpath->query("//*[@id='rank']/table/tr[3]/td[1]");
         
         return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
     }
     
+    
     public function getQuarterRank($url = false) {
-        return $this->getGlobalRank($url);
+        $xpath = $this->_getXPath($url);
+        $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[1]/div");
+
+        return self::retInt( strip_tags($nodes->item(0)->nodeValue) );
     }
 
     public function getCountryRank($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
+        $xpath = $this->_getXPath($url);
         $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[2]/div");
 
         $rank = self::retInt( strip_tags($nodes->item(0)->nodeValue) );
@@ -89,12 +70,7 @@ class SEOstats_Alexa extends SEOstats implements services
 
     public function getBacklinkCount($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
+        $xpath = $this->_getXPath($url);
         $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[3]/div[1]/a");
 
         return self::retInt($nodes->item(0)->nodeValue);
@@ -102,12 +78,7 @@ class SEOstats_Alexa extends SEOstats implements services
 
     public function getPageLoadTime($url = false)
     {
-        $html = self::_alexa($url);
-
-        $doc = new DOMDocument();
-        @$doc->loadHtml($html);
-
-        $xpath = new DOMXPath($doc);
+        $xpath = $this->_getXPath($url);
         $nodes = @$xpath->query( "//*[@id='trafficstats_div']/div[4]/div[1]/p" );
 
         return strip_tags($nodes->item(0)->nodeValue);
@@ -147,8 +118,27 @@ class SEOstats_Alexa extends SEOstats implements services
             return sprintf($imgTag, $imgUrl, $w, $h, $domain);
         }
     }
+    
+    /**
+     * @return DOMXPath
+     */
+    private function _getXPath($url) {
+        $html = $this->_getAlexaPage($url);
+        $doc = $this->_getDOMDocument($html);
+        $xpath = new DOMXPath($doc);
+        return $xpath;
+    }
+    
+    /**
+     * @return DOMDocument
+     */
+    private function _getDOMDocument($html) {
+        $doc = new DOMDocument();
+        @$doc->loadHtml($html);
+        return $doc;
+    }
 
-    private function _alexa($url)
+    private function _getAlexaPage($url)
     {
         $url = false != $url ? $url : self::getUrl();
         $domain = UrlHelper::getHost($url);
