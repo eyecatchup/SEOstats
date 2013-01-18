@@ -3,7 +3,7 @@
 require("../src/seostats.php");
 try 
 {
-  $url = "http://www.nahklick.de"; 
+  $url = "http://www.nahklick.de";
   $seostats = new SEOstats($url);
 ?>
 <table>
@@ -13,27 +13,29 @@ try
 	</tr>
 	<tr>
 		<td>Global Domain-Rank</td>
-		<td><?php print $seostats->Alexa()->getGlobalRank(); ?></td>
+		<td><?php 
+        $alexa = $seostats->Alexa(); 
+		print $alexa->getGlobalRank(); ?></td>
 	</tr>
 	<tr>
         <td>Week Domain-Rank</td>
-        <td><?php print $seostats->Alexa()->getWeekRank(); ?></td>
+        <td><?php print $alexa->getWeekRank(); ?></td>
     </tr>
     <tr>
         <td>Month Domain-Rank</td>
-        <td><?php print $seostats->Alexa()->getMonthRank(); ?></td>
+        <td><?php print $alexa->getMonthRank(); ?></td>
     </tr>
-	<tr><?php $ctryRk = $seostats->Alexa()->getCountryRank(); ?>
+	<tr><?php $ctryRk = $alexa->getCountryRank(); ?>
 		<td>Country-specific Domain-Rank</td>
 		<td><?php print $ctryRk['rank']; ?> (Rank in <?php print $ctryRk['country']; ?>)</td>
 	</tr>
 	<tr>
 		<td>Total amount of incoming links</td>
-		<td><?php print $seostats->Alexa()->getBacklinkCount(); ?></td>
+		<td><?php print $alexa->getBacklinkCount(); ?></td>
 	</tr>
 	<tr>
 		<td>Average Pageload Time</td>
-		<td><?php print $seostats->Alexa()->getPageLoadTime(); ?></td>
+		<td><?php print $alexa->getPageLoadTime(); ?></td>
 	</tr>
 	<!-- GOOGLE -->
 	<tr>
@@ -41,19 +43,21 @@ try
 	</tr>
 	<tr>
 		<td>Toolbar PageRank</td>
-		<td><?php print $seostats->Google()->getPageRank(); ?></td>
+		<td><?php
+		$google = $seostats->Google();
+		print $google->getPageRank(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of pages in Websearch-Index</td>
-		<td><?php print $seostats->Google()->getSiteindexTotal(); ?></td>
+		<td><?php print $google->getSiteindexTotal(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of incoming links</td>
-		<td><?php print $seostats->Google()->getBacklinksTotal(); ?></td>
+		<td><?php print $google->getBacklinksTotal(); ?></td>
 	</tr>
 	<tr>
 		<td>PageSpeed total score</td>
-		<td><?php print $seostats->Google()->getPagespeedScore(); ?>/100</td>
+		<td><?php print $google->getPagespeedScore(); ?>/100</td>
 	</tr>
 	<!-- OPENSITEEXPLORER -->
 	<tr>
@@ -109,9 +113,11 @@ try
 	</tr>
 	<tr>
 		<td>Visibility-Index</td>
-		<td><?php print $seostats->Sistrix()->getVisibilityIndex(); ?></td>
+		<td><?php 
+		$sistrix = $seostats->Sistrix();
+		print $sistrix->getVisibilityIndex(); ?></td>
 	</tr>
-	<tr><?php $data3 = $seostats->Sistrix()->OpenLinkGraph()->getSummary(); ?>
+	<tr><?php $data3 = $sistrix->OpenLinkGraph()->getSummary(); ?>
 		<td>Total amount of incoming links</td>
 		<td><?php print $data3['totalInlinks']; ?></td>
 	</tr>
@@ -137,9 +143,11 @@ try
 	</tr>
 	<tr>
 		<td>Total amount of Google +1s for the URL</td>
-		<td><?php print $seostats->Social()->getGoogleShares(); ?></td>
+		<td><?php
+		$social = $seostats->Social(); 
+		print $social->getGoogleShares(); ?></td>
 	</tr>
-	<tr><?php $fb = $seostats->Social()->getFacebookShares(); ?>
+	<tr><?php $fb = $social->getFacebookShares(); ?>
 		<td>Total amount of Facebook Likes</td>
 		<td><?php print $fb['like_count']; ?></td>
 	</tr>
@@ -153,31 +161,31 @@ try
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from Tweets</td>
-		<td><?php print $seostats->Social()->getTwitterShares(); ?></td>
+		<td><?php print $social->getTwitterShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from Delicious</td>
-		<td><?php print $seostats->Social()->getDeliciousShares(); ?></td>
+		<td><?php print $social->getDeliciousShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from Digg</td>
-		<td><?php print $seostats->Social()->getDiggShares(); ?></td>
+		<td><?php print $social->getDiggShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from LinkedIn</td>
-		<td><?php print $seostats->Social()->getLinkedInShares(); ?></td>
+		<td><?php print $social->getLinkedInShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from Pinterest</td>
-		<td><?php print $seostats->Social()->getPinterestShares(); ?></td>
+		<td><?php print $social->getPinterestShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from StumbleUpon</td>
-		<td><?php print $seostats->Social()->getStumbleUponShares(); ?></td>
+		<td><?php print $social->getStumbleUponShares(); ?></td>
 	</tr>
 	<tr>
 		<td>Total amount of backlinks from VKontakte</td>
-		<td><?php print $seostats->Social()->getVKontakteShares(); ?></td>
+		<td><?php print $social->getVKontakteShares(); ?></td>
 	</tr>
 </table>
 <?
