@@ -10,13 +10,25 @@
 class SEOstats_Alexa extends SEOstats implements services
 {
     /**
+     * Used for cache
+     * @var DOMXPath
+     */
+    private $_xpath = NULL;
+    
+    /**
+     * Used for cache
+     * @var DOMXPath
+     */
+    private $_lastLoadedUrl = NULL;
+    
+    /**
      * The global rank is compute as an average over three months
      * 
      * @return int
      */
     public function getGlobalRank($url = false)
     {
-        return $this->getQuarterRank();
+        return $this->getQuarterRank($url);
     }
     
     /**
@@ -123,9 +135,16 @@ class SEOstats_Alexa extends SEOstats implements services
      * @return DOMXPath
      */
     private function _getXPath($url) {
+        $url = $this->_getUrl($url);
+        if ($this->_lastLoadedUrl == $url) {
+            return $this->_xpath;
+        }
         $html = $this->_getAlexaPage($url);
         $doc = $this->_getDOMDocument($html);
         $xpath = new DOMXPath($doc);
+        $this->_lastLoadedUrl = $url;
+        $this->_xpath = $xpath;
+        
         return $xpath;
     }
     
@@ -140,12 +159,20 @@ class SEOstats_Alexa extends SEOstats implements services
 
     private function _getAlexaPage($url)
     {
-        $url = false != $url ? $url : self::getUrl();
         $domain = UrlHelper::getHost($url);
 
         $dataUrl = sprintf(services::ALEXA_SITEINFO_URL, $domain);
 
         return HttpRequest::sendRequest($dataUrl);
+    }
+    
+    /**
+     * Ensure the URL is set, return default otherwise
+     * @return string
+     */
+    private function _getUrl($url) {
+        $url = false != $url ? $url : self::getUrl();
+        return $url;
     }
 
     private function retInt($str)
