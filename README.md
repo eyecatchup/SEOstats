@@ -8,6 +8,10 @@ SEOstats offers over 50 different methods to request SEO relevant data for websi
 
 The dev branch code is a work in progress. To get the latest stable release, use the master branch https://github.com/eyecatchup/SEOstats/tree/master or the downloads tab https://github.com/eyecatchup/SEOstats/downloads.
 
+## Dependencies
+
+Depends on PHP5-CURL and PHP5-SOAP module.
+
 ## Usage
 
 ### TOC
