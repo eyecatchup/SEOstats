@@ -4,7 +4,7 @@ ini_set('max_execution_time', 300);
 require '../src/seostats.php';
 
 try {
-    $url = "http://www.meetone.com";
+    $url = "http://www.nahklick.de";
     /**
      * Create a new SEOstats object to request SEO metrics
      * for the given URL.
