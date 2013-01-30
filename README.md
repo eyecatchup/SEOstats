@@ -2,11 +2,23 @@
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
 
-SEOstats offers over 50 different methods and gathers data from Google, Yahoo, Bing, SEOmoz, Alexa, Facebook and Twitter.
+SEOstats offers over 50 different methods and gathers data from Google, Yahoo, Bing, SEOmoz, SEMRush, Sistrix, Alexa, Facebook, Twitter & more.
 
 ## Dependencies
 
 SEOstats requires the PHP5-CURL, PHP5-JSON and PHP5-SOAP extensions.
+
+## Installation
+
+The recommended way to install SEOstats is [through composer](http://getcomposer.org). Just create a `composer.json` file and run the `php composer.phar install` command (Windows users use `composer install`) to install it:
+
+    {
+        "require": {
+            "seostats/seostats": "dev-master"
+        }
+    }
+
+Alternatively, you can download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file and extract it.
 
 ## Usage
 
