@@ -2,6 +2,13 @@
     "name": "seostats/seostats",
     "description": "SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics for any website.",
     "version": "2.5.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stephan Schmitz",
+            "email": "eyecatchup@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=5.2.3"
     }
