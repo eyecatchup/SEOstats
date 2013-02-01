@@ -23,12 +23,14 @@ class SEOstats_OpenSiteExplorer extends SEOstats implements services
 		
 		$data = $doc->getElementsByTagName('td');
 
-        return array(
-			'domainAuthority'    => trim(strip_tags($data->item(0)->textContent)),
-            'pageAuthority'      => trim(strip_tags($data->item(1)->textContent)),          
-            'linkingRootDomains' => trim(strip_tags($data->item(2)->textContent)),
-            'totalInboundLinks'  => trim(strip_tags($data->item(3)->textContent))
-        );
+        if($data->item(0)){ // Only return results if available
+            return array(
+                'domainAuthority'    => trim(strip_tags($data->item(0)->textContent)),
+                'pageAuthority'      => trim(strip_tags($data->item(1)->textContent)),          
+                'linkingRootDomains' => trim(strip_tags($data->item(2)->textContent)),
+                'totalInboundLinks'  => trim(strip_tags($data->item(3)->textContent))
+            );
+        }
     }
 }
 
