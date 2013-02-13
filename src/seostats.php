@@ -40,6 +40,9 @@
  *  For increased reliability, resolve os-specific system path.
  */
 
+if (!defined('__DIR__'))
+    define('__DIR__', dirname(__FILE__));
+
 $base_path = __DIR__;
 if (realpath( $base_path ) !== false) {
     $base_path = realpath($base_path).'/';
