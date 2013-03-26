@@ -56,6 +56,8 @@
  * @link        http://pear.php.net/pepr/pepr-proposal-show.php?id=198
  */
 
+ namespace seostats;
+ 
 /**
  * Marker constant for Services_JSON::decode(), used to flag stack state
  */

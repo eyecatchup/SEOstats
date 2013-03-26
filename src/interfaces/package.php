@@ -1,4 +1,9 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+
+namespace seostats;
+
+if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+
 /**
  *  SEOstats package Vars
  *

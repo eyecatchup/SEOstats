@@ -1,4 +1,7 @@
-<?php define('DISABLE_MAN', FALSE);
+<?php 
+namespace seostats;
+
+define('DISABLE_MAN', FALSE);
 /* pref              User preference interface.
  * @package          GTB_PageRank
  * @author           Stephan Schmitz <eyecatchup@gmail.com>

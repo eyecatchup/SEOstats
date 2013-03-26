@@ -9,7 +9,7 @@ try {
      * Create a new SEOstats object to request SEO metrics
      * for the given URL.
      */
-    $seostats = new SEOstats($url);
+    $seostats = new seostats\SEOstats($url);
 ?>
 <!--
     Demo output for the SEOstats result data.
