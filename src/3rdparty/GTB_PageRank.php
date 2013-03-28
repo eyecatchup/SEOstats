@@ -568,7 +568,7 @@ class GTB_Request extends GTB_PageRank
  *  @package          GTB_PageRank
  *  @author           Stephan Schmitz <eyecatchup@gmail.com>
  */
-class GTB_Exception extends Exception 
+class GTB_Exception extends \Exception 
 {
   // exitNoUrl - throws an exception and exits, when trying to create a new object on no input.
   static function noUrl() {

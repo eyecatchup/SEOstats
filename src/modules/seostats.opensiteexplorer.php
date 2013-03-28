@@ -23,7 +23,7 @@ class SEOstats_OpenSiteExplorer extends SEOstats implements services
 
         $html = HttpRequest::sendRequest($dataUrl);
 
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         @$doc->loadHtml($html);
 		
 		$data = $doc->getElementsByTagName('td');
