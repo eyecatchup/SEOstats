@@ -1,5 +1,10 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
-/**
+<?php
+
+namespace seostats;
+
+if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+
+ /**
  *  SEOstats extension for SEMRush data.
  *
  *  @package    SEOstats

@@ -1,4 +1,9 @@
-<?php  if ( ! defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+
+namespace seostats;
+
+if ( ! defined('SEOSTATSPATH')) exit('No direct access allowed!');
+
 /**
  *  SEOstats Exception Class
  *
@@ -7,7 +12,7 @@
  *  @updated    2012/05/13
  */
 
-class SEOstatsException extends Exception {}
+class SEOstatsException extends \Exception {}
 
 if (!function_exists('curl_init'))
 {

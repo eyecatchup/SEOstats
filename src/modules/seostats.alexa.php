@@ -1,4 +1,9 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+
+namespace seostats;
+
+if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+
 /**
  *  SEOstats extension for Alexa data.
  *
@@ -141,7 +146,7 @@ class SEOstats_Alexa extends SEOstats implements services
         }
         $html = $this->_getAlexaPage($url);
         $doc = $this->_getDOMDocument($html);
-        $xpath = new DOMXPath($doc);
+        $xpath = new \DOMXPath($doc);
         $this->_lastLoadedUrl = $url;
         $this->_xpath = $xpath;
         
@@ -152,7 +157,7 @@ class SEOstats_Alexa extends SEOstats implements services
      * @return DOMDocument
      */
     private function _getDOMDocument($html) {
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         @$doc->loadHtml($html);
         return $doc;
     }

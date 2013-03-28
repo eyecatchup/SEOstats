@@ -1,4 +1,9 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+
+namespace seostats;
+
+if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 /**
@@ -18,7 +23,7 @@ class SEOstats_OpenSiteExplorer extends SEOstats implements services
 
         $html = HttpRequest::sendRequest($dataUrl);
 
-        $doc = new DOMDocument();
+        $doc = new \DOMDocument();
         @$doc->loadHtml($html);
 		
 		$data = $doc->getElementsByTagName('td');

@@ -39,6 +39,8 @@
  *---------------------------------------------------------------
  *  For increased reliability, resolve os-specific system path.
  */
+ 
+namespace seostats;
 
 $base_path = __DIR__;
 if (realpath( $base_path ) !== false) {
