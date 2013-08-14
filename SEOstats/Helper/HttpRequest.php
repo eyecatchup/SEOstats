@@ -1,13 +1,17 @@
-<?php  if ( ! defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+namespace SEOstats\Helper;
+
 /**
- *  HTTP Request Helper Class
+ * HTTP Request Helper Class
  *
- *  @package    SEOstats
- *  @author     Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated    2012/06/15
+ * @package    SEOstats
+ * @author     Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright  Copyright (c) 2010 - present Stephan Schmitz
+ * @license    http://eyecatchup.mit-license.org/  MIT License
+ * @updated    2013/05/12
  */
 
-class HttpRequest extends SEOstats
+class HttpRequest
 {
     /**
      *  HTTP GET/POST request with curl.
@@ -20,18 +24,21 @@ class HttpRequest extends SEOstats
      */
     public static function sendRequest($url, $postData = false, $postJson = false)
     {
+        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
+                \SEOstats\SEOstats::BUILD_NO);
+
         $ch = curl_init($url);
         curl_setopt_array($ch, array(
-            CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+            CURLOPT_USERAGENT       => $ua,
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_CONNECTTIMEOUT  => 30,
             CURLOPT_FOLLOWLOCATION  => 1,
             CURLOPT_MAXREDIRS       => 2,
-            CURLOPT_SSL_VERIFYPEER  => 0
+            CURLOPT_SSL_VERIFYPEER  => 0,
         ));
 
-        if (false != $postData) {
-            if (false != $postJson) {
+        if (false !== $postData) {
+            if (false !== $postJson) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER,
                     array('Content-type: application/json'));
                 $data = json_encode($postData);
@@ -46,10 +53,7 @@ class HttpRequest extends SEOstats
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if($httpCode == 200) {
-            return $response;
-        }
-        else { return $httpCode; }
+        return (200 == (int)$httpCode) ? $response : false;
     }
 
     /**
@@ -62,37 +66,43 @@ class HttpRequest extends SEOstats
      */
     public static function getHttpCode($url)
     {
+        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
+                \SEOstats\SEOstats::BUILD_NO);
+
         $ch = curl_init($url);
         curl_setopt_array($ch, array(
-            CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+            CURLOPT_USERAGENT       => $ua,
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_CONNECTTIMEOUT  => 10,
             CURLOPT_FOLLOWLOCATION  => 1,
             CURLOPT_MAXREDIRS       => 2,
             CURLOPT_SSL_VERIFYPEER  => 0,
-            CURLOPT_NOBODY          => 1
+            CURLOPT_NOBODY          => 1,
         ));
 
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        return (int) $httpCode;
+        return (int)$httpCode;
     }
 
     public function getFile($url, $file)
     {
+        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
+                \SEOstats\SEOstats::BUILD_NO);
+
         $fp = fopen("$file", 'w');
 
         $ch = curl_init($url);
         curl_setopt_array($ch, array(
-            CURLOPT_USERAGENT => sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', SEOstats::BUILD_NO),
+            CURLOPT_USERAGENT       => $ua,
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_CONNECTTIMEOUT  => 30,
             CURLOPT_FOLLOWLOCATION  => 1,
             CURLOPT_MAXREDIRS       => 2,
             CURLOPT_SSL_VERIFYPEER  => 0,
-            CURLOPT_FILE            => $fp
+            CURLOPT_FILE            => $fp,
         ));
 
         curl_exec($ch);
@@ -100,9 +110,6 @@ class HttpRequest extends SEOstats
         fclose($fp);
 
         clearstatcache();
-        return (bool) FALSE !== stat($file);
+        return (bool)(false !== stat($file));
     }
 }
-
-/* End of file seostats.httprequest.php */
-/* Location: ./src/helper/seostats.httprequest.php */

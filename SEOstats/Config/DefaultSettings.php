@@ -1,13 +1,24 @@
-<?php  if ( ! defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+namespace SEOstats\Config;
+
 /**
- *  Default client settings
+ * Configuration constants for the SEOstats library.
  *
- *  @package    SEOstats
- *  @updated    2013/01/29
+ * @package    SEOstats
+ * @author     Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright  Copyright (c) 2010 - present Stephan Schmitz
+ * @license    http://eyecatchup.mit-license.org/  MIT License
+ * @updated    2013/02/03
  */
 
-interface default_settings
+/**
+ * Default client settings
+ * @package    SEOstats
+ */
+interface DefaultSettings
 {
+    const DEFAULT_RETURN_NO_DATA = 'n.a.';
+
     const GOOGLE_TLD = 'com';
 
     // Note: Google search results, doesn't matter which tld you request, vary depending on
@@ -24,13 +35,10 @@ interface default_settings
     const HTTP_HEADER_ACCEPT_LANGUAGE = 'en-us;q=0.8,en;q=0.3';
 
     // For curl instances: Whether to allow Google to store cookies, or not.
-    const ALLOW_GOOGLE_COOKIES = '0';
+    const ALLOW_GOOGLE_COOKIES = 0;
 
-	// Choose the local SEMRush database to use.
+    // Choose the local SEMRush database to use.
     const SEMRUSH_DB = 'de';
 
     const EXPORT_DIR = 'data/';
 }
-
-/* End of file default-settings.php */
-/* Location: ./src/interfaces/default-settings.php */
