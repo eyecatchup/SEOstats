@@ -46,24 +46,7 @@ Alternatively, you can download the [`SEOstats.zip`](https://github.com/eyecatch
 ### Brief Example of Use
 To use the SEOstats methods, you must include the Autoloader first.  
 
-You can now call all methods statically as follows, passing the URL to the method directly.
-
-```php
-<?php
-require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
-
-try {
-  $url = 'http://www.google.com/';
-
-  // Get the Google Toolbar Pagerank for the given URL.
-  echo \SEOstats\Services\Google::getPageRank($url);
-}
-catch (SEOstatsException $e) {
-  die($e->getMessage());
-}
-```
-
-Alternatively, you can create a new SEOstats instance an bind any URL to the instance for further use.
+Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.
 
 ```php
 <?php
@@ -83,6 +66,23 @@ try {
 	echo Google::getPageRank();
 	echo Google::getPagespeedScore();
   }
+}
+catch (SEOstatsException $e) {
+  die($e->getMessage());
+}
+```
+
+Alternatively, you can call all methods statically, passing the URL to the methods directly.
+
+```php
+<?php
+require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
+
+try {
+  $url = 'http://www.google.com/';
+
+  // Get the Google Toolbar Pagerank for the given URL.
+  echo \SEOstats\Services\Google::getPageRank($url);
 }
 catch (SEOstatsException $e) {
   die($e->getMessage());
