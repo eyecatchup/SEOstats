@@ -8,7 +8,7 @@ namespace SEOstats\Services;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/14
+ * @updated    2013/08/17
  */
 
 use SEOstats\SEOstats as SEOstats;
@@ -23,24 +23,101 @@ class Alexa extends SEOstats
      */
     protected static $_xpath = false;
 
+    protected static $_rankKeys = array(
+        '1d' => 0,
+        '7d' => 0,
+        '1m' => 0,
+        '3m' => 0,
+    );
+
     /**
-     * The global rank is compute as an average over three months
-     *
+     * Get yesterday's rank
+     * @return int
+     */
+    public static function getDailyRank($url = false)
+    {
+        self::setRankingKeys($url);
+        if (0 == self::$_rankKeys['1d']) {
+            return parent::noDataDefaultValue();
+        }
+
+        $xpath = self::_getXPath($url);
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[" . self::$_rankKeys['1d'] . "]/td[1]");
+
+        return !$nodes->item(0) ? parent::noDataDefaultValue() :
+            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+
+    /**
+     * For backward compatibility
+     * @deprecated
+     */
+    public static function getWeekRank($url = false) {
+        return self::getWeeklyRank($url);
+    }
+    /**
+     * Get the average rank over the last 7 days
+     * @return int
+     */
+    public static function getWeeklyRank($url = false)
+    {
+        self::setRankingKeys($url);
+        if (0 == self::$_rankKeys['7d']) {
+            return parent::noDataDefaultValue();
+        }
+
+        $xpath = self::_getXPath($url);
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[" . self::$_rankKeys['7d'] . "]/td[1]");
+
+        return !$nodes->item(0) ? parent::noDataDefaultValue() :
+            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+
+    /**
+     * For backward compatibility
+     * @deprecated
+     */
+    public static function getMonthRank($url = false) {
+        return self::getMonthlyRank($url);
+    }
+    /**
+     * Get the average rank over the last month
+     * @return int
+     */
+    public static function getMonthlyRank($url = false)
+    {
+        self::setRankingKeys($url);
+        if (0 == self::$_rankKeys['1m']) {
+            return parent::noDataDefaultValue();
+        }
+
+        $xpath = self::_getXPath($url);
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[" . self::$_rankKeys['1m'] . "]/td[1]");
+
+        return !$nodes->item(0) ? parent::noDataDefaultValue() :
+            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+    }
+
+    /**
+     * For backward compatibility
+     * @deprecated
+     */
+    public static function getQuarterRank($url = false) {
+        return self::getGlobalRank($url);
+    }
+    /**
+     * Get the average rank over the last 3 months
      * @return int
      */
     public static function getGlobalRank($url = false)
     {
-        return self::getQuarterRank($url);
-    }
+        self::setRankingKeys($url);
+        if (0 == self::$_rankKeys['3m']) {
+            return parent::noDataDefaultValue();
+        }
 
-    /**
-     * Get the average rank over the week
-     * @return int
-     */
-    public static function getWeekRank($url = false)
-    {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='rank']/table/tr[2]/td[1]");
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr[" . self::$_rankKeys['3m'] . "]/td[1]");
 
         return !$nodes->item(0) ? parent::noDataDefaultValue() :
             self::retInt( strip_tags($nodes->item(0)->nodeValue) );
@@ -50,36 +127,57 @@ class Alexa extends SEOstats
      * Get the average rank over the week
      * @return int
      */
-    public static function getMonthRank($url = false)
+    public static function setRankingKeys($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='rank']/table/tr[3]/td[1]");
+        $nodes = @$xpath->query("//*[@id='rank']/table/tr");
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
-    }
-
-
-    public static function getQuarterRank($url = false) {
-        $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[1]/div");
-
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+        if (5 == $nodes->length) {
+            self::$_rankKeys = array(
+                '1d' => 2,
+                '7d' => 3,
+                '1m' => 4,
+                '3m' => 5,
+            );
+        }
+        else if (4 == $nodes->length) {
+            self::$_rankKeys = array(
+                '1d' => 0,
+                '7d' => 2,
+                '1m' => 3,
+                '3m' => 4,
+            );
+        }
+        else if (3 == $nodes->length) {
+            self::$_rankKeys = array(
+                '1d' => 0,
+                '7d' => 0,
+                '1m' => 2,
+                '3m' => 3,
+            );
+        }
+        else if (2 == $nodes->length) {
+            self::$_rankKeys = array(
+                '1d' => 0,
+                '7d' => 0,
+                '1m' => 0,
+                '3m' => 2,
+            );
+        }
     }
 
     public static function getCountryRank($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[2]/div");
+        $node1 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/strong/a");
+        $node2 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong/a");
 
-        if ($nodes->item(0)) {
-            $rank = self::retInt(strip_tags($nodes->item(0)->nodeValue));
-            if ($nodes->item(1) && 0 != $rank) {
-                $cntry = @explode("\n", $nodes->item(1)->nodeValue, 3);
+        if ($node2->item(0)) {
+            $rank = self::retInt(strip_tags($node2->item(0)->nodeValue));
+            if ($node1->item(0) && 0 != $rank) {
                 return array(
                     'rank' => $rank,
-                    'country' => $cntry[1]
+                    'country' => $node1->item(0)->nodeValue,
                 );
             }
         }
@@ -90,7 +188,7 @@ class Alexa extends SEOstats
     public static function getBacklinkCount($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='siteStats']/tbody/tr[1]/td[3]/div[1]/a");
+        $nodes = @$xpath->query("//*[@id='linksin_div']/section/div/div[1]/span");
 
         return !$nodes->item(0) ? parent::noDataDefaultValue() :
             self::retInt($nodes->item(0)->nodeValue);
@@ -99,7 +197,7 @@ class Alexa extends SEOstats
     public static function getPageLoadTime($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query( "//*[@id='trafficstats_div']/div[4]/div[1]/p" );
+        $nodes = @$xpath->query( "//*[@id='section-load']/div/section/p" );
 
         return !$nodes->item(0) ? parent::noDataDefaultValue() :
             strip_tags($nodes->item(0)->nodeValue);

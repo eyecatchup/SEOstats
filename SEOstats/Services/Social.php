@@ -8,7 +8,7 @@ namespace SEOstats\Services;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/14
+ * @updated    2013/08/17
  */
 
 use SEOstats\SEOstats as SEOstats;
@@ -18,13 +18,20 @@ use SEOstats\Helper as Helper;
 class Social extends SEOstats
 {
     /**
+     * For backward compatibility
+     * @deprecated
+     */
+    public static function getGoogleShares($url = false) {
+        return self::getGooglePlusShares($url);
+    }
+    /**
      * Returns the total count of Google+ Plus Ones
      *
      * @access        public
      * @param   url   string     The URL to check.
      * @return        integer    Returns the total count of Plus Ones for a URL.
      */
-    public static function getGoogleShares($url = false)
+    public static function getGooglePlusShares($url = false)
     {
         $url     = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::GOOGLE_PLUSONE_URL, urlencode($url));
