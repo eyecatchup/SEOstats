@@ -1,13 +1,21 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+namespace SEOstats\Config;
+
 /**
- *  SEOstats provider list and service URLs
+ * Configuration constants for the SEOstats library.
  *
- *  @package    SEOstats
- *  @author     Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated    2013/01/29
+ * @package    SEOstats
+ * @author     Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright  Copyright (c) 2010 - present Stephan Schmitz
+ * @license    http://eyecatchup.mit-license.org/  MIT License
+ * @updated    2013/08/14
  */
 
-interface services
+/**
+ * SEOstats provider list and service URLs
+ * @package    SEOstats
+ */
+interface Services
 {
     const PROVIDER = '["alexa","google","ose","semrush","seomoz","sistrix","social","yahoo"]';
 
@@ -26,8 +34,8 @@ interface services
     // Url to get Google search total counts from
     const GOOGLE_APISEARCH_URL = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=%s&q=%s';
 
-    // Url to get the Pagespeed analysis from
-    const GOOGLE_PAGESPEED_URL = 'https://developers.google.com/_apps/pagespeed/run_pagespeed?url=%s&format=json';
+    // Url to the Page Speed Insights API
+    const GOOGLE_PAGESPEED_URL = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed?url=%s&key=%s';
 
     // Url to get the Plus One count from
     const GOOGLE_PLUSONE_URL = 'https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url=%s';
@@ -63,6 +71,3 @@ interface services
     // Url to get share count via VKontakte from
     const VKONTAKTE_INFO_URL = 'http://vk.com/share.php?act=count&index=1&url=%s';
 }
-
-/* End of file services.php */
-/* Location: ./src/interfaces/services.php */

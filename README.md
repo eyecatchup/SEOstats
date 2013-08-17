@@ -2,11 +2,11 @@
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
 
-SEOstats offers over 50 different methods and gathers data from Google, Yahoo, Bing, SEOmoz, SEMRush, Sistrix, Alexa, Facebook, Twitter & more.
+SEOstats offers over 50 different methods and gathers data from Alexa, Google, SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & more.
 
 ## Dependencies
 
-SEOstats requires the PHP5-CURL, PHP5-JSON and PHP5-SOAP extensions.
+SEOstats requires the PHP5-CURL and PHP5-SOAP extensions.
 
 ## Installation
 
@@ -44,32 +44,52 @@ Alternatively, you can download the [`SEOstats.zip`](https://github.com/eyecatch
 <hr>   
  
 ### Brief Example of Use
-You have several methods to define the URL to request data for.
+To use the SEOstats methods, you must include the Autoloader first.  
+
+Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.
+
 ```php
 <?php
+require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
+
+use \SEOstats\Services\Google as Google;
+
 try {
-  $url1 = 'http://www.nahklick.de';
-  $url2 = 'http://www.bing.com';
-  $url3 = 'http://www.google.com';
+  $url = 'http://www.google.com/';
 
-  // Set a URL using the constructor function.
-  $SEOstats = new SEOstats($url1);
-  print $SEOstats->Google()->getPageRank(); // prints 4
+  // Create a new SEOstats instance.
+  $seostats = new \SEOstats\SEOstats;
+  
+  // Bind the URL to the current SEOstats instance.
+  if ($seostats->setUrl($url)) {
 
-  // Set a URL using the `setUrl` function (overwrites any previously set URL). Eg:
-  $SEOstats = new SEOstats($url1);
-  $SEOstats->setUrl($url2);
-  print $SEOstats->Google()->getPageRank(); // prints 8
-
-  // Set a URL using optional parameter calls (overwrites any previously set URL). Eg:
-  $SEOstats = new SEOstats($url1);
-  $SEOstats->setUrl($url2);
-  print $SEOstats->Google()->getPageRank($url3); // prints 9
+	echo Google::getPageRank();
+	echo Google::getPagespeedScore();
+  }
 }
 catch (SEOstatsException $e) {
   die($e->getMessage());
 }
 ```
+
+Alternatively, you can call all methods statically, passing the URL to the methods directly.
+
+```php
+<?php
+require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
+
+try {
+  $url = 'http://www.google.com/';
+
+  // Get the Google Toolbar Pagerank for the given URL.
+  echo \SEOstats\Services\Google::getPageRank($url);
+}
+catch (SEOstatsException $e) {
+  die($e->getMessage());
+}
+```
+
+More detailed examples can be found in the `./example` directory.
 <hr>
 
 ## SEOstats Alexa Methods
@@ -77,17 +97,26 @@ catch (SEOstatsException $e) {
 ### Alexa Traffic Metrics
 ```php
 <?php
-  // Returns the global Alexa Page-Rank.
-  print $SEOstats->Alexa()->getGlobalRank();
+  // Returns the global Alexa Traffic Rank (last 3 months).
+  print Alexa::getGlobalRank();
 
-  // Returns a country-specific Alexa Page-Rank.
-  print_r( $SEOstats->Alexa()->getCountryRank() );
+  // Returns the global Traffic Rank for the last month.
+  print Alexa::getMonthlyRank();
 
-  // The total amount of backlinks returned by Alexa.
-  print $SEOstats->Alexa()->getBacklinkCount();
+  // Returns the global Traffic Rank for the last week.
+  print Alexa::getWeeklyRank();
 
-  // Returns pageload time information based on measurements by Alexa's crawler.
-  print $SEOstats->Alexa()->getPageLoadTime();
+  // Returns the global Traffic Rank for yesterday.
+  print Alexa::getDailyRank();
+
+  // Returns the country-specific Alexa Traffic Rank.
+  print_r( Alexa::getCountryRank() );
+
+  // Returns Alexa's backlink count for the given domain.
+  print Alexa::getBacklinkCount();
+
+  // Returns Alexa's page load time info for the given domain.
+  print Alexa::getPageLoadTime();
 ```
 
 ### Alexa Traffic Graphs
@@ -95,22 +124,22 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns HTML code for the 'daily traffic trend'-graph.
-  print $SEOstats->Alexa()->getTrafficGraph(1);
+  print Alexa::getTrafficGraph(1);
 
   // Returns HTML code for the 'daily pageviews (percent)'-graph.
-  print $SEOstats->Alexa()->getTrafficGraph(2);
+  print Alexa::getTrafficGraph(2);
 
   // Returns HTML code for the 'daily pageviews per user'-graph.
-  print $SEOstats->Alexa()->getTrafficGraph(3);
+  print Alexa::getTrafficGraph(3);
 
   // Returns HTML code for the 'time on site (in minutes)'-graph.
-  print $SEOstats->Alexa()->getTrafficGraph(4);
+  print Alexa::getTrafficGraph(4);
   
   // Returns HTML code for the 'bounce rate (percent)'-graph.
-  print $SEOstats->Alexa()->getTrafficGraph(5);
+  print Alexa::getTrafficGraph(5);
   
   // Returns HTML code for the 'search visits'-graph, using specific graph dimensions of 320*240 px.
-  print $SEOstats->Alexa()->getTrafficGraph(6, 0, 320, 240);
+  print Alexa::getTrafficGraph(6, 0, 320, 240);
 ```
 <hr>
 
@@ -120,19 +149,19 @@ catch (SEOstatsException $e) {
 
 ```php
 <?php
-  //  Returns the Google Toolbar PageRank.
-  print $SEOstats->Google()->getPageRank();
+  //  Returns the Google PageRank for the given URL.
+  print Google::getPageRank();
 ```
 
 ### Google Pagespeed Service
 
 ```php
 <?php
-  // Returns an array, containing the resultset for a 'Google Pagespeed' analysis.
-  print_r( $SEOstats->Google()->getPagespeedAnalysis() );
+  // Returns the Google Pagespeed analysis' metrics for the given URL.
+  print_r( Google::getPagespeedAnalysis() );
 
-  // Returns the 'Google Pagespeed' analysis' total score.
-  print $SEOstats->Google()->getPagespeedScore();
+  // Returns the Google Pagespeed analysis' total score.
+  print Google::getPagespeedScore();
 ```
 
 ### Google Websearch Index
@@ -140,13 +169,13 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns the total amount of results for a Google site-search for the object URL.
-  print $SEOstats->Google()->getSiteindexTotal();
+  print Google::getSiteindexTotal();
 
   // Returns the total amount of results for a Google link-search for the object URL.
-  print $SEOstats->Google()->getBacklinksTotal();
+  print Google::getBacklinksTotal();
 
-  // Returns the total amount of results for a Google search.
-  print $SEOstats->Google()->getSearchResultsTotal('keyword');
+  // Returns the total amount of results for a Google search for 'keyword'.
+  print Google::getSearchResultsTotal('keyword');
 ```
 
 ### Google SERP Details
@@ -154,14 +183,14 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array of URLs and titles for the first 100 results for a Google web search for 'keyword'.
-  print_r ( $SEOstats->Google()->getSerps('keyword') );
+  print_r ( Google::getSerps('keyword') );
 
   // Returns an array of URLs and titles for the first 200 results for a Google site-search for $url.
-  print_r ( $SEOstats->Google()->getSerps("site:$url", 200) );
+  print_r ( Google::getSerps("site:$url", 200) );
 
   // Returns an array of URLs, titles and position in SERPS for occurrences of $url
   // within the first 1000 results for a Google web search for 'keyword'.
-  print_r ( $SEOstats->Google()->getSerps('keyword', 1000, $url) );
+  print_r ( Google::getSerps('keyword', 1000, $url) );
 ```
 <hr>
 
@@ -170,7 +199,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns basic SEOmoz page metrics (Page-Authority, Domain Authority, Domain-Inlinks, total Inlinks).
-  print_r ( $SEOstats->OpenSiteExplorer()->getPageMetrics() );
+  print_r ( OpenSiteExplorer::getPageMetrics() );
 ```
 <hr>
 
@@ -181,16 +210,16 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array containing the SEMRush main report (includes DomainRank, Traffic- & Ads-Data)
-  print_r ( $SEOstats->SEMRush()->getDomainRank() );
+  print_r ( SEMRush::getDomainRank() );
 
   // Returns an array containing the domain rank history.
-  print_r ( $SEOstats->SEMRush()->getDomainRankHistory() );
+  print_r ( SEMRush::getDomainRankHistory() );
 
   // Returns an array containing data for competeing (auto-detected) websites.
-  print_r ( $SEOstats->SEMRush()->getCompetitors() );
+  print_r ( SEMRush::getCompetitors() );
 
   // Returns an array containing data about organic search engine traffic, using explicitly SEMRush's german database.
-  print_r ( $SEOstats->SEMRush()->getOrganicKeywords(0, 'de') );
+  print_r ( SEMRush::getOrganicKeywords(0, 'de') );
 ```
 
 ### SEMRush Graphs
@@ -198,21 +227,21 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns HTML code for the 'search engine traffic'-graph.
-  print $SEOstats->SEMRush()->getDomainGraph(1);
+  print SEMRush::getDomainGraph(1);
 
   // Returns HTML code for the 'search engine traffic price'-graph.
-  print $SEOstats->SEMRush()->getDomainGraph(2);
+  print SEMRush::getDomainGraph(2);
 
   // Returns HTML code for the 'number of adwords ads'-graph, using explicitly SEMRush's german database.
-  print $SEOstats->SEMRush()->getDomainGraph(3, 0, 'de');
+  print SEMRush::getDomainGraph(3, 0, 'de');
 
   // Returns HTML code for the 'adwords traffic'-graph, using explicitly SEMRush's german database and
   // specific graph dimensions of 320*240 px.
-  print $SEOstats->SEMRush()->getDomainGraph(4, 0, 'de', 320, 240);
+  print SEMRush::getDomainGraph(4, 0, 'de', 320, 240);
 
   // Returns HTML code for the 'adwords traffic price '-graph, using explicitly SEMRush's german database,
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
-  print $SEOstats->SEMRush()->getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
+  print SEMRush::getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
 <hr>
 
@@ -224,7 +253,7 @@ catch (SEOstatsException $e) {
 <?php
   // Returns the Sistrix visibility index
   // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
-  print $SEOstats->Sistrix()->getVisibilityIndex();
+  print Sistrix::getVisibilityIndex();
 ```
 <hr>
 
@@ -235,7 +264,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns integer PlusOne count
-  print $SEOstats->Social()->getGoogleShares();
+  print Social::getGooglePlusShares();
 ```
 
 ### Facebook Interactions
@@ -243,7 +272,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns an array of total counts for overall Facebook interactions count, shares, likes, comments and clicks.
-  print_r ( $SEOstats->Social()->getFacebookShares() );
+  print_r ( Social::getFacebookShares() );
 ```
 
 ### Twitter Mentions
@@ -251,7 +280,7 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns integer tweet count for URL mentions
-  print $SEOstats->Social()->getTwitterShares();
+  print Social::getTwitterShares();
 ```
 
 ### Other Shares
@@ -259,25 +288,25 @@ catch (SEOstatsException $e) {
 ```php
 <?php
   // Returns the total count of URL shares via Delicious
-  print $SEOstats->Social()->getDeliciousShares();
+  print Social::getDeliciousShares();
   
   // Returns array of top ten delicious tags for a URL
-  print_r ( $SEOstats->Social()->getDeliciousTopTags() );
+  print_r ( Social::getDeliciousTopTags() );
   
   // Returns the total count of URL shares via Digg
-  print $SEOstats->Social()->getDiggShares();
+  print Social::getDiggShares();
   
   // Returns the total count of URL shares via LinkedIn
-  print $SEOstats->Social()->getLinkedInShares();
+  print Social::getLinkedInShares();
   
   // Returns the total count of URL shares via Pinterest
-  print $SEOstats->Social()->getPinterestShares();
+  print Social::getPinterestShares();
   
   // Returns the total count of URL shares via StumbleUpon
-  print $SEOstats->Social()->getStumbleUponShares();
+  print Social::getStumbleUponShares();
   
   // Returns the total count of URL shares via VKontakte
-  print $SEOstats->Social()->getVKontakteShares();
+  print Social::getVKontakteShares();
 ```
 <hr>
 

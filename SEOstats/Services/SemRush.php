@@ -1,15 +1,24 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+namespace SEOstats\Services;
+
 /**
- *  SEOstats extension for SEMRush data.
+ * SEOstats extension for SEMRush data.
  *
- *  @package    SEOstats
- *  @author     Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated    2012/06/16
+ * @package    SEOstats
+ * @author     Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright  Copyright (c) 2010 - present Stephan Schmitz
+ * @license    http://eyecatchup.mit-license.org/  MIT License
+ * @updated    2013/08/14
  */
 
-class SEOstats_SEMRush extends SEOstats
+use SEOstats\Common\SEOstatsException as E;
+use SEOstats\SEOstats as SEOstats;
+use SEOstats\Config as Config;
+use SEOstats\Helper as Helper;
+
+class SEMRush extends SEOstats
 {
-    public function getDBs()
+    public static function getDBs()
     {
         return array(
             "au",     # Google.com.au (Australia)
@@ -26,7 +35,7 @@ class SEOstats_SEMRush extends SEOstats
         );
     }
 
-    public function getParams()
+    public static function getParams()
     {
         return array(
           "DomainReports" => array(
@@ -69,63 +78,59 @@ class SEOstats_SEMRush extends SEOstats
      * @return       array              Returns an array containing the main report data.
      * @link         http://www.semrush.com/api.html
      */
-    public function getDomainRank($url = false, $db = false)
+    public static function getDomainRank($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $dataUrl = self::getBackendUrl($url, $db, 'domain_rank');
-
-        $data = self::getApiData($dataUrl);
+        $data    = self::getApiData($dataUrl);
 
         if (!is_array($data)) {
-            $data = self::getApiData( str_replace('.backend.', '.api.', $dataUrl) );
+            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
             if (!is_array($data)) {
-                return false;
+                return parent::noDataDefaultValue();
             }
         }
         return $data['rank']['data'][0];
     }
 
-    public function getDomainRankHistory($url = false, $db = false)
+    public static function getDomainRankHistory($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $dataUrl = self::getBackendUrl($url, $db, 'domain_rank_history');
-
-        $data = self::getApiData($dataUrl);
+        $data    = self::getApiData($dataUrl);
 
         if (!is_array($data)) {
-            $data = self::getApiData( str_replace('.backend.', '.api.', $dataUrl) );
+            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
             if (!is_array($data)) {
-                return false;
+                return parent::noDataDefaultValue();
             }
         }
         return $data['rank_history'];
     }
 
-    public function getOrganicKeywords($url = false, $db = false)
+    public static function getOrganicKeywords($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $dataUrl = self::getWidgetUrl($url, $db, 'organic');
+        $data    = self::getApiData($dataUrl);
 
-        $data = self::getApiData($dataUrl);
-
-        return ! is_array($data) ? false : $data['organic'];
+        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic'];
     }
 
-    public function getCompetitors($url = false, $db = false)
+    public static function getCompetitors($url = false, $db = false)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $dataUrl = self::getWidgetUrl($url, $db, 'organic_organic');
+        $data    = self::getApiData($dataUrl);
 
-        $data = self::getApiData($dataUrl);
-
-        return ! is_array($data) ? false : $data['organic_organic'];
+        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic_organic'];
     }
 
-    public function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
+    public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-        $db = false != $db ? $db : default_settings::SEMRUSH_DB;
-        $url = false != $url ? $url : self::getUrl();
-        $domain   = UrlHelper::getHost($url);
+        $db       = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
+        $url      = self::getUrl($url);
+        $domain   = Helper\Url::parseHost($url);
         $database = self::checkDatabase($db);
 
         if (false == $domain) {
@@ -147,7 +152,8 @@ class SEOstats_SEMRush extends SEOstats
             self::exc('You must specify a valid language code.');
         }
         else {
-            $imgUrl = sprintf(services::SEMRUSH_GRAPH_URL, $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
+            $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
+                $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
             if (true != $html) {
                 return $imgUrl;
             } else {
@@ -157,56 +163,58 @@ class SEOstats_SEMRush extends SEOstats
         }
     }
 
-    private function getApiData($url)
+    private static function getApiData($url)
     {
-        $jsonData = HttpRequest::sendRequest($url);
-        return json_decode($jsonData, true);
+        $json = parent::_getPage($url);
+        return Helper\Json::decode($json, true);
     }
 
-    private function getBackendUrl($url, $db, $reportType)
+    private static function getBackendUrl($url, $db, $reportType)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $domain   = UrlHelper::getHost($url);
+        $url      = parent::getUrl($url);
+        $domain   = Helper\Url::parseHost($url);
         $database = self::checkDatabase($db);
 
         if (false === $domain) {
-            self::exc('Invalid domain name.'); }
+            self::exc('Invalid domain name.');
+        }
         else if (false === $database) {
-            self::exc('db'); }
+            self::exc('db');
+        }
         else {
-            $backendUrl = services::SEMRUSH_BE_URL;
+            $backendUrl = Config\Services::SEMRUSH_BE_URL;
             return sprintf($backendUrl, $database, $reportType, $domain);
         }
     }
 
-    private function getWidgetUrl($url, $db, $reportType)
+    private static function getWidgetUrl($url, $db, $reportType)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $domain   = UrlHelper::getHost($url);
+        $url      = parent::getUrl($url);
+        $domain   = Helper\Url::parseHost($url);
         $database = self::checkDatabase($db);
 
         if (false === $domain) {
-            self::exc('Invalid domain name.'); }
+            self::exc('Invalid domain name.');
+        }
         else if (false === $database) {
-            self::exc('db'); }
+            self::exc('db');
+        }
         else {
-            $widgetUrl = services::SEMRUSH_WIDGET_URL;
+            $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
             return sprintf($widgetUrl, $reportType, $database, $domain);
         }
     }
 
-    private function checkDatabase($db)
+    private static function checkDatabase($db)
     {
-        return ! in_array($db, self::getDBs()) ? false : $db;
+        return !in_array($db, self::getDBs()) ? false : $db;
     }
 
-    private function exc($err)
+    private static function exc($err)
     {
-        $e = ($err == 'db') ? "Invalid database. Choose one of: " . substr( implode(", ", self::getDBs()), 0, -2) : $err;
-        throw new SEOstatsException($e);
+        $e = ($err == 'db') ? "Invalid database. Choose one of: " .
+            substr( implode(", ", self::getDBs()), 0, -2) : $err;
+        throw new E($e);
         exit(0);
     }
 }
-
-/* End of file seostats.semrush.php */
-/* Location: ./src/modules/seostats.semrush.php */
