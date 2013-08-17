@@ -2,7 +2,7 @@
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
 
-SEOstats offers over 50 different methods and gathers data from Alexa, Google, SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & more.
+SEOstats offers over 50 different methods and gathers data from Alexa, Google, SEMRush, Open-Site-Explorer (by SEOmoz), Sistrix, Facebook, Twitter & more.
 
 ## Dependencies
 
@@ -10,20 +10,23 @@ SEOstats requires the PHP5-CURL and PHP5-SOAP extensions.
 
 ## Installation
 
-The recommended way to install SEOstats is [through composer](http://getcomposer.org). Just create a `composer.json` file and run the `php composer.phar install` command (Windows users use `composer install`) to install it:
+The recommended way to install SEOstats is [through composer](http://getcomposer.org).  
+To install SEOstats, just create the following `composer.json` file 
 
     {
         "require": {
             "seostats/seostats": "dev-master"
         }
     }
+and run the `php composer.phar install` (Windows: `composer install`) command in path of the `composer.json`.  
 
-Alternatively, you can download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file and extract it.
+Alternatively, download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file and extract it.
 
 ## Usage
 
 ### TOC
 
+* <a href='#configuration'>Configuration</a>  
 * <a href='#brief-example-of-use'>Brief Example of Use</a>  
 * <a href='#seostats-alexa-methods'>Alexa Methods</a>   
  * <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>   
@@ -42,9 +45,21 @@ Alternatively, you can download the [`SEOstats.zip`](https://github.com/eyecatch
 * <a href='#seostats-social-media-methods'>Social Media Methods</a>  
 
 <hr>   
+
+### Configuration
+There're two configuration files to note:  
+<ol>
+<li>`./SEOstats/Config/ApiKeys.php`<br>
+<em>Client API Keys (currently required for Google's Pagespeed Service only).</em>
+</li>
+<li>`./SEOstats/Config/DefaultSettings.php`<br>
+<em>Some default settings for querying data (mainly locale related stuff).</em>
+</li>
+</ol>
+<hr>
  
 ### Brief Example of Use
-To use the SEOstats methods, you must include the Autoloader first.  
+To use the SEOstats methods, you must include the Autoloader (`./SEOstats/bootstrap.php`) first.  
 
 Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.
 
@@ -52,7 +67,7 @@ Now, you can create a new SEOstats instance an bind any URL to the instance for 
 <?php
 require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
 
-use \SEOstats\Services\Google as Google;
+use \SEOstats\Services as SEOstats;
 
 try {
   $url = 'http://www.google.com/';
@@ -63,8 +78,8 @@ try {
   // Bind the URL to the current SEOstats instance.
   if ($seostats->setUrl($url)) {
 
-	echo Google::getPageRank();
-	echo Google::getPagespeedScore();
+	echo SEOstats\Alexa::getGlobalRank();
+	echo SEOstats\Google::getPageRank();
   }
 }
 catch (SEOstatsException $e) {
@@ -72,7 +87,7 @@ catch (SEOstatsException $e) {
 }
 ```
 
-Alternatively, you can call all methods statically, passing the URL to the methods directly.
+Alternatively, you can call all methods statically passing the URL to the methods directly.
 
 ```php
 <?php
@@ -91,7 +106,7 @@ catch (SEOstatsException $e) {
 
 More detailed examples can be found in the `./example` directory.
 <hr>
-
+ 
 ## SEOstats Alexa Methods
 
 ### Alexa Traffic Metrics
