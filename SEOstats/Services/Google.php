@@ -1,13 +1,22 @@
-<?php if (!defined('SEOSTATSPATH')) exit('No direct access allowed!');
+<?php
+namespace SEOstats\Services;
+
 /**
- *  SEOstats extension for Google data.
+ * SEOstats extension for Google data.
  *
- *  @package    SEOstats
- *  @author     Stephan Schmitz <eyecatchup@gmail.com>
- *  @updated    2012/06/07
+ * @package    SEOstats
+ * @author     Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright  Copyright (c) 2010 - present Stephan Schmitz
+ * @license    http://eyecatchup.mit-license.org/  MIT License
+ * @updated    2013/08/14
  */
 
-class SEOstats_Google extends SEOstats implements services, default_settings
+use SEOstats\Common\SEOstatsException as E;
+use SEOstats\SEOstats as SEOstats;
+use SEOstats\Config as Config;
+use SEOstats\Helper as Helper;
+
+class Google extends SEOstats
 {
     /**
      *  Gets the Google Pagerank
@@ -15,12 +24,10 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      *  @param    string    $url    String, containing the query URL.
      *  @return   integer           Returns the Google PageRank.
      */
-    public function getPageRank($url = false)
+    public static function getPageRank($url = false)
     {
-        require_once(SEOSTATSPATH . '3rdparty/GTB_PageRank.php');
-
-        $url = false != $url ? $url : self::getUrl();
-        $gtb = new GTB_PageRank($url);
+        require_once SEOSTATSPATH . 'Services\3rdparty\GTB_PageRank.php';
+        $gtb = new \GTB_PageRank(parent::getUrl($url));
 
         return $gtb->getPageRank();
     }
@@ -31,10 +38,10 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      *  @param    string    $url    String, containing the query URL.
      *  @return   integer           Returns the total site-search result count.
      */
-    public function getSiteindexTotal($url = false)
+    public static function getSiteindexTotal($url = false)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $query = urlencode("site:$url");
+        $url   = parent::getUrl($url);
+        $query = urlencode("site:{$url}");
 
         return self::getSearchResultsTotal($query);
     }
@@ -45,10 +52,10 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      *  @param    string    $url    String, containing the query URL.
      *  @return   integer           Returns the total link-search result count.
      */
-    public function getBacklinksTotal($url = false)
+    public static function getBacklinksTotal($url = false)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $query = urlencode("link:$url");
+        $url   = parent::getUrl($url);
+        $query = urlencode("link:{$url}");
 
         return self::getSearchResultsTotal($query);
     }
@@ -60,42 +67,43 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      *  @param    string    $url    String, containing the query URL.
      *  @return   integer           Returns the total search result count.
      */
-    public function getSearchResultsTotal($url = false)
+    public static function getSearchResultsTotal($url = false)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $url = sprintf(services::GOOGLE_APISEARCH_URL, 1, $url);
+        $url = parent::getUrl($url);
+        $url = sprintf(Config\Services::GOOGLE_APISEARCH_URL, 1, $url);
 
-        $ret = HttpRequest::sendRequest($url);
+        $ret = parent::_getPage($url);
 
-        $obj = json_decode($ret);
-        return ! isset($obj->responseData->cursor->estimatedResultCount)
-               ? '0'
+        $obj = Helper\Json::decode($ret);
+        return !isset($obj->responseData->cursor->estimatedResultCount)
+               ? parent::noDataDefaultValue()
                : intval($obj->responseData->cursor->estimatedResultCount);
     }
 
-    /**
-     *  Returns total amount of results for any Google search,
-     *  requesting the deprecated Websearch API.
-     *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns a total count.
-     */
-    public function getPagespeedAnalysis($url = false)
+    public static function getPagespeedAnalysis($url = false)
     {
-        $url = false != $url ? $url : self::getUrl();
-        $url = sprintf(services::GOOGLE_PAGESPEED_URL, $url);
+        if ('' == Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY) {
+            throw new E('In order to use the PageSpeed API, you must obtain
+                and set an API key first (see SEOstats\Config\ApiKeys.php).');
+            exit(0);
+        }
 
-        $ret = HttpRequest::sendRequest($url);
+        $url = parent::getUrl($url);
+        $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL,
+            $url, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
 
-        return json_decode($ret);
+        $ret = parent::_getPage($url);
+
+        return Helper\Json::decode($ret);
     }
 
-    public function getPagespeedScore($url = false)
+    public static function getPagespeedScore($url = false)
     {
-        $url = false != $url ? $url : self::getUrl();
+        $url = parent::getUrl($url);
         $ret = self::getPagespeedAnalysis($url);
 
-        return intval($ret->results->score);
+        return !$ret->score ? parent::noDataDefaultValue() :
+            intval($ret->score);
     }
 
     /**
@@ -105,7 +113,7 @@ class SEOstats_Google extends SEOstats implements services, default_settings
      * @param     string    $tld    String, containing the desired Google top level domain.
      * @return    array             Returns array, containing the keys 'URL', 'Title' and 'Description'.
      */
-    public function getSerps($query, $maxResults=100, $domain=false)
+    public static function getSerps($query, $maxResults=100, $domain=false)
     {
         $q = rawurlencode($query);
         $maxResults = ($maxResults/10)-1;
@@ -118,8 +126,8 @@ class SEOstats_Google extends SEOstats implements services, default_settings
 
             $curledSerp = utf8_decode( self::gCurl($nextSerp, $ref) );
 
-            if (preg_match("#answer=86640#i", $curledSerp)) {
-                print('Please read: http://www.google.com/support/websearch/bin/answer.py?&answer=86640&hl=en');
+            if (preg_match("#answer[=|/]86640#i", $curledSerp)) {
+                print('Please read: https://support.google.com/websearch/answer/86640');
                 exit();
             }
             else {
@@ -133,7 +141,7 @@ class SEOstats_Google extends SEOstats implements services, default_settings
                                 $c++;
                                 $resCnt = ($start * 10) + $c;
                                 if (FALSE !== $domain) {
-                                    if (preg_match("#^$domain#i", $match[1])) {
+                                    if (preg_match("#^{$domain}#i", $match[1])) {
                                         $result[] = array(
                                             'position' => $resCnt,
                                             'url' => $match[1],
@@ -170,9 +178,9 @@ class SEOstats_Google extends SEOstats implements services, default_settings
         return $result;
     }
 
-    private function gCurl($path, $ref, $useCookie = default_settings::ALLOW_GOOGLE_COOKIES)
+    private static function gCurl($path, $ref, $useCookie = Config\DefaultSettings::ALLOW_GOOGLE_COOKIES)
     {
-        $url = sprintf('https://www.google.%s/', default_settings::GOOGLE_TLD);
+        $url = sprintf('https://www.google.%s/', Config\DefaultSettings::GOOGLE_TLD);
         $referer = $ref == '' ? $url : $ref;
         $url .= $path;
 
@@ -182,13 +190,13 @@ class SEOstats_Google extends SEOstats implements services, default_settings
         }
 
         $header = array(
-            'Host: www.google.' . default_settings::GOOGLE_TLD,
+            'Host: www.google.' . Config\DefaultSettings::GOOGLE_TLD,
             'Connection: keep-alive',
             'Cache-Control: max-age=0',
             'User-Agent: ' . $ua,
             'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Referer: ' . $referer,
-            'Accept-Language: ' . default_settings::HTTP_HEADER_ACCEPT_LANGUAGE,
+            'Accept-Language: ' . Config\DefaultSettings::HTTP_HEADER_ACCEPT_LANGUAGE,
             'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7'
         );
 
@@ -199,8 +207,8 @@ class SEOstats_Google extends SEOstats implements services, default_settings
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         curl_setopt($ch, CURLOPT_USERAGENT, $ua);
         if ($useCookie == 1) {
-            curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie.txt');
-            curl_setopt($ch, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');
+            curl_setopt($ch, CURLOPT_COOKIEJAR, __DIR__ . '/cookie.txt');
+            curl_setopt($ch, CURLOPT_COOKIEFILE, __DIR__ . '/cookie.txt');
         }
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         $result = curl_exec($ch);
@@ -209,6 +217,3 @@ class SEOstats_Google extends SEOstats implements services, default_settings
         return ($info['http_code']!=200) ? false : $result;
     }
 }
-
-/* End of file seostats.google.php */
-/* Location: ./src/modules/seostats.google.php */
