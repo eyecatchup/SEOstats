@@ -17,7 +17,7 @@ use SEOstats\Services as Service;
  *  @author      Stephan Schmitz <eyecatchup@gmail.com>
  *  @copyright   Copyright (c) 2010 - present Stephan Schmitz
  *  @license     http://eyecatchup.mit-license.org
- *  @version     CVS: $Id: SEOstats.php, v2.5.2 Rev 31 2013/08/14 13:57:17 ssc Exp $
+ *  @version     CVS: $Id: SEOstats.php, v2.5.3 Rev 32 2013/08/19 13:57:17 ssc Exp $
  *  @link        https://github.com/eyecatchup/SEOstats/
  *  ================================================================================
  *  LICENSE: Permission is hereby granted, free of charge, to any person obtaining
@@ -104,6 +104,11 @@ class SEOstats
         return new Service\Google;
     }
 
+    public function Mozscape()
+    {
+        return new Service\Mozscape;
+    }
+
     public function OpenSiteExplorer()
     {
         return new Service\OpenSiteExplorer;
@@ -122,11 +127,6 @@ class SEOstats
     public function Social()
     {
         return new Service\Social;
-    }
-
-    public static function getHost()
-    {
-        return self::$_host;
     }
 
     public static function getLastLoadedHtml()
@@ -160,6 +160,16 @@ class SEOstats
             exit();
         }
         return true;
+    }
+
+    public static function getHost($url = false)
+    {
+        return Helper\Url::parseHost(self::getUrl($url));
+    }
+	
+    public static function getDomain($url = false)
+    {
+        return 'http://' . self::getHost($url = false);
     }
 
     /**

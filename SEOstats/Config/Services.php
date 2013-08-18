@@ -8,7 +8,7 @@ namespace SEOstats\Config;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/14
+ * @updated    2013/08/18
  */
 
 /**
@@ -17,55 +17,59 @@ namespace SEOstats\Config;
  */
 interface Services
 {
-    const PROVIDER = '["alexa","google","ose","semrush","seomoz","sistrix","social","yahoo"]';
+    const PROVIDER = '["alexa","google","ose","semrush","mozscape","sistrix","social"]';
 
-    // Url to get Alexa stats from
+    // Alexa public report URLs.
     const ALEXA_SITEINFO_URL = 'http://www.alexa.com/siteinfo/%s';
     const ALEXA_GRAPH_URL = 'http://traffic.alexa.com/graph?&o=f&c=1&y=%s&b=ffffff&n=666666&w=%s&h=%s&r=%sm&u=%s';
 
-    // Url to get the Sistrix visibility index from
+    // Sistrix Visibility Index public report URL.
     // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
     const SISTRIX_VI_URL = 'http://www.sichtbarkeitsindex.de/%s';
 
+    // SEMrush API Endpoints.
     const SEMRUSH_BE_URL = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';
     const SEMRUSH_GRAPH_URL = 'http://semrush.com/archive/graphs.php?domain=%s&db=%s&type=%s&w=%s&h=%s&lc=%s&dc=%s&l=%s';
     const SEMRUSH_WIDGET_URL = 'http://widget.semrush.com/widget.php?action=report&type=%s&db=%s&domain=%s';
 
-    // Url to get Google search total counts from
+    // Mozscape (f.k.a. Seomoz) Link metrics API Endpoint.
+    const MOZSCAPE_API_URL = 'http://lsapi.seomoz.com/linkscape/url-metrics/%s?Cols=%s&AccessID=%s&Expires=%s&Signature=%s';
+
+    // Google Websearch API Endpoint.
     const GOOGLE_APISEARCH_URL = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=%s&q=%s';
 
-    // Url to the Page Speed Insights API
+    // Google Pagespeed Insights API Endpoint.
     const GOOGLE_PAGESPEED_URL = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed?url=%s&key=%s';
 
-    // Url to get the Plus One count from
+    // Google +1 Fastbutton URL.
     const GOOGLE_PLUSONE_URL = 'https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url=%s';
 
-    // Open Site Explorer base Url
+    // Open Site Explorer's public report URL.
     const OPENSITEEXPLORER_URL = 'http://www.opensiteexplorer.org/%s.html?group=0&page=%s&site=%s&sort=';
 
-    // Url to get Facebook link stats from
+    // Facebook FQL API Endpoint.
     const FB_LINKSTATS_URL = 'https://api.facebook.com/method/fql.query?query=%s&format=json';
 
-    // Url to get Twitter mentions from
+    // Twitter URL tweet count API Endpoint (Use of this Endpoint is actually not allowed (see link)!).
     // @link https://dev.twitter.com/discussions/5653#comment-11514
     const TWEETCOUNT_URL = 'http://cdn.api.twitter.com/1/urls/count.json?url=%s';
 
-    // Url to get share count via Delicious from
+    // Delicious API Endpoint.
     const DELICIOUS_INFO_URL = 'http://feeds.delicious.com/v2/json/urlinfo/data?url=%s';
 
-    // Url to get share count via Digg from
+    // Digg API Endpoint.
     // @link http://widgets.digg.com/buttons.js
     const DIGG_INFO_URL = 'http://widgets.digg.com/buttons/count?url=%s&cb=_';
 
-    // Url to get share count via LinkedIn from
+    // LinkedIn API Endpoint.
     // Replaces deprecated share count Url "http://www.linkedin.com/cws/share-count?url=%s".
     // @link http://developer.linkedin.com/forum/discrepancies-between-share-counts
     const LINKEDIN_INFO_URL = 'http://www.linkedin.com/countserv/count/share?url=%s&callback=_';
 
-    // Url to get share count via Pinterest from
+    // Pinterest API Endpoint.
     const PINTEREST_INFO_URL = 'http://api.pinterest.com/v1/urls/count.json?url=%s&callback=_';
 
-    // Url to get share count via StumbleUpon from
+    // StumbleUpon API Endpoint.
     const STUMBLEUPON_INFO_URL = 'http://www.stumbleupon.com/services/1.01/badge.getinfo?url=%s';
 
     // Url to get share count via VKontakte from

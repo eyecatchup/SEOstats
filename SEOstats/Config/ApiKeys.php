@@ -8,7 +8,7 @@ namespace SEOstats\Config;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/14
+ * @updated    2013/08/18
  */
 
 /**
@@ -17,10 +17,15 @@ namespace SEOstats\Config;
  */
 interface ApiKeys
 {
-    // To acquire an API key, visit Google's APIs Console here:
+    // To acquire a Pagespeed API key, visit Google's APIs Console here:
     //      https://code.google.com/apis/console
     // In the Services pane, activate the "PageSpeed Insights API" (not the service!).
     // Next, go to the API Access pane. The API key is near the bottom of that pane,
     // in the section titled "Simple API Access.".
     const GOOGLE_SIMPLE_API_ACCESS_KEY = '';
+
+    // To acquire a Mozscape (f.k.a. SEOmoz) API key, visit:
+    //      https://moz.com/products/api/keys
+    const MOZSCAPE_ACCESS_ID  = '';
+    const MOZSCAPE_SECRET_KEY = '';
 }

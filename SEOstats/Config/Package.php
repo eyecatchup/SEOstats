@@ -8,7 +8,7 @@ namespace SEOstats\Config;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/17
+ * @updated    2013/08/18
  */
 
 /**
@@ -17,7 +17,7 @@ namespace SEOstats\Config;
  */
 interface Package
 {
-    const VERSION_CODE = '2.5.2';
+    const VERSION_CODE = '2.5.3-dev';
     const LICENSE_TYPE = 'MIT Licence';
     const LICENSE_URL  = 'http://eyecatchup.mit-license.org/';
     const AUTHOR_NAME  = 'Stephan Schmitz';
