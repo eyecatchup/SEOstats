@@ -1,3 +1,5 @@
+[![Flattr SEOstats](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=eyecatchup&url=https://github.com/eyecatchup/SEOstats&title=SEOstats&language=en&tags=github&category=software)
+
 # SEOstats: SEO metrics library for PHP
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
