@@ -10,15 +10,15 @@ SEOstats requires the PHP5-CURL and PHP5-SOAP extensions.
 
 ## Installation
 
-The recommended way to install SEOstats is [through composer](http://getcomposer.org).  
-To install SEOstats, just create the following `composer.json` file 
+The recommended way to install SEOstats is [through composer](http://getcomposer.org).
+To install SEOstats, just create the following `composer.json` file
 
     {
         "require": {
             "seostats/seostats": "dev-master"
         }
     }
-and run the `php composer.phar install` (Windows: `composer install`) command in path of the `composer.json`.  
+and run the `php composer.phar install` (Windows: `composer install`) command in path of the `composer.json`.
 
 Alternatively, download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file and extract it.
 
@@ -26,28 +26,28 @@ Alternatively, download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOst
 
 ### TOC
 
-* <a href='#configuration'>Configuration</a>  
-* <a href='#brief-example-of-use'>Brief Example of Use</a>  
-* <a href='#seostats-alexa-methods'>Alexa Methods</a>   
- * <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>   
- * <a href='#alexa-traffic-graphs'>Alexa Traffic Graphs</a>   
-* <a href='#seostats-google-methods'>Google Methods</a>   
- * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>   
- * <a href='#google-pagespeed-service'>Pagespeed Service</a>   
- * <a href='#google-websearch-index'>Websearch Index</a>   
- * <a href='#google-serp-details'>SERP Details</a>   
-* <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>   
-* <a href='#seostats-semrush-methods'>SEMRush Methods</a>   
- * <a href='#semrush-domain-reports'>Domain Reports</a>   
- * <a href='#semrush-graphs'>Graphs</a>   
-* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>  
- * <a href='#sistrix-visibility-index'>Visibility Index</a>    
-* <a href='#seostats-social-media-methods'>Social Media Methods</a>  
+* <a href='#configuration'>Configuration</a>
+* <a href='#brief-example-of-use'>Brief Example of Use</a>
+* <a href='#seostats-alexa-methods'>Alexa Methods</a>
+ * <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>
+ * <a href='#alexa-traffic-graphs'>Alexa Traffic Graphs</a>
+* <a href='#seostats-google-methods'>Google Methods</a>
+ * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>
+ * <a href='#google-pagespeed-service'>Pagespeed Service</a>
+ * <a href='#google-websearch-index'>Websearch Index</a>
+ * <a href='#google-serp-details'>SERP Details</a>
+* <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>
+* <a href='#seostats-semrush-methods'>SEMRush Methods</a>
+ * <a href='#semrush-domain-reports'>Domain Reports</a>
+ * <a href='#semrush-graphs'>Graphs</a>
+* <a href='#seostats-sistrix-methods'>Sistrix Methods</a>
+ * <a href='#sistrix-visibility-index'>Visibility Index</a>
+* <a href='#seostats-social-media-methods'>Social Media Methods</a>
 
-<hr>   
+<hr>
 
 ### Configuration
-There're two configuration files to note:  
+There're two configuration files to note:
 <ol>
 <li>`./SEOstats/Config/ApiKeys.php`<br>
 <em>Client API Keys (currently required for Google's Pagespeed Service only).</em>
@@ -57,15 +57,16 @@ There're two configuration files to note:
 </li>
 </ol>
 <hr>
- 
+
 ### Brief Example of Use
-To use the SEOstats methods, you must include the Autoloader (`./SEOstats/bootstrap.php`) first.  
+To use the SEOstats methods, you must include the Autoloader (`./SEOstats/bootstrap.php`) first.
 
 Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.
 
 ```php
 <?php
-require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
+
+require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 use \SEOstats\Services as SEOstats;
 
@@ -74,7 +75,7 @@ try {
 
   // Create a new SEOstats instance.
   $seostats = new \SEOstats\SEOstats;
-  
+
   // Bind the URL to the current SEOstats instance.
   if ($seostats->setUrl($url)) {
 
@@ -91,7 +92,8 @@ Alternatively, you can call all methods statically passing the URL to the method
 
 ```php
 <?php
-require_once (__DIR__ . '\..') . '\SEOstats\bootstrap.php';
+
+require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 try {
   $url = 'http://www.google.com/';
@@ -106,7 +108,7 @@ catch (SEOstatsException $e) {
 
 More detailed examples can be found in the `./example` directory.
 <hr>
- 
+
 ## SEOstats Alexa Methods
 
 ### Alexa Traffic Metrics
@@ -149,10 +151,10 @@ More detailed examples can be found in the `./example` directory.
 
   // Returns HTML code for the 'time on site (in minutes)'-graph.
   print Alexa::getTrafficGraph(4);
-  
+
   // Returns HTML code for the 'bounce rate (percent)'-graph.
   print Alexa::getTrafficGraph(5);
-  
+
   // Returns HTML code for the 'search visits'-graph, using specific graph dimensions of 320*240 px.
   print Alexa::getTrafficGraph(6, 0, 320, 240);
 ```
@@ -304,22 +306,22 @@ More detailed examples can be found in the `./example` directory.
 <?php
   // Returns the total count of URL shares via Delicious
   print Social::getDeliciousShares();
-  
+
   // Returns array of top ten delicious tags for a URL
   print_r ( Social::getDeliciousTopTags() );
-  
+
   // Returns the total count of URL shares via Digg
   print Social::getDiggShares();
-  
+
   // Returns the total count of URL shares via LinkedIn
   print Social::getLinkedInShares();
-  
+
   // Returns the total count of URL shares via Pinterest
   print Social::getPinterestShares();
-  
+
   // Returns the total count of URL shares via StumbleUpon
   print Social::getStumbleUponShares();
-  
+
   // Returns the total count of URL shares via VKontakte
   print Social::getVKontakteShares();
 ```
@@ -327,6 +329,6 @@ More detailed examples can be found in the `./example` directory.
 
 ## License
 
-(c) 2010 - 2013, Stephan Schmitz eyecatchup@gmail.com   
-License: MIT, http://eyecatchup.mit-license.org   
-URL: https://github.com/eyecatchup/SEOstats   
+(c) 2010 - 2013, Stephan Schmitz eyecatchup@gmail.com
+License: MIT, http://eyecatchup.mit-license.org
+URL: https://github.com/eyecatchup/SEOstats
