@@ -1,2 +1,6 @@
+/vendor/
+
 .project
 .settings
+
+.DS_Store
