@@ -26,7 +26,7 @@ class Google extends SEOstats
      */
     public static function getPageRank($url = false)
     {
-        require_once SEOSTATSPATH . 'Services\3rdparty\GTB_PageRank.php';
+        require_once SEOSTATSPATH . 'Services/3rdparty/GTB_PageRank.php';
         $gtb = new \GTB_PageRank(parent::getUrl($url));
 
         return $gtb->getPageRank();
