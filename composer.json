@@ -13,6 +13,10 @@
         }
     ],
     "require": {
-        "php": ">=5.2.3"
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-0": { "SEOstats\\": "" },
+        "classmap": ["SEOstats/Services/3rdparty"]
     }
 }
