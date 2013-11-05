@@ -57,7 +57,6 @@ class Json
      */
     private static function getJsonService()
     {
-        require_once SEOSTATSPATH . 'Services\3rdparty\JSON.php';
         return new \Services_JSON();
     }
 
