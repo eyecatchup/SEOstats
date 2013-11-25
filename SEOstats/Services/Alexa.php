@@ -111,13 +111,15 @@ class Alexa extends SEOstats
      */
     public static function getGlobalRank($url = false)
     {
+        /*
         self::setRankingKeys($url);
         if (0 == self::$_rankKeys['3m']) {
             return parent::noDataDefaultValue();
         }
-
+        */
+        
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='rank']/table/tr[" . self::$_rankKeys['3m'] . "]/td[1]");
+        $nodes = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a");
 
         return !$nodes->item(0) ? parent::noDataDefaultValue() :
             self::retInt( strip_tags($nodes->item(0)->nodeValue) );
