@@ -36,7 +36,7 @@ try {
     // Bind the URL to the current SEOstats instance.
     if ($seostats->setUrl($url)) {
 
-        echo "Alexa metrics for " $url . PHP_EOL;
+        echo "Alexa metrics for " . $url . PHP_EOL;
 
         // Get the global Alexa Traffic Rank (last 3 months).
         echo "Global Rank (quarterly): " .
