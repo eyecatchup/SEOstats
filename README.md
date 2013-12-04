@@ -26,7 +26,7 @@ and run the `php composer.phar install` (Windows: `composer install`) command in
 
 #### Use SEOstats without composer
 
-If composer is no option for you, you can still just download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file and extract it. However, currently [there is an issues with autoloading](https://github.com/eyecatchup/SEOstats/issues/49) and you need to follow the instructions in the comments in the example files in order to use SEOstats (or download zip for the development version of SEOstats (2.5.3) [here](https://github.com/eyecatchup/SEOstats/archive/dev-253.zip)).
+If composer is no option for you, you can still just download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file of the current master branch (version 2.5.2) and extract it. However, currently [there is an issues with autoloading](https://github.com/eyecatchup/SEOstats/issues/49) and you need to follow the instructions in the comments in the example files in order to use SEOstats (or download zip for the development version of SEOstats (2.5.3) [here](https://github.com/eyecatchup/SEOstats/archive/dev-253.zip)).
 
 ## Usage
 
