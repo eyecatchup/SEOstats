@@ -20,10 +20,60 @@ To install SEOstats, just create the following `composer.json` file
     }
 and run the `php composer.phar install` (Windows: `composer install`) command in path of the `composer.json`.  
 
-#### Command line example:
+#### Step-by-step example:
 
-<img src="http://i.imgur.com/02TPudv.png">
+If you haven't installed composer yet, here's the easiest way to do so:
+```
+# Download the composer installer and execute it with PHP:
+user@host:~/> curl -sS https://getcomposer.org/installer | php
 
+# Copy composer.phar to where your local executables live:
+user@host:~/> mv /path/given/by/composer-installer/composer.phar /usr/local/bin/composer.phar
+
+# Alternatively: For ease of use, you can add an alias to your bash profile:
+# (Note, you need to re-login your terminal for the change to take effect.)
+user@host:~/> echo 'alias composer="php /usr/local/bin/composer.phar"' >> ~/.profile
+```
+<hr>
+If you have installed composer, follow these steps to install SEOstats:
+```
+# Create a new directory and cd into it:
+user@host:~/> mkdir /path/to/seostats && cd /path/to/seostats
+
+# Create the composer.json for SEOstats:
+user@host:/path/to/seostats> echo '{"require":{"seostats/seostats":"dev-master"}}' > composer.json
+
+# Run the install command:
+user@host:/path/to/seostats> composer install
+Loading composer repositories with package information
+Installing dependencies (including require-dev)
+  - Installing seostats/seostats (dev-master 4c192e4)
+    Cloning 4c192e43256c95741cf85d23ea2a0d59a77b7a9a
+
+Writing lock file
+Generating autoload files
+
+# You're done. For a quick start, you can now 
+# copy the example files to the install directory:
+user@host:/path/to/seostats> cp ./vendor/seostats/seostats/example/*.php  ./
+
+# Your SEOstats install directory should look like this now:
+user@host:/path/to/seostats> ls -1
+composer.json
+composer.lock
+get-alexa-graphs.php
+get-alexa-metrics.php
+get-google-pagerank.php
+get-google-pagespeed-analysis.php
+get-google-serps.php
+get-opensiteexplorer-metrics.php
+get-semrush-graphs.php
+get-semrush-metrics.php
+get-sistrix-visibilityindex.php
+get-social-metrics.php
+vendor
+```
+<hr>
 #### Use SEOstats without composer
 
 If composer is no option for you, you can still just download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file of the current master branch (version 2.5.2) and extract it. However, currently [there is an issues with autoloading](https://github.com/eyecatchup/SEOstats/issues/49) and you need to follow the instructions in the comments in the example files in order to use SEOstats (or download zip for the development version of SEOstats (2.5.3) [here](https://github.com/eyecatchup/SEOstats/archive/dev-253.zip)).
@@ -65,14 +115,15 @@ There're two configuration files to note:
 <hr>
 
 ### Brief Example of Use
-To use the SEOstats methods, you must include the Autoloader (`./SEOstats/bootstrap.php`) first.
+To use the SEOstats methods, you must include one of the Autoloader classes first (For composer installs: `./vendor/autoload.php`; for zip download: `./SEOstats/bootstrap.php`).
 
 Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.
 
 ```php
 <?php
-
-require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+// Depending on how you installed SEOstats
+#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use \SEOstats\Services as SEOstats;
 
@@ -98,8 +149,9 @@ Alternatively, you can call all methods statically passing the URL to the method
 
 ```php
 <?php
-
-require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+// Depending on how you installed SEOstats
+#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 try {
   $url = 'http://www.google.com/';
@@ -335,6 +387,6 @@ More detailed examples can be found in the `./example` directory.
 
 ## License
 
-(c) 2010 - 2013, Stephan Schmitz eyecatchup@gmail.com
-License: MIT, http://eyecatchup.mit-license.org
-URL: https://github.com/eyecatchup/SEOstats
+(c) 2010 - 2013, Stephan Schmitz eyecatchup@gmail.com  
+License: MIT, http://eyecatchup.mit-license.org  
+URL: https://github.com/eyecatchup/SEOstats  
