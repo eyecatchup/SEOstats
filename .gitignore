@@ -1,6 +1,6 @@
-/vendor/
-
+build/*
+vendor/
+composer.lock
 .project
 .settings
-
 .DS_Store
