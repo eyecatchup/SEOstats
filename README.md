@@ -271,12 +271,46 @@ More detailed examples can be found in the `./example` directory.
 ```
 <hr>
 
-## SEOstats Open Site Explorer Methods
+## SEOstats Open Site Explorer (by MOZ) Methods
 
 ```php
 <?php
-  // Returns basic SEOmoz page metrics (Page-Authority, Domain Authority, Domain-Inlinks, total Inlinks).
-  print_r ( OpenSiteExplorer::getPageMetrics() );
+  // Returns several metrics from Open Site Explorer (by MOZ)
+  $ose = OpenSiteExplorer::getPageMetrics();
+
+  // MOZ Domain-Authority Rank - Predicts this domain's ranking potential in the search engines 
+  // based on an algorithmic combination of all link metrics.
+  print "Domain-Authority:         " .
+        $ose->domainAuthority->result . ' (' .      // Int - e.g 42
+        $ose->domainAuthority->unit   . ') - ' .    // String - "/100"
+        $ose->domainAuthority->descr  . PHP_EOL;    // String - Result value description
+
+  // MOZ Page-Authority Rank - Predicts this page's ranking potential in the search engines 
+  // based on an algorithmic combination of all link metrics.
+  print "Page-Authority:           " .
+        $ose->pageAuthority->result . ' (' .        // Int - e.g 48
+        $ose->pageAuthority->unit   . ') - ' .      // String - "/100"
+        $ose->pageAuthority->descr  . PHP_EOL;      // String - Result value description
+
+  // Just-Discovered Inbound Links - Number of links to this page found over the past %n days, 
+  // indexed within an hour of being shared on Twitter.
+  print "Just-Discovered Links:    " .
+        $ose->justDiscovered->result . ' (' .       // Int - e.g 140
+        $ose->justDiscovered->unit   . ') - ' .     // String - e.g "32 days"
+        $ose->justDiscovered->descr  . PHP_EOL;     // String - Result value description
+
+  // Root-Domain Inbound Links - Number of unique root domains (e.g., *.example.com) 
+  // containing at least one linking page to this URL.
+  print "Linking Root Domains:     " .
+        $ose->linkingRootDomains->result . ' (' .   // Int - e.g 210
+        $ose->linkingRootDomains->unit   . ') - ' . // String - "Root Domains"
+        $ose->linkingRootDomains->descr  . PHP_EOL; // String - Result value description
+
+  // Total Links - All links to this page including internal, external, followed, and nofollowed.
+  print "Total Links:              " .
+        $ose->totalLinks->result . ' (' .           // Int - e.g 31571
+        $ose->totalLinks->unit   . ') - ' .         // String - "Total Links"
+        $ose->totalLinks->descr  . PHP_EOL;         // String - Result value description
 ```
 <hr>
 
