@@ -195,7 +195,7 @@ class GTB_PageRank implements tbr, pref
    */ 
   public function getTbrTldSuggestion() {
 	$tmp = explode(".google.", GTB_Request::_get(tbr::SUGGEST_TLD_URL));
-	return trim($tmp[1]);
+	return isset($tmp[1]) ? trim($tmp[1]) : 'com';
   }
   /** getTbrPath - Get the Google Toolbar Pagerank request path.
    *  @access  public
@@ -253,7 +253,7 @@ class GTB_PageRank implements tbr, pref
 	foreach ($b as $k => $v) { //Foreach hash key value...
 		if(is_string($v) && strlen($v) > 0) {
 			//...format a query string. 
-			$qs[] = sprintf(tbr::QUERY_STRING, $v, $a);
+			$qs[] = sprintf(tbr::QUERY_STRING, $v, urlencode($a));
 		}
 	} 
 	if (sizeof($qs) > 0) {
