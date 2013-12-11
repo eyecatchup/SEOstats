@@ -4,7 +4,7 @@
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
 
-SEOstats offers over 50 different methods and gathers data from Alexa, Google, SEMRush, Open-Site-Explorer (by SEOmoz), Sistrix, Facebook, Twitter & more.
+SEOstats offers over 50 different methods and gathers data from Alexa, Google, Moz (f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & more.
 
 ## Dependencies
 
@@ -94,6 +94,7 @@ If composer is no option for you, you can still just download the [`SEOstats.zip
  * <a href='#google-pagespeed-service'>Pagespeed Service</a>
  * <a href='#google-websearch-index'>Websearch Index</a>
  * <a href='#google-serp-details'>SERP Details</a>
+* <a href='#seostats-mozscape-methods'>Mozscape Methods</a>  
 * <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>
  * <a href='#semrush-domain-reports'>Domain Reports</a>
@@ -108,7 +109,7 @@ If composer is no option for you, you can still just download the [`SEOstats.zip
 There're two configuration files to note:
 <ol>
 <li>`./SEOstats/Config/ApiKeys.php`<br>
-<em>Client API Keys (currently required for Google's Pagespeed Service only).</em>
+<em>Client API Keys (currently required for Mozscape and Google's Pagespeed Service only).</em>
 </li>
 <li>`./SEOstats/Config/DefaultSettings.php`<br>
 <em>Some default settings for querying data (mainly locale related stuff).</em>
@@ -268,6 +269,32 @@ More detailed examples can be found in the `./example` directory.
   // Returns an array of URLs, titles and position in SERPS for occurrences of $url
   // within the first 1000 results for a Google web search for 'keyword'.
   print_r ( Google::getSerps('keyword', 1000, $url) );
+```
+<hr>
+
+## SEOstats Mozscape Methods
+
+```php
+<?php
+  // The normalized 10-point MozRank score of the URL. 
+  print Mozscape::getMozRank();
+  
+  // The raw MozRank score of the URL.
+  print Mozscape::getMozRankRaw();
+  
+  // The number of links (equity or nonequity or not, internal or external) to the URL.
+  print Mozscape::getLinkCount();
+  
+  // The number of external equity links to the URL (http://apiwiki.moz.com/glossary#equity).
+  print Mozscape::getEquityLinkCount();
+  
+  // A normalized 100-point score representing the likelihood
+  // of the URL to rank well in search engine results.  
+  print Mozscape::getPageAuthority();
+  
+  // A normalized 100-point score representing the likelihood
+  // of the root domain of the URL to rank well in search engine results.
+  print Mozscape::getDomainAuthority();
 ```
 <hr>
 

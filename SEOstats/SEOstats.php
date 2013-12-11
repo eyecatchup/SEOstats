@@ -104,6 +104,11 @@ class SEOstats
         return new Service\Google;
     }
 
+    public function Mozscape()
+    {
+        return new Service\Mozscape;
+    }
+
     public function OpenSiteExplorer()
     {
         return new Service\OpenSiteExplorer;
@@ -122,11 +127,6 @@ class SEOstats
     public function Social()
     {
         return new Service\Social;
-    }
-
-    public static function getHost()
-    {
-        return self::$_host;
     }
 
     public static function getLastLoadedHtml()
@@ -160,6 +160,16 @@ class SEOstats
             exit();
         }
         return true;
+    }
+
+    public static function getHost($url = false)
+    {
+        return Helper\Url::parseHost(self::getUrl($url));
+    }
+        
+    public static function getDomain($url = false)
+    {
+        return 'http://' . self::getHost($url = false);
     }
 
     /**
