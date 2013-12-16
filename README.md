@@ -4,7 +4,7 @@
 
 SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
 
-SEOstats offers over 50 different methods and gathers data from Alexa, Google, Moz (f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & more.
+SEOstats offers over 50 different methods and gathers data from Alexa, Google, Mozscape (by Moz - f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & many more.
 
 ## Dependencies
 
