@@ -437,6 +437,9 @@ More detailed examples can be found in the `./example` directory.
   // Returns the total count of URL shares via LinkedIn
   print Social::getLinkedInShares();
 
+  // Returns shares, comments, clicks and reach for the given URL via Xing
+  print_r( Social::getXingShares() );
+
   // Returns the total count of URL shares via Pinterest
   print Social::getPinterestShares();
 
