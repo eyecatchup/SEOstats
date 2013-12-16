@@ -8,7 +8,7 @@ namespace SEOstats\Services;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/14
+ * @updated    2013/12/17
  */
 
 use SEOstats\Common\SEOstatsException as E;
@@ -26,6 +26,12 @@ class Google extends SEOstats
      */
     public static function getPageRank($url = false)
     {
+        // Composer autoloads classes out of the SEOstats namespace.
+        // The custom autolader, however, does not. So we need to include it first.
+        if(!class_exists('\GTB_PageRank')) {
+            require_once realpath(__DIR__ . '/3rdparty/GTB_PageRank.php');
+        }
+
         $gtb = new \GTB_PageRank(parent::getUrl($url));
 
         return $gtb->getPageRank();

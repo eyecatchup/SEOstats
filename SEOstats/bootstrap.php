@@ -16,39 +16,24 @@ if (!ini_get('date.timezone') && function_exists('date_default_timezone_set')) {
     date_default_timezone_set('UTC');
 }
 
+// Exit if the PHP version is not equals or greater 5.3.0.
+if (version_compare(PHP_VERSION, '5.3', '<')) {
+    exit('SEOstats requires PHP version 5.3.0 or greater, but yours is ' . PHP_VERSION);
+}
+
 // Disabling Zend Garbage Collection to prevent segfaults with PHP5.4+
 // @link https://bugs.php.net/bug.php?id=53976
 if (version_compare(PHP_VERSION, '5.4', '>=') && gc_enabled()) {
     gc_disable();
 }
 
-// Define the __DIR__ constant for PHP versions < 5.3.
-// @link http://www.php.net/manual/en/language.constants.predefined.php#113233
-(@__DIR__ == '__DIR__') && define('__DIR__', dirname(__FILE__));
-
 /*
  *---------------------------------------------------------------
- *  SEOSTATS BASE PATH
- *---------------------------------------------------------------
- *  For increased reliability, resolve os-specific system path.
- */
-
-$base_path = __DIR__;
-if (realpath( $base_path ) !== false) {
-    $base_path = realpath($base_path).'/';
-}
-$base_path = rtrim($base_path, '/').'/';
-$base_path = str_replace('\\', '/', $base_path);
-
-define('SEOSTATSPATH', $base_path);
-
-/*
- *---------------------------------------------------------------
- *  Register autoloader
+ *  Register custom PSR-0 Autoloader
  *---------------------------------------------------------------
  */
 
-require_once SEOSTATSPATH . '/Common/AutoLoader.php';
+require_once realpath(__DIR__ . '/Common/AutoLoader.php');
 
 $autoloader = new \SEOstats\Common\AutoLoader(__NAMESPACE__, dirname(__DIR__));
 
