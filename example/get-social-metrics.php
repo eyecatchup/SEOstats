@@ -39,55 +39,67 @@ try {
         echo "Social network metrics for " . $url . PHP_EOL;
 
         /**
-         *  Get the total count of Google +1s for the given URL.
+         *  Get the total count of +1s for $url on Google+.
          */
         echo "Google+ Shares:          " .
             Social::getGooglePlusShares() . PHP_EOL;
 
         /**
-         *  Get the total count of Twitter mentions for the given URL.
+         *  Get the total count of mentions of $url on Twitter.
          */
         echo "Twitter Shares:          " .
             Social::getTwitterShares() . PHP_EOL;
 
         /**
-         *  Get the total count of Facebook Shares for the given URL.
+         *  Get interaction counts (shares, likes, comments, clicks) for $url on Facebook.
          */
         echo "Facebook Shares:         ";
             print_r(Social::getFacebookShares());
 
         /**
-         *  Get the total count of VKontakte shares for the given URL.
+         *  Get the total count of shares for $url via VKontakte.
          */
         echo "VKontakte Shares:        " .
             Social::getVKontakteShares() . PHP_EOL;
 
         /**
-         *  Get the total count of Pinterest shares for the given URL.
+         *  Get the total count of shares for $url via Pinterest.
          */
         echo "Pinterest Shares:        " .
             Social::getPinterestShares() . PHP_EOL;
 
         /**
-         *  Get the total count of LinkedIn shares for the given URL.
+         *  Get the total count of shares for $url via LinkedIn.
          */
         echo "LinkedIn Shares:         " .
             Social::getLinkedInShares() . PHP_EOL;
 
         /**
-         *  Get the total count of Delicious shares for the given URL.
+         *  Get interaction counts (shares, comments, clicks, reach) for host of $url on Xing.
+         */
+        echo "Xing Shares:             ";
+            print_r(Social::getXingShares());
+
+        /**
+         *  Get the total count of shares for $url via Delicious.
          */
         echo "Delicious Shares:        " .
             Social::getDeliciousShares() . PHP_EOL;
 
         /**
-         *  Get the total count of Digg shares for the given URL.
+         *  Get the Top10 tags for $url from Delicious.
+         */
+        echo "Xing Shares:             ";
+            print_r(Social::getDeliciousTopTags());
+
+        /**
+         *  Get the total count of shares for $url via Digg.
          */
         echo "Digg Shares:             " .
             Social::getDiggShares() . PHP_EOL;
 
         /**
-         *  Get the total count of StumpleUpon shares for the given URL.
+         *  Get the total count of shares for $url via StumpleUpon.
          */
         echo "StumpleUpon Shares:      " .
             Social::getStumbleUponShares() . PHP_EOL;

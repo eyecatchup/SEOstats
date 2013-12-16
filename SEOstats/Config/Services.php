@@ -8,7 +8,7 @@ namespace SEOstats\Config;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/12/11
+ * @updated    2013/12/16
  */
 
 /**
@@ -74,4 +74,7 @@ interface Services
 
     // Url to get share count via VKontakte from
     const VKONTAKTE_INFO_URL = 'http://vk.com/share.php?act=count&index=1&url=%s';
+
+    // Url to get share count via Xing from
+    const XING_SHAREBUTTON_URL = 'https://www.xing-share.com/app/share?op=get_share_button;counter=top;url=%s';
 }

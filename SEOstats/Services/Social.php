@@ -8,7 +8,7 @@ namespace SEOstats\Services;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/08/17
+ * @updated    2013/12/16
  */
 
 use SEOstats\SEOstats as SEOstats;
@@ -25,7 +25,7 @@ class Social extends SEOstats
         return self::getGooglePlusShares($url);
     }
     /**
-     * Returns the total count of Google+ Plus Ones
+     * Returns the total count of +1s for $url on Google+.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -42,7 +42,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns Facebook Sharing data
+     * Returns an array of interaction counts (shares, likes, comments, clicks) for $url on Facebook.
      *
      * @access        public
      * @link          http://developers.facebook.com/docs/reference/fql/link_stat/
@@ -63,7 +63,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of Twitter mentions
+     * Returns the total count of mentions of $url on Twitter.
      *
      * @access       public
      * @param   url  string             The URL to check.
@@ -82,7 +82,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via Delicious
+     * Returns the total count of shares for $url via Delicious.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -100,7 +100,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the Top10 tags from Delicious
+     * Returns the Top10 tags for $url from Delicious.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -124,7 +124,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via Digg
+     * Returns the total count of shares for $url via Digg.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -142,7 +142,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via LinkedIn
+     * Returns the total count of shares for $url via LinkedIn.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -160,7 +160,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via Pinterest
+     * Returns the total count of shares for $url via Pinterest.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -178,7 +178,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via StumpleUpon
+     * Returns the total count of shares for $url via StumpleUpon.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -197,7 +197,7 @@ class Social extends SEOstats
     }
 
     /**
-     * Returns the total count of URL shares via VKontakte
+     * Returns the total count of shares for $url via VKontakte.
      *
      * @access        public
      * @param   url   string     The URL to check.
@@ -212,5 +212,33 @@ class Social extends SEOstats
         @preg_match_all('#^VK\.Share\.count\(1, (\d+)\);$#si', $htmlData, $matches);
 
         return isset($matches[1][0]) ? intval($matches[1][0]) : parent::noDataDefaultValue();
+    }
+
+    /**
+     * Returns an array of interaction counts (shares, comments, clicks, reach) for host of $url on Xing.
+     *
+     * @access        public
+     * @param   url   string     The URL to check.
+     * @return        array      Returns URL shares, comments, clicks and 'reach'.
+     * @link          https://blog.xing.com/2012/01/xing-share-button/ Return values explained (German)
+     */
+    public static function getXingShares($url = false)
+    {
+        $host    = parent::getHost($url);
+        $dataUrl = sprintf(Config\Services::XING_SHAREBUTTON_URL, urlencode($host));
+
+        $htmlData = parent::_getPage($dataUrl);
+        @preg_match_all('/\r?\n(\d+)\r?\n/s', $htmlData, $matches);
+
+        if (isset($matches[1]) && 4 == sizeof($matches[1])) {
+            return array(
+                'shares'   => intval($matches[1][0]),
+                'comments' => intval($matches[1][1]),
+                'clicks'   => intval($matches[1][2]),
+                'reach'    => intval($matches[1][3]),
+            );
+        }
+
+        return parent::noDataDefaultValue();
     }
 }
