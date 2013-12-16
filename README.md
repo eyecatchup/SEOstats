@@ -8,7 +8,7 @@ SEOstats offers over 50 different methods and gathers data from Alexa, Google, M
 
 ## Dependencies
 
-SEOstats requires the PHP5-CURL and PHP5-SOAP extensions.
+SEOstats requires PHP version 5.3 or greater and the PHP5-CURL and PHP5-JSON extensions.
 
 ## Installation
 
