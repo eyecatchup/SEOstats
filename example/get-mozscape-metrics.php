@@ -15,7 +15,7 @@
 // If you did NOT installed SEOstats via composer but instead downloaded the zip file from github.com,
 // you need to follow this steps:
 //
-// 1. Comment-in line 25 (remove hash char "#") and comment-out line 25 (prepend hash char "#")
+// 1. Comment-in line 24 (remove hash char "#") and comment-out line 25 (prepend hash char "#")
 // 2. Copy this example file (and the others) from ./example/example.php to ./example.php
 //
 // For further reference see: https://github.com/eyecatchup/SEOstats/issues/49
