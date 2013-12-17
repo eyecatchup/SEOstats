@@ -11,18 +11,18 @@
             "name": "Stephan Schmitz",
             "email": "eyecatchup@gmail.com",
             "homepage": "https://github.com/eyecatchup",
-			"role": "Creator, Developer, Maintainer"
+            "role": "Creator, Developer, Maintainer"
         },
         {
             "name": "SEOstats Community",
             "homepage": "https://github.com/eyecatchup/seostats/contributors",
-			"role": "Contributor, Developer"
+            "role": "Contributor, Developer"
         }
     ],
     "require": {
         "php": ">=5.3",
-		"ext-curl": "*",
-		"ext-json": "*"
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-0": { "SEOstats\\": "" },
