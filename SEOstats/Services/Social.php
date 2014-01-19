@@ -8,7 +8,7 @@ namespace SEOstats\Services;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/12/16
+ * @updated    2014/01/19
  */
 
 use SEOstats\SEOstats as SEOstats;
@@ -36,9 +36,9 @@ class Social extends SEOstats
         $url     = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::GOOGLE_PLUSONE_URL, urlencode($url));
         $html    = parent::_getPage($dataUrl);
-        @preg_match_all('#c: (.*?)\.0#si', $html, $matches);
+        @preg_match_all('/window\.__SSR\s\=\s\{c:\s(\d+?)\./', $html, $match, PREG_SET_ORDER);
 
-        return isset($matches[1][0]) ? intval($matches[1][0]) : parent::noDataDefaultValue();
+        return (1 === sizeof($match) && 2 === sizeof($match[0])) ? intval($match[0][1]) : parent::noDataDefaultValue();
     }
 
     /**
