@@ -138,7 +138,10 @@ class Google extends SEOstats
             else {
                 $matches = array();
                 preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
-                if (!empty($matches[1])) {
+                if (empty($matches[1])) {
+                    // No [@id="rso"]/li/h3 on currect page
+                    $pages -= 1;
+                } else {
                     $c = 0;
                     foreach ($matches[1] as $link) {
                         if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
@@ -173,9 +176,6 @@ class Google extends SEOstats
                         // No 'Next'-link on currect page
                         $pages -= 1;
                     }
-                } else {
-                    // No [@id="rso"]/li/h3 on currect page
-                    $pages -= 1;
                 }
             }
             if ($start == $maxResults) {
