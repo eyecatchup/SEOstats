@@ -141,23 +141,25 @@ class Google extends SEOstats
                 if (!empty($matches[1])) {
                     $c = 0;
                     foreach ($matches[1] as $link) {
-                        if (preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match)) {
-                            if (!preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1])) {
-                                $c++;
-                                $resCnt = ($start * 10) + $c;
-                                if (FALSE === $domain) {
-                                    $result[$resCnt] = array(
-                                        'url' => $match[1],
-                                        'headline' => trim(strip_tags($match[2]))
-                                    );
-                                } elseif (preg_match("#^{$domain}#i", $match[1])) {
-                                    $result[] = array(
-                                        'position' => $resCnt,
-                                        'url' => $match[1],
-                                        'headline' => trim(strip_tags($match[2]))
-                                    );
-                                }
-                            }
+                        if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
+                              preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
+                        {
+                            continue;
+                        }
+
+                        $c++;
+                        $resCnt = ($start * 10) + $c;
+                        if (FALSE === $domain) {
+                            $result[$resCnt] = array(
+                                'url' => $match[1],
+                                'headline' => trim(strip_tags($match[2]))
+                            );
+                        } elseif (preg_match("#^{$domain}#i", $match[1])) {
+                            $result[] = array(
+                                'position' => $resCnt,
+                                'url' => $match[1],
+                                'headline' => trim(strip_tags($match[2]))
+                            );
                         }
                     }
                     if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
