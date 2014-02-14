@@ -41,9 +41,9 @@ class AutoLoader
      *
      * @return boolean If the loading was successful
      */
-    public function load($class)
+    public function load($className)
     {
-        $class = ltrim($class, '\\');
+        $class = ltrim($className, '\\');
 
         if (strpos($class, $this->namespace) !== 0) {
             return false;
@@ -60,7 +60,8 @@ class AutoLoader
         }
 
         require $path;
-        return true;
+
+        return class_exists($className,false);
     }
 
     /**
