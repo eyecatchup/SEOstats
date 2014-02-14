@@ -145,16 +145,14 @@ class Google extends SEOstats
                             if (!preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1])) {
                                 $c++;
                                 $resCnt = ($start * 10) + $c;
-                                if (FALSE !== $domain) {
-                                    if (preg_match("#^{$domain}#i", $match[1])) {
-                                        $result[] = array(
-                                            'position' => $resCnt,
-                                            'url' => $match[1],
-                                            'headline' => trim(strip_tags($match[2]))
-                                        );
-                                    }
-                                } else {
+                                if (FALSE === $domain) {
                                     $result[$resCnt] = array(
+                                        'url' => $match[1],
+                                        'headline' => trim(strip_tags($match[2]))
+                                    );
+                                } elseif (preg_match("#^{$domain}#i", $match[1])) {
+                                    $result[] = array(
+                                        'position' => $resCnt,
                                         'url' => $match[1],
                                         'headline' => trim(strip_tags($match[2]))
                                     );
