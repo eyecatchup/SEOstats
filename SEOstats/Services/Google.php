@@ -135,49 +135,50 @@ class Google extends SEOstats
                 print('Please read: https://support.google.com/websearch/answer/86640');
                 exit();
             }
-            else {
-                $matches = array();
-                preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
-                if (empty($matches[1])) {
-                    // No [@id="rso"]/li/h3 on currect page
-                    $pages -= 1;
-                } else {
-                    $c = 0;
-                    foreach ($matches[1] as $link) {
-                        if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
-                              preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
-                        {
-                            continue;
-                        }
-
-                        $c++;
-                        $resCnt = ($start * 10) + $c;
-                        if (FALSE === $domain) {
-                            $result[$resCnt] = array(
-                                'url' => $match[1],
-                                'headline' => trim(strip_tags($match[2]))
-                            );
-                        } elseif (preg_match("#^{$domain}#i", $match[1])) {
-                            $result[] = array(
-                                'position' => $resCnt,
-                                'url' => $match[1],
-                                'headline' => trim(strip_tags($match[2]))
-                            );
-                        }
-                    } // foreach ($matches[1] as $link)
 
 
-                    if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
-                        // Found 'Next'-link on currect page
-                        $pages += 1;
-                        $delay += 200000;
-                        usleep($delay);
-                    } else {
-                        // No 'Next'-link on currect page
-                        $pages -= 1;
+            $matches = array();
+            preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
+            if (empty($matches[1])) {
+                // No [@id="rso"]/li/h3 on currect page
+                $pages -= 1;
+            } else {
+                $c = 0;
+                foreach ($matches[1] as $link) {
+                    if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
+                          preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
+                    {
+                        continue;
                     }
+
+                    $c++;
+                    $resCnt = ($start * 10) + $c;
+                    if (FALSE === $domain) {
+                        $result[$resCnt] = array(
+                            'url' => $match[1],
+                            'headline' => trim(strip_tags($match[2]))
+                        );
+                    } elseif (preg_match("#^{$domain}#i", $match[1])) {
+                        $result[] = array(
+                            'position' => $resCnt,
+                            'url' => $match[1],
+                            'headline' => trim(strip_tags($match[2]))
+                        );
+                    }
+                } // foreach ($matches[1] as $link)
+
+
+                if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
+                    // Found 'Next'-link on currect page
+                    $pages += 1;
+                    $delay += 200000;
+                    usleep($delay);
+                } else {
+                    // No 'Next'-link on currect page
+                    $pages -= 1;
                 }
             }
+
             if ($start == $maxResults) {
                 $pages -= 1;
             }
