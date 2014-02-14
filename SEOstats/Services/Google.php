@@ -161,7 +161,9 @@ class Google extends SEOstats
                                 'headline' => trim(strip_tags($match[2]))
                             );
                         }
-                    }
+                    } // foreach ($matches[1] as $link)
+
+
                     if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
                         // Found 'Next'-link on currect page
                         $pages += 1;
@@ -179,7 +181,7 @@ class Google extends SEOstats
             if ($start == $maxResults) {
                 $pages -= 1;
             }
-        }
+        } // for ($start=0; $start<$pages; $start++)
         return $result;
     }
 
