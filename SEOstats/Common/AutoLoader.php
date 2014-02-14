@@ -55,12 +55,12 @@ class AutoLoader
         $path      = $this->path . implode(DIRECTORY_SEPARATOR, $nsparts);
         $path     .= str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
 
-        if (file_exists($path)) {
-            require $path;
-            return true;
+        if (!is_readable($path)) {
+            return false;
         }
 
-        return false;
+        require $path;
+        return true;
     }
 
     /**
