@@ -69,37 +69,18 @@ class GTB_PageRank implements tbr, pref
 	$path  = $this->GTB_SERVER['path'];
 	$tbUrl = 'http://' . $host . $tld . $path;
 	$qStrings = self::getQueryStrings();
-	if(isset($qStrings[0])) {
-		$PR = self::getToolbarPageRank($tbUrl . $qStrings[0]);
-		if ($PR !== FALSE) {
-			return $PR;
-		} else {
-			if (isset($qStrings[1])) {
-				$PR = self::getToolbarPageRank($tbUrl . $qStrings[1]);
-				if ($PR !== FALSE) {
-					return $PR;
-				} else {
-					if (isset($qStrings[2])) {
-						$PR = self::getToolbarPageRank($tbUrl . $qStrings[2]);
-						if ($PR !== FALSE) {
-							return $PR;
-						} else {
-							if (isset($qStrings[3])) {
-								$PR = self::getToolbarPageRank($tbUrl . $qStrings[3]);
-								if ($PR !== FALSE) {
-									return $PR;
-								} else {
-									return 'Failed to generate a valid hash for PR check.';
-								}
-							}
-						}
-					}
-				}
-			}
+
+	for ( $i=0; $i < 3; $i++ ) {
+		if( !isset($qStrings[$i])) {
+			break;
 		}
-	} else {
-		return 'Failed to generate a valid hash for PR check.';
+		$PR = self::getToolbarPageRank($tbUrl . $prString);
+		if ($PR === FALSE) {
+		    continue;
+		}
+		return $PR;
 	}
+	return 'Failed to generate a valid hash for PR check.';
   }
   public function getToolbarPageRank($toolbarUrl) {
 	$ret = GTB_Request::_get($toolbarUrl);
