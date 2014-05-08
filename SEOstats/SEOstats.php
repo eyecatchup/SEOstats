@@ -42,19 +42,19 @@ use SEOstats\Services as Service;
 /**
  * Check required PHP settings.
  */
-if (!function_exists('curl_init')) {
+if (! function_exists('curl_init')) {
     throw new E('SEOstats requires the PHP CURL extension.');
     exit();
 }
 
 if (1 == ini_get('safe_mode') || 'on' === strtolower(ini_get('safe_mode'))) {
-    throw new E('Because some SEOstats functions require the CURLOPT_FOLLOWLOCATION flag, ' .
-        'you must not run PHP in safe mode! (This flag can not be set in safe mode.)');
+    throw new E('Because some SEOstats functions require the CURLOPT_FOLLOWLOCATION flag, ' . 'you must not run PHP in safe mode! (This flag can not be set in safe mode.)');
     exit();
 }
 
 /**
- * Starting point for the SEOstats library. Example Usage:
+ * Starting point for the SEOstats library.
+ * Example Usage:
  *
  * <code>
  * ...
@@ -75,17 +75,13 @@ if (1 == ini_get('safe_mode') || 'on' === strtolower(ini_get('safe_mode'))) {
  * $result = \SEOstats\Services\Google::getSerps('query string', 500, $url);
  * ...
  * </code>
- *
  */
 class SEOstats
 {
+
     const BUILD_NO = Config\Package::VERSION_CODE;
 
-    protected static $_url,
-                     $_host,
-                     $_lastHtml,
-                     $_lastLoadedUrl
-                     = false;
+    protected static $_url, $_host, $_lastHtml, $_lastLoadedUrl = false;
 
     public function __construct($url = false)
     {
@@ -96,37 +92,37 @@ class SEOstats
 
     public function Alexa()
     {
-        return new Service\Alexa;
+        return new Service\Alexa();
     }
 
     public function Google()
     {
-        return new Service\Google;
+        return new Service\Google();
     }
 
     public function Mozscape()
     {
-        return new Service\Mozscape;
+        return new Service\Mozscape();
     }
 
     public function OpenSiteExplorer()
     {
-        return new Service\OpenSiteExplorer;
+        return new Service\OpenSiteExplorer();
     }
 
     public function SEMRush()
     {
-        return new Service\SemRush;
+        return new Service\SemRush();
     }
 
     public function Sistrix()
     {
-        return new Service\Sistrix;
+        return new Service\Sistrix();
     }
 
     public function Social()
     {
-        return new Service\Social;
+        return new Service\Social();
     }
 
     public static function getLastLoadedHtml()
@@ -141,6 +137,7 @@ class SEOstats
 
     /**
      * Ensure the URL is set, return default otherwise
+     *
      * @return string
      */
     public static function getUrl($url = false)
@@ -152,10 +149,9 @@ class SEOstats
     public function setUrl($url)
     {
         if (false !== Helper\Url::isRfc($url)) {
-            self::$_url  = $url;
+            self::$_url = $url;
             self::$_host = Helper\Url::parseHost($url);
-        }
-        else {
+        } else {
             throw new E('Invalid URL!');
             exit();
         }
@@ -166,33 +162,39 @@ class SEOstats
     {
         return Helper\Url::parseHost(self::getUrl($url));
     }
-        
+
     public static function getDomain($url = false)
     {
         return 'http://' . self::getHost($url = false);
     }
 
     /**
+     *
      * @return DOMDocument
      */
-    protected static function _getDOMDocument($html) {
-        $doc = new \DOMDocument;
+    protected static function _getDOMDocument($html)
+    {
+        $doc = new \DOMDocument();
         @$doc->loadHtml($html);
         return $doc;
     }
 
     /**
+     *
      * @return DOMXPath
      */
-    protected static function _getDOMXPath($doc) {
+    protected static function _getDOMXPath($doc)
+    {
         $xpath = new \DOMXPath($doc);
         return $xpath;
     }
 
     /**
+     *
      * @return HTML string
      */
-    protected static function _getPage($url) {
+    protected static function _getPage($url)
+    {
         $url = self::getUrl($url);
         if (self::getLastLoadedUrl() == $url) {
             return self::getLastLoadedHtml();
@@ -203,8 +205,7 @@ class SEOstats
             self::$_lastLoadedUrl = $url;
             self::_setHtml($html);
             return $html;
-        }
-        else {
+        } else {
             self::noDataDefaultValue();
         }
     }

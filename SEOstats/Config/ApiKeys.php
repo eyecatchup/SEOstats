@@ -13,19 +13,21 @@ namespace SEOstats\Config;
 
 /**
  * Client API keys
- * @package    SEOstats
+ *
+ * @package SEOstats
  */
 interface ApiKeys
 {
     // To acquire an API key, visit Google's APIs Console here:
-    //      https://code.google.com/apis/console
+    // https://code.google.com/apis/console
     // In the Services pane, activate the "PageSpeed Insights API" (not the service!).
     // Next, go to the API Access pane. The API key is near the bottom of that pane,
     // in the section titled "Simple API Access.".
     const GOOGLE_SIMPLE_API_ACCESS_KEY = '';
 
     // To acquire a Mozscape (f.k.a. SEOmoz) API key, visit:
-    //      https://moz.com/products/api/keys
-    const MOZSCAPE_ACCESS_ID  = '';
+    // https://moz.com/products/api/keys
+    const MOZSCAPE_ACCESS_ID = '';
+
     const MOZSCAPE_SECRET_KEY = '';
 }

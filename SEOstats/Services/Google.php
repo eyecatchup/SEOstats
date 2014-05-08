@@ -10,7 +10,6 @@ namespace SEOstats\Services;
  * @license    http://eyecatchup.mit-license.org/  MIT License
  * @updated    2013/12/17
  */
-
 use SEOstats\Common\SEOstatsException as E;
 use SEOstats\SEOstats as SEOstats;
 use SEOstats\Config as Config;
@@ -18,17 +17,18 @@ use SEOstats\Helper as Helper;
 
 class Google extends SEOstats
 {
+
     /**
-     *  Gets the Google Pagerank
+     * Gets the Google Pagerank
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the Google PageRank.
+     * @param    string    $url    String, containing the query URL.
+     * @return   integer           Returns the Google PageRank.
      */
     public static function getPageRank($url = false)
     {
         // Composer autoloads classes out of the SEOstats namespace.
         // The custom autolader, however, does not. So we need to include it first.
-        if(!class_exists('\GTB_PageRank')) {
+        if (! class_exists('\GTB_PageRank')) {
             require_once realpath(__DIR__ . '/3rdparty/GTB_PageRank.php');
         }
 
@@ -38,39 +38,39 @@ class Google extends SEOstats
     }
 
     /**
-     *  Returns the total amount of results for a Google 'site:'-search for the object URL.
+     * Returns the total amount of results for a Google 'site:'-search for the object URL.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total site-search result count.
+     * @param    string    $url    String, containing the query URL.
+     * @return   integer           Returns the total site-search result count.
      */
     public static function getSiteindexTotal($url = false)
     {
-        $url   = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $query = urlencode("site:{$url}");
 
         return self::getSearchResultsTotal($query);
     }
 
     /**
-     *  Returns the total amount of results for a Google 'link:'-search for the object URL.
+     * Returns the total amount of results for a Google 'link:'-search for the object URL.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total link-search result count.
+     * @param    string    $url    String, containing the query URL.
+     * @return   integer           Returns the total link-search result count.
      */
     public static function getBacklinksTotal($url = false)
     {
-        $url   = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $query = urlencode("link:{$url}");
 
         return self::getSearchResultsTotal($query);
     }
 
     /**
-     *  Returns total amount of results for any Google search,
-     *  requesting the deprecated Websearch API.
+     * Returns total amount of results for any Google search,
+     * requesting the deprecated Websearch API.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total search result count.
+     * @param    string    $url    String, containing the query URL.
+     * @return   integer           Returns the total search result count.
      */
     public static function getSearchResultsTotal($url = false)
     {
@@ -80,9 +80,7 @@ class Google extends SEOstats
         $ret = parent::_getPage($url);
 
         $obj = Helper\Json::decode($ret);
-        return !isset($obj->responseData->cursor->estimatedResultCount)
-               ? parent::noDataDefaultValue()
-               : intval($obj->responseData->cursor->estimatedResultCount);
+        return ! isset($obj->responseData->cursor->estimatedResultCount) ? parent::noDataDefaultValue() : intval($obj->responseData->cursor->estimatedResultCount);
     }
 
     public static function getPagespeedAnalysis($url = false)
@@ -94,8 +92,7 @@ class Google extends SEOstats
         }
 
         $url = parent::getUrl($url);
-        $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL,
-            $url, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
+        $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL, $url, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
 
         $ret = parent::_getPage($url);
 
@@ -107,8 +104,7 @@ class Google extends SEOstats
         $url = parent::getUrl($url);
         $ret = self::getPagespeedAnalysis($url);
 
-        return !$ret->score ? parent::noDataDefaultValue() :
-            intval($ret->score);
+        return ! $ret->score ? parent::noDataDefaultValue() : intval($ret->score);
     }
 
     /**
@@ -118,32 +114,31 @@ class Google extends SEOstats
      * @param     string    $tld    String, containing the desired Google top level domain.
      * @return    array             Returns array, containing the keys 'URL', 'Title' and 'Description'.
      */
-    public static function getSerps($query, $maxResults=100, $domain=false)
+    public static function getSerps($query, $maxResults = 100, $domain = false)
     {
         $q = rawurlencode($query);
-        $maxResults = ($maxResults/10)-1;
-        $result = array ();
+        $maxResults = ($maxResults / 10) - 1;
+        $result = array();
         $pages = 1;
         $delay = 0;
-        for ($start=0; $start<$pages; $start++) {
+        for ($start = 0; $start < $pages; $start ++) {
             $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
-            $nextSerp =  0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
+            $nextSerp = 0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
 
-            $curledSerp = utf8_decode( self::gCurl($nextSerp, $ref) );
+            $curledSerp = utf8_decode(self::gCurl($nextSerp, $ref));
 
             if (preg_match("#answer[=|/]86640#i", $curledSerp)) {
                 print('Please read: https://support.google.com/websearch/answer/86640');
                 exit();
-            }
-            else {
+            } else {
                 $matches = array();
                 preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
-                if (!empty($matches[1])) {
+                if (! empty($matches[1])) {
                     $c = 0;
                     foreach ($matches[1] as $link) {
                         if (preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match)) {
-                            if (!preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1])) {
-                                $c++;
+                            if (! preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1])) {
+                                $c ++;
                                 $resCnt = ($start * 10) + $c;
                                 if (FALSE !== $domain) {
                                     if (preg_match("#^{$domain}#i", $match[1])) {
@@ -162,7 +157,7 @@ class Google extends SEOstats
                             }
                         }
                     }
-                    if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
+                    if (preg_match('#id="?pnnext"?#', $curledSerp)) {
                         // Found 'Next'-link on currect page
                         $pages += 1;
                         $delay += 200000;
@@ -219,6 +214,6 @@ class Google extends SEOstats
         $result = curl_exec($ch);
         $info = curl_getinfo($ch);
         curl_close($ch);
-        return ($info['http_code']!=200) ? false : $result;
+        return ($info['http_code'] != 200) ? false : $result;
     }
 }

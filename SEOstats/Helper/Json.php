@@ -10,7 +10,6 @@ namespace SEOstats\Helper;
  * @license    http://eyecatchup.mit-license.org/  MIT License
  * @updated    2013/02/03
  */
-
 class Json
 {
    /**
@@ -23,11 +22,10 @@ class Json
     */
     public static function decode($str, $assoc = false)
     {
-        if (!function_exists('json_decode')) {
+        if (! function_exists('json_decode')) {
             $j = self::getJsonService();
             return $j->decode($str);
-        }
-        else {
+        } else {
             return $assoc ? json_decode($str, true) : json_decode($str);
         }
     }
@@ -42,11 +40,10 @@ class Json
     */
     public static function encode($var)
     {
-        if (!function_exists('json_encode')) {
+        if (! function_exists('json_encode')) {
             $j = self::getJsonService();
             return $j->encode($var);
-        }
-        else {
+        } else {
             return json_encode($var);
         }
     }
@@ -59,5 +56,4 @@ class Json
     {
         return new \Services_JSON();
     }
-
 }
