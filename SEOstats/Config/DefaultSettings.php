@@ -13,7 +13,8 @@ namespace SEOstats\Config;
 
 /**
  * Default client settings
- * @package    SEOstats
+ *
+ * @package SEOstats
  */
 interface DefaultSettings
 {
@@ -43,15 +44,15 @@ interface DefaultSettings
 
     // Choose the local SEMRush database to use.
     // Valid values are:
-    //   au - Google.com.au (Australia)
-    //   br - Google.com.br (Brazil)
-    //   ca - Google.ca (Canada)
-    //   de - Google.de (Germany)
-    //   es - Google.es (Spain)
-    //   fr - Google.fr (France)
-    //   it - Google.it (Italy)
-    //   ru - Google.ru (Russia)
-    //   uk - Google.co.uk (United Kingdom)
-    //   us - Google.com (United States)
+    // au - Google.com.au (Australia)
+    // br - Google.com.br (Brazil)
+    // ca - Google.ca (Canada)
+    // de - Google.de (Germany)
+    // es - Google.es (Spain)
+    // fr - Google.fr (France)
+    // it - Google.it (Italy)
+    // ru - Google.ru (Russia)
+    // uk - Google.co.uk (United Kingdom)
+    // us - Google.com (United States)
     const SEMRUSH_DB = 'us';
 }
