@@ -41,23 +41,27 @@ class AutoLoader
      *
      * @return boolean If the loading was successful
      */
-    public function load($class)
+    public function load($className)
     {
-        $class = ltrim($class, '\\');
+        $class = ltrim($className, '\\');
 
-        if (strpos($class, $this->namespace) === 0) {
-            $nsparts   = explode('\\', $class);
-            $class     = array_pop($nsparts);
-            $nsparts[] = '';
-            $path      = $this->path . implode(DIRECTORY_SEPARATOR, $nsparts);
-            $path     .= str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
-
-            if (file_exists($path)) {
-                require $path;
-                return true;
-            }
+        if (strpos($class, $this->namespace) !== 0) {
+            return false;
         }
-        return false;
+
+        $nsparts   = explode('\\', $class);
+        $class     = array_pop($nsparts);
+        $nsparts[] = '';
+        $path      = $this->path . implode(DIRECTORY_SEPARATOR, $nsparts);
+        $path     .= str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+
+        if (!is_readable($path)) {
+            return false;
+        }
+
+        require $path;
+
+        return class_exists($className,false);
     }
 
     /**
