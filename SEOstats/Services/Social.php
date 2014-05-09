@@ -2,7 +2,7 @@
 namespace SEOstats\Services;
 
 /**
- *  SEOstats extension for Social-Media data.
+ * SEOstats extension for Social-Media data.
  *
  * @package    SEOstats
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
@@ -10,20 +10,24 @@ namespace SEOstats\Services;
  * @license    http://eyecatchup.mit-license.org/  MIT License
  * @updated    2014/01/19
  */
-
 use SEOstats\SEOstats as SEOstats;
 use SEOstats\Config as Config;
 use SEOstats\Helper as Helper;
 
 class Social extends SEOstats
 {
+
     /**
      * For backward compatibility
+     *
      * @deprecated
+     *
      */
-    public static function getGoogleShares($url = false) {
+    public static function getGoogleShares($url = false)
+    {
         return self::getGooglePlusShares($url);
     }
+
     /**
      * Returns the total count of +1s for $url on Google+.
      *
@@ -33,9 +37,9 @@ class Social extends SEOstats
      */
     public static function getGooglePlusShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::GOOGLE_PLUSONE_URL, urlencode($url));
-        $html    = parent::_getPage($dataUrl);
+        $html = parent::_getPage($dataUrl);
         @preg_match_all('/window\.__SSR\s\=\s\{c:\s(\d+?)\./', $html, $match, PREG_SET_ORDER);
 
         return (1 === sizeof($match) && 2 === sizeof($match[0])) ? intval($match[0][1]) : parent::noDataDefaultValue();
@@ -52,8 +56,8 @@ class Social extends SEOstats
      */
     public static function getFacebookShares($url = false)
     {
-        $url     = parent::getUrl($url);
-        $fql     = sprintf('SELECT total_count, share_count, like_count, comment_count, commentsbox_count, click_count FROM link_stat WHERE url="%s"', $url);
+        $url = parent::getUrl($url);
+        $fql = sprintf('SELECT total_count, share_count, like_count, comment_count, commentsbox_count, click_count FROM link_stat WHERE url="%s"', $url);
         $dataUrl = sprintf(Config\Services::FB_LINKSTATS_URL, rawurlencode($fql));
 
         $jsonData = parent::_getPage($dataUrl);
@@ -72,7 +76,7 @@ class Social extends SEOstats
      */
     public static function getTwitterShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::TWEETCOUNT_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
@@ -90,7 +94,7 @@ class Social extends SEOstats
      */
     public static function getDeliciousShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::DELICIOUS_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
@@ -108,7 +112,7 @@ class Social extends SEOstats
      */
     public static function getDeliciousTopTags($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::DELICIOUS_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
@@ -116,7 +120,7 @@ class Social extends SEOstats
 
         $ret = array();
         if (isset($phpArray[0]['top_tags']) && 0 < sizeof($phpArray[0]['top_tags'])) {
-            foreach($phpArray[0]['top_tags'] as $k => $v) {
+            foreach ($phpArray[0]['top_tags'] as $k => $v) {
                 $ret[] = $k;
             }
         }
@@ -132,11 +136,11 @@ class Social extends SEOstats
      */
     public static function getDiggShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::DIGG_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
-        $phpArray = Helper\Json::decode(substr($jsonData, 2, -2), true);
+        $phpArray = Helper\Json::decode(substr($jsonData, 2, - 2), true);
 
         return isset($phpArray['diggs']) ? intval($phpArray['diggs']) : parent::noDataDefaultValue();
     }
@@ -150,11 +154,11 @@ class Social extends SEOstats
      */
     public static function getLinkedInShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::LINKEDIN_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
-        $phpArray = Helper\Json::decode(substr($jsonData, 2, -2), true);
+        $phpArray = Helper\Json::decode(substr($jsonData, 2, - 2), true);
 
         return isset($phpArray['count']) ? intval($phpArray['count']) : parent::noDataDefaultValue();
     }
@@ -168,11 +172,11 @@ class Social extends SEOstats
      */
     public static function getPinterestShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::PINTEREST_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
-        $phpArray = Helper\Json::decode(substr($jsonData, 2, -1), true);
+        $phpArray = Helper\Json::decode(substr($jsonData, 2, - 1), true);
 
         return isset($phpArray['count']) ? intval($phpArray['count']) : parent::noDataDefaultValue();
     }
@@ -186,14 +190,13 @@ class Social extends SEOstats
      */
     public static function getStumbleUponShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::STUMBLEUPON_INFO_URL, urlencode($url));
 
         $jsonData = parent::_getPage($dataUrl);
         $phpArray = Helper\Json::decode($jsonData, true);
 
-        return isset($phpArray['result']['in_index']) && true == $phpArray['result']['in_index']
-            ? intval($phpArray['result']['views']) : parent::noDataDefaultValue();
+        return isset($phpArray['result']['in_index']) && true == $phpArray['result']['in_index'] ? intval($phpArray['result']['views']) : parent::noDataDefaultValue();
     }
 
     /**
@@ -205,7 +208,7 @@ class Social extends SEOstats
      */
     public static function getVKontakteShares($url = false)
     {
-        $url     = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::VKONTAKTE_INFO_URL, urlencode($url));
 
         $htmlData = parent::_getPage($dataUrl);
@@ -224,7 +227,7 @@ class Social extends SEOstats
      */
     public static function getXingShares($url = false)
     {
-        $host    = parent::getHost($url);
+        $host = parent::getHost($url);
         $dataUrl = sprintf(Config\Services::XING_SHAREBUTTON_URL, urlencode($host));
 
         $htmlData = parent::_getPage($dataUrl);
@@ -232,10 +235,10 @@ class Social extends SEOstats
 
         if (isset($matches[1]) && 4 == sizeof($matches[1])) {
             return array(
-                'shares'   => intval($matches[1][0]),
+                'shares' => intval($matches[1][0]),
                 'comments' => intval($matches[1][1]),
-                'clicks'   => intval($matches[1][2]),
-                'reach'    => intval($matches[1][3]),
+                'clicks' => intval($matches[1][2]),
+                'reach' => intval($matches[1][3])
             );
         }
 

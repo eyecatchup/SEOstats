@@ -13,14 +13,17 @@ namespace SEOstats\Config;
 
 /**
  * SEOstats provider list and service URLs
- * @package    SEOstats
+ *
+ * @package SEOstats
  */
 interface Services
 {
+
     const PROVIDER = '["alexa","google","ose","semrush","mozscape","sistrix","social"]';
 
     // Alexa public report URLs.
     const ALEXA_SITEINFO_URL = 'http://www.alexa.com/siteinfo/%s';
+
     const ALEXA_GRAPH_URL = 'http://traffic.alexa.com/graph?&o=f&c=1&y=%s&b=ffffff&n=666666&w=%s&h=%s&r=%sm&u=%s';
 
     // Sistrix Visibility Index public report URL.
@@ -29,7 +32,9 @@ interface Services
 
     // SEMrush API Endpoints.
     const SEMRUSH_BE_URL = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';
+
     const SEMRUSH_GRAPH_URL = 'http://semrush.com/archive/graphs.php?domain=%s&db=%s&type=%s&w=%s&h=%s&lc=%s&dc=%s&l=%s';
+
     const SEMRUSH_WIDGET_URL = 'http://widget.semrush.com/widget.php?action=report&type=%s&db=%s&domain=%s';
 
     // Mozscape (f.k.a. Seomoz) Link metrics API Endpoint.

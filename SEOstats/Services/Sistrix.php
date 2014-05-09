@@ -10,13 +10,13 @@ namespace SEOstats\Services;
  * @license    http://eyecatchup.mit-license.org/  MIT License
  * @updated    2013/08/14
  */
-
 use SEOstats\SEOstats as SEOstats;
 use SEOstats\Config as Config;
 use SEOstats\Helper as Helper;
 
 class Sistrix extends SEOstats
 {
+
     /**
      * Returns the Sistrix visibility index
      *
@@ -27,8 +27,8 @@ class Sistrix extends SEOstats
      */
     public static function getVisibilityIndex($url = false)
     {
-        $url     = parent::getUrl($url);
-        $domain  = Helper\Url::parseHost($url);
+        $url = parent::getUrl($url);
+        $domain = Helper\Url::parseHost($url);
         $dataUrl = sprintf(Config\Services::SISTRIX_VI_URL, urlencode($domain));
 
         $html = parent::_getPage($dataUrl);

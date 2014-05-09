@@ -10,7 +10,6 @@ namespace SEOstats\Common;
  * @license    http://eyecatchup.mit-license.org/  MIT License
  * @updated    2013/02/03
  */
-
 class SEOstatsException extends \Exception
 {
 }
