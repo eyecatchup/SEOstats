@@ -119,7 +119,7 @@ class Alexa extends SEOstats
         */
         
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a");
+        $nodes = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong");
 
         return !$nodes->item(0) ? parent::noDataDefaultValue() :
             self::retInt( strip_tags($nodes->item(0)->nodeValue) );
