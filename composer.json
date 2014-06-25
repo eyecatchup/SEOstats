@@ -34,7 +34,8 @@
 		"ext-json" : "*"
 	},
     "require-dev" : {
-        "squizlabs/php_codesniffer" : "~1"
+				"squizlabs/php_codesniffer" : "~1",
+        "phpunit/phpunit" : ">=3.7,<4"
     },
 	"autoload" : {
 		"psr-0" : {

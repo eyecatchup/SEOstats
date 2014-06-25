@@ -12,7 +12,7 @@ before_script:
 
 script:
   - ./vendor/bin/phpunit ./tests/
-  - ./vendor/bin/phpcs -n --standard=PSR2 ./SEOstats/ ./tests/
+#  - ./vendor/bin/phpcs -n --standard=PSR2 ./SEOstats/ ./tests/
 
 notifications:
   email: false
