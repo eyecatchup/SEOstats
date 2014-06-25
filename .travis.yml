@@ -11,7 +11,7 @@ before_script:
   - php composer.phar install --dev
 
 script:
-  - phpunit --configuration ./tests/phpunit.xml
+  - ./vendor/bin/phpunit ./tests/
   - ./vendor/bin/phpcs -n --standard=PSR2 ./SEOstats/ ./tests/
 
 notifications:
