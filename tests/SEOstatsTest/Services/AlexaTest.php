@@ -2,46 +2,23 @@
 
 namespace SEOstatsTest\Services;
 
+use SEOstatsTest\AbstractSEOstatsTestCase;
 use SEOstats\Services\Alexa;
-use ReflectionClass;
 
-class AlexaTest extends \PHPUnit_Framework_TestCase
+class AlexaTest extends AbstractSEOstatsTestCase
 {
-    /**
-     *
-     * @var Alexa
-     */
-    protected $SUT;
-
-
-    /**
-     *
-     * @var Alexa
-     */
-    protected $mockedSUT;
-
-
-    /**
-     *
-     * @var string
-     */
-    protected $url;
-
-
-    /**
-     *
-     * @var string
-     */
-    protected $reflection = array();
+    protected $standardVersionFile = "alexa-siteinfo-%s.html";
+    protected $standardVersionSubFile = "alexa-siteinfo-%s-%s-%s.html";
 
     public function setUp()
     {
+        parent::setup();
+
         $this->reflection = array();
 
         $this->url = 'http://github.com';
         $this->SUT = new \SEOstats\Services\Alexa();
         $this->SUT->setUrl($this->url);
-
     }
 
     /**
@@ -288,72 +265,11 @@ class AlexaTest extends \PHPUnit_Framework_TestCase
         $this->mockedSUT->setUrl(array_key_exists('url',$vars) ? $vars['url'] : $this->url);
     }
 
-    protected function mockGetPage()
-    {
-        $standardFile = sprintf('%s/_assert/alexa-siteinfo-%s.html', __DIR__, 2013);
-
-        $this->mockedSUT->staticExpects($this->any())
-                        ->method('_getPage')
-                        ->will($this->returnValue(file_get_contents($standardFile)));
-    }
-
     protected function mockGetAlexaPage ($version, $calledTest = null)
     {
-        $standardFile = sprintf('%s/_assert/alexa-siteinfo-%s.html', __DIR__, $version);
+        $standardFile = sprintf($this->assertDirectory . $this->standardVersionFile, $version);
         $this->mockedSUT->staticExpects($this->any())
                         ->method('_getAlexaPage')
                         ->will($this->returnValue(file_get_contents($standardFile)));
-    }
-
-    protected function getStandardVersions ($version, $methode)
-    {
-        $filePattern = 'alexa-siteinfo-%s-%s-%s.html';
-
-        $methodeFile = __DIR__ . '/_assert/' . sprintf($filePattern, $version, $methode, 1);
-
-
-        $result= array($version);
-        if (! file_exists($methodeFile)) {
-            return array($version);
-        }
-
-        $fileList = new \DirectoryIterator(__DIR__ . '/_assert/');
-        $regexp = '#' . sprintf($filePattern, $version, $methode, '\d+') . '$#';
-        $filtertList = new \RegexIterator($fileList, $regexp);
-
-        $regexp = '#alexa-siteinfo-([^.]+).html$#';
-        foreach ($filtertList as $file) {
-            preg_match($regexp, $file, $matches);
-            $result[] = $matches[1];
-        }
-        return $result;
-    }
-
-    protected function helperMakeAccessable ($object, $propertyOrMethod, $value = null)
-    {
-        $objectClass = get_class($object);
-        if (!isset($this->reflection[$objectClass])) {
-            $this->reflection[$objectClass] = new ReflectionClass($object);
-        }
-        $reflection = $this->reflection[$objectClass];
-        $isMethod = $reflection->hasMethod($propertyOrMethod);
-
-        if ($isMethod) {
-            $reflectionSub = $reflection->getMethod($propertyOrMethod);
-        } else {
-            $reflectionSub = $reflection->getProperty($propertyOrMethod);
-        }
-
-        $reflectionSub->setAccessible(true);
-
-        if (!is_null($value)) {
-            if ($isMethod) {
-                return $reflectionSub->invokeArgs($object, $value);
-            } else {
-                $reflectionSub->setValue($object, $value);
-            }
-        }
-
-        return $reflectionSub;
     }
 }
