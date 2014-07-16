@@ -35,6 +35,7 @@
 	},
     "require-dev" : {
 				"squizlabs/php_codesniffer" : "~1",
+		"composer/composer" : "dev",
         "phpunit/phpunit" : ">=3.7,<4",
 				"scrutinizer/ocular" : "~1"
     },
