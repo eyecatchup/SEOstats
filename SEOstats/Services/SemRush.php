@@ -16,7 +16,7 @@ use SEOstats\SEOstats as SEOstats;
 use SEOstats\Config as Config;
 use SEOstats\Helper as Helper;
 
-class SEMRush extends SEOstats
+class SemRush extends SEOstats
 {
     public static function getDBs()
     {
