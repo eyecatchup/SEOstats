@@ -2,10 +2,9 @@
 
 namespace SEOstatsTest\Services;
 
-use SEOstatsTest\AbstractSEOstatsTestCase;
 use SEOstats\Services\Alexa;
 
-class AlexaTest extends AbstractSEOstatsTestCase
+class AlexaTest extends AbstractServiceTestCase
 {
     protected $standardVersionFile = "alexa-siteinfo-%s.html";
     protected $standardVersionSubFile = "alexa-siteinfo-%s-%s-%s.html";
@@ -219,6 +218,7 @@ class AlexaTest extends AbstractSEOstatsTestCase
 
         foreach ($versionList as $version) {
             foreach ($methodList as $methodName=>$methodeAssertResultType) {
+
                 $versionArray = $this->getStandardVersions($version[0], $methodName);
                 $iVersion = 0;
                 foreach($versionArray as $versionSub) {
@@ -267,7 +267,7 @@ class AlexaTest extends AbstractSEOstatsTestCase
 
     protected function mockGetAlexaPage ($version, $calledTest = null)
     {
-        $standardFile = sprintf($this->assertDirectory . $this->standardVersionFile, $version);
+        $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionFile, $version);
         $this->mockedSUT->staticExpects($this->any())
                         ->method('_getAlexaPage')
                         ->will($this->returnValue(file_get_contents($standardFile)));

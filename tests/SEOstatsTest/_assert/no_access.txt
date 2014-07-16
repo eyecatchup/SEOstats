@@ -1,0 +1,1088 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html class="   ">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+    <title>SEOstats/README.md at master · eyecatchup/SEOstats · GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+    <meta property="fb:app_id" content="1401488693436528"/>
+
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="eyecatchup/SEOstats" name="twitter:title" /><meta content="SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics." name="twitter:description" /><meta content="https://avatars1.githubusercontent.com/u/845131?s=400" name="twitter:image:src" />
+<meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars1.githubusercontent.com/u/845131?s=400" property="og:image" /><meta content="eyecatchup/SEOstats" property="og:title" /><meta content="https://github.com/eyecatchup/SEOstats" property="og:url" /><meta content="SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics." property="og:description" />
+
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    <link rel="conduit-xhr" href="https://ghconduit.com:25035">
+    
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="selected-link" value="repo_source" data-pjax-transient />
+      <meta name="google-analytics" content="UA-3769691-2">
+
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="02F038E6:0F8A:9C9336:53B3C4D8" name="octolytics-dimension-request_id" />
+    
+
+    
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico" />
+
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="UdooGsT7eYwE6nl8TJOxSL/j3ETSaddVCgAIl2e+x5kXqWEIUynweiERXCYumtgd8ZL6ULeiK+6LNsIszEuUIw==" name="csrf-token" />
+
+    <link href="https://assets-cdn.github.com/assets/github-a8199f29102b2eac9df6d0098cf7a9c9857e89ee.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://assets-cdn.github.com/assets/github2-bb63b855e5e18db898c33c27a431a6f17937a7cf.css" media="all" rel="stylesheet" type="text/css" />
+    
+
+
+    <meta http-equiv="x-pjax-version" content="5c22711055c203d86aa59c099c5fc47f">
+
+      
+  <meta name="description" content="SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics." />
+
+
+  <meta content="845131" name="octolytics-dimension-user_id" /><meta content="eyecatchup" name="octolytics-dimension-user_login" /><meta content="2145654" name="octolytics-dimension-repository_id" /><meta content="eyecatchup/SEOstats" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="2145654" name="octolytics-dimension-repository_network_root_id" /><meta content="eyecatchup/SEOstats" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/eyecatchup/SEOstats/commits/master.atom" rel="alternate" title="Recent Commits to SEOstats:master" type="application/atom+xml" />
+
+  </head>
+
+
+  <body class="logged_out  env-production  vis-public page-blob">
+    <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+    <div class="wrapper">
+      
+      
+      
+      
+
+
+      
+      <div class="header header-logged-out">
+  <div class="container clearfix">
+
+    <a class="header-logo-wordmark" href="https://github.com/">
+      <span class="mega-octicon octicon-logo-github"></span>
+    </a>
+
+    <div class="header-actions">
+        <a class="button primary" href="/join">Sign up</a>
+      <a class="button signin" href="/login?return_to=%2Feyecatchup%2FSEOstats%2Fblob%2Fmaster%2FREADME.md">Sign in</a>
+    </div>
+
+    <div class="command-bar js-command-bar  in-repository">
+
+      <ul class="top-nav">
+          <li class="explore"><a href="/explore">Explore</a></li>
+          <li class="features"><a href="/features">Features</a></li>
+          <li class="enterprise"><a href="https://enterprise.github.com/">Enterprise</a></li>
+          <li class="blog"><a href="/blog">Blog</a></li>
+      </ul>
+        <form accept-charset="UTF-8" action="/search" class="command-bar-form" id="top_search_form" method="get">
+
+<div class="commandbar">
+  <span class="message"></span>
+  <input type="text" data-hotkey="s, /" name="q" id="js-command-bar-field" placeholder="Search or type a command" tabindex="1" autocapitalize="off"
+    
+    
+      data-repo="eyecatchup/SEOstats"
+      data-branch="master"
+      data-sha="ea311c2d9cbae9e36345054c5edb69d9a8141c51"
+  >
+  <div class="display hidden"></div>
+</div>
+
+    <input type="hidden" name="nwo" value="eyecatchup/SEOstats" />
+
+    <div class="select-menu js-menu-container js-select-menu search-context-select-menu">
+      <span class="minibutton select-menu-button js-menu-target" role="button" aria-haspopup="true">
+        <span class="js-select-button">This repository</span>
+      </span>
+
+      <div class="select-menu-modal-holder js-menu-content js-navigation-container" aria-hidden="true">
+        <div class="select-menu-modal">
+
+          <div class="select-menu-item js-navigation-item js-this-repository-navigation-item selected">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" class="js-search-this-repository" name="search_target" value="repository" checked="checked" />
+            <div class="select-menu-item-text js-select-button-text">This repository</div>
+          </div> <!-- /.select-menu-item -->
+
+          <div class="select-menu-item js-navigation-item js-all-repositories-navigation-item">
+            <span class="select-menu-item-icon octicon octicon-check"></span>
+            <input type="radio" name="search_target" value="global" />
+            <div class="select-menu-item-text js-select-button-text">All repositories</div>
+          </div> <!-- /.select-menu-item -->
+
+        </div>
+      </div>
+    </div>
+
+  <span class="help tooltipped tooltipped-s" aria-label="Show command bar help">
+    <span class="octicon octicon-question"></span>
+  </span>
+
+
+  <input type="hidden" name="ref" value="cmdform">
+
+</form>
+    </div>
+
+  </div>
+</div>
+
+
+
+      <div id="start-of-content" class="accessibility-aid"></div>
+          <div class="site" itemscope itemtype="http://schema.org/WebPage">
+    <div id="js-flash-container">
+      
+    </div>
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+        
+
+<ul class="pagehead-actions">
+
+
+  <li>
+      <a href="/login?return_to=%2Feyecatchup%2FSEOstats"
+    class="minibutton with-count star-button tooltipped tooltipped-n"
+    aria-label="You must be signed in to star a repository" rel="nofollow">
+    <span class="octicon octicon-star"></span>
+    Star
+  </a>
+
+    <a class="social-count js-social-count" href="/eyecatchup/SEOstats/stargazers">
+      512
+    </a>
+
+  </li>
+
+    <li>
+      <a href="/login?return_to=%2Feyecatchup%2FSEOstats"
+        class="minibutton with-count js-toggler-target fork-button tooltipped tooltipped-n"
+        aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <span class="octicon octicon-repo-forked"></span>
+        Fork
+      </a>
+      <a href="/eyecatchup/SEOstats/network" class="social-count">
+        146
+      </a>
+    </li>
+</ul>
+
+        <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+          <span class="repo-label"><span>public</span></span>
+          <span class="mega-octicon octicon-repo"></span>
+          <span class="author"><a href="/eyecatchup" class="url fn" itemprop="url" rel="author"><span itemprop="title">eyecatchup</span></a></span><!--
+       --><span class="path-divider">/</span><!--
+       --><strong><a href="/eyecatchup/SEOstats" class="js-current-repository js-repo-home-link">SEOstats</a></strong>
+
+          <span class="page-context-loader">
+            <img alt="" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline js-new-discussion-timeline  ">
+        <div class="repository-sidebar clearfix">
+            
+
+<div class="sunken-menu vertical-right repo-nav js-repo-nav js-repository-container-pjax js-octicon-loaders">
+  <div class="sunken-menu-contents">
+    <ul class="sunken-menu-group">
+      <li class="tooltipped tooltipped-w" aria-label="Code">
+        <a href="/eyecatchup/SEOstats" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-pjax="true" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /eyecatchup/SEOstats">
+          <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+        <li class="tooltipped tooltipped-w" aria-label="Issues">
+          <a href="/eyecatchup/SEOstats/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-hotkey="g i" data-selected-links="repo_issues /eyecatchup/SEOstats/issues">
+            <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+            <span class='counter'>12</span>
+            <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>        </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Pull Requests">
+        <a href="/eyecatchup/SEOstats/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-hotkey="g p" data-selected-links="repo_pulls /eyecatchup/SEOstats/pulls">
+            <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull Requests</span>
+            <span class='counter'>3</span>
+            <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+
+        <li class="tooltipped tooltipped-w" aria-label="Wiki">
+          <a href="/eyecatchup/SEOstats/wiki" aria-label="Wiki" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-hotkey="g w" data-selected-links="repo_wiki /eyecatchup/SEOstats/wiki">
+            <span class="octicon octicon-book"></span> <span class="full-word">Wiki</span>
+            <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>        </li>
+    </ul>
+    <div class="sunken-menu-separator"></div>
+    <ul class="sunken-menu-group">
+
+      <li class="tooltipped tooltipped-w" aria-label="Pulse">
+        <a href="/eyecatchup/SEOstats/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="pulse /eyecatchup/SEOstats/pulse">
+          <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Graphs">
+        <a href="/eyecatchup/SEOstats/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-pjax="true" data-selected-links="repo_graphs repo_contributors /eyecatchup/SEOstats/graphs">
+          <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Network">
+        <a href="/eyecatchup/SEOstats/network" aria-label="Network" class="js-selected-navigation-item sunken-menu-item js-disable-pjax" data-selected-links="repo_network /eyecatchup/SEOstats/network">
+          <span class="octicon octicon-repo-forked"></span> <span class="full-word">Network</span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+    </ul>
+
+
+  </div>
+</div>
+
+              <div class="only-with-full-nav">
+                
+
+  
+
+<div class="clone-url open"
+  data-protocol-type="http"
+  data-url="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone">
+  <h3><strong>HTTPS</strong> clone URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/eyecatchup/SEOstats.git" readonly="readonly">
+    <span class="url-box-clippy">
+    <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="https://github.com/eyecatchup/SEOstats.git" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+
+<div class="clone-url "
+  data-protocol-type="subversion"
+  data-url="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone">
+  <h3><strong>Subversion</strong> checkout URL</h3>
+  <div class="clone-url-box">
+    <input type="text" class="clone js-url-field"
+           value="https://github.com/eyecatchup/SEOstats" readonly="readonly">
+    <span class="url-box-clippy">
+    <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="https://github.com/eyecatchup/SEOstats" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+<p class="clone-options">You can clone with
+      <a href="#" class="js-clone-selector" data-protocol="http">HTTPS</a>
+      or <a href="#" class="js-clone-selector" data-protocol="subversion">Subversion</a>.
+  <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</p>
+
+
+
+                <a href="/eyecatchup/SEOstats/archive/master.zip"
+                   class="minibutton sidebar-button"
+                   aria-label="Download eyecatchup/SEOstats as a zip file"
+                   title="Download eyecatchup/SEOstats as a zip file"
+                   rel="nofollow">
+                  <span class="octicon octicon-cloud-download"></span>
+                  Download ZIP
+                </a>
+              </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+          
+
+
+<a href="/eyecatchup/SEOstats/blob/d6f8dc189f12801bdc2b5fc9aa58a4f342c76681/README.md" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+<!-- blob contrib key: blob_contributors:v21:490910bc221ac0f4a001001f75a0b7f1 -->
+
+<p title="This is a placeholder element" class="js-history-link-replace hidden"></p>
+
+<div class="file-navigation">
+  
+
+<div class="select-menu js-menu-container js-select-menu" >
+  <span class="minibutton select-menu-button js-menu-target css-truncate" data-hotkey="w"
+    data-master-branch="master"
+    data-ref="master"
+    title="master"
+    role="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <span class="octicon octicon-git-branch"></span>
+    <i>branch:</i>
+    <span class="js-select-button css-truncate-target">master</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-x js-menu-close"></span>
+      </div> <!-- /.select-menu-header -->
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" class="js-select-menu-tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" class="js-select-menu-tab">Tags</a>
+            </li>
+          </ul>
+        </div><!-- /.select-menu-tabs -->
+      </div><!-- /.select-menu-filters -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/blob/dev-253/README.md"
+                 data-name="dev-253"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="dev-253">dev-253</a>
+            </div> <!-- /.select-menu-item -->
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/blob/gh-pages/README.md"
+                 data-name="gh-pages"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="gh-pages">gh-pages</a>
+            </div> <!-- /.select-menu-item -->
+            <div class="select-menu-item js-navigation-item selected">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/blob/master/README.md"
+                 data-name="master"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="master">master</a>
+            </div> <!-- /.select-menu-item -->
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/blob/wip-cs/README.md"
+                 data-name="wip-cs"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="wip-cs">wip-cs</a>
+            </div> <!-- /.select-menu-item -->
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/tree/2.5.3-wip/README.md"
+                 data-name="2.5.3-wip"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="2.5.3-wip">2.5.3-wip</a>
+            </div> <!-- /.select-menu-item -->
+            <div class="select-menu-item js-navigation-item ">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="/eyecatchup/SEOstats/tree/2.5.2/README.md"
+                 data-name="2.5.2"
+                 data-skip-pjax="true"
+                 rel="nofollow"
+                 class="js-navigation-open select-menu-item-text css-truncate-target"
+                 title="2.5.2">2.5.2</a>
+            </div> <!-- /.select-menu-item -->
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div> <!-- /.select-menu-list -->
+
+    </div> <!-- /.select-menu-modal -->
+  </div> <!-- /.select-menu-modal-holder -->
+</div> <!-- /.select-menu -->
+
+  <div class="button-group right">
+    <a href="/eyecatchup/SEOstats/find/master"
+          class="js-show-file-finder minibutton empty-icon tooltipped tooltipped-s"
+          data-pjax
+          data-hotkey="t"
+          aria-label="Quickly jump between files">
+      <span class="octicon octicon-list-unordered"></span>
+    </a>
+    <button class="js-zeroclipboard minibutton zeroclipboard-button"
+          data-clipboard-text="README.md"
+          aria-label="Copy to clipboard"
+          data-copied-hint="Copied!">
+      <span class="octicon octicon-clippy"></span>
+    </button>
+  </div>
+
+  <div class="breadcrumb">
+    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/eyecatchup/SEOstats" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">SEOstats</span></a></span></span><span class="separator"> / </span><strong class="final-path">README.md</strong>
+  </div>
+</div>
+
+
+  <div class="commit file-history-tease">
+      <img alt="Stephan Schmitz" class="main-avatar js-avatar" data-user="845131" height="24" src="https://avatars2.githubusercontent.com/u/845131?s=140" width="24" />
+      <span class="author"><a href="/eyecatchup" rel="author">eyecatchup</a></span>
+      <time datetime="2014-01-19T20:20:52+01:00" is="relative-time">January 19, 2014</time>
+      <div class="commit-title">
+          <a href="/eyecatchup/SEOstats/commit/d6f8dc189f12801bdc2b5fc9aa58a4f342c76681" class="message" data-pjax="true" title="Hello 2014">Hello 2014</a>
+      </div>
+
+    <div class="participation">
+      <p class="quickstat"><a href="#blob_contributors_box" rel="facebox"><strong>2</strong>  contributors</a></p>
+          <a class="avatar tooltipped tooltipped-s" aria-label="eyecatchup" href="/eyecatchup/SEOstats/commits/master/README.md?author=eyecatchup"><img alt="Stephan Schmitz" class=" js-avatar" data-user="845131" height="20" src="https://avatars2.githubusercontent.com/u/845131?s=140" width="20" /></a>
+    <a class="avatar tooltipped tooltipped-s" aria-label="francisbesset" href="/eyecatchup/SEOstats/commits/master/README.md?author=francisbesset"><img alt="Francis Besset" class=" js-avatar" data-user="471525" height="20" src="https://avatars1.githubusercontent.com/u/471525?s=140" width="20" /></a>
+
+
+    </div>
+    <div id="blob_contributors_box" style="display:none">
+      <h2 class="facebox-header">Users who have contributed to this file</h2>
+      <ul class="facebox-user-list">
+          <li class="facebox-user-list-item">
+            <img alt="Stephan Schmitz" class=" js-avatar" data-user="845131" height="24" src="https://avatars2.githubusercontent.com/u/845131?s=140" width="24" />
+            <a href="/eyecatchup">eyecatchup</a>
+          </li>
+          <li class="facebox-user-list-item">
+            <img alt="Francis Besset" class=" js-avatar" data-user="471525" height="24" src="https://avatars1.githubusercontent.com/u/471525?s=140" width="24" />
+            <a href="/francisbesset">francisbesset</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
+<div class="file-box">
+  <div class="file">
+    <div class="meta clearfix">
+      <div class="info file-name">
+        <span class="icon"><b class="octicon octicon-file-text"></b></span>
+        <span class="mode" title="File Mode">file</span>
+        <span class="meta-divider"></span>
+          <span>459 lines (346 sloc)</span>
+          <span class="meta-divider"></span>
+        <span>15.726 kb</span>
+      </div>
+      <div class="actions">
+        <div class="button-group">
+              <a class="minibutton disabled tooltipped tooltipped-w" href="#"
+                 aria-label="You must be signed in to make or propose changes">Edit</a>
+          <a href="/eyecatchup/SEOstats/raw/master/README.md" class="minibutton " id="raw-url">Raw</a>
+            <a href="/eyecatchup/SEOstats/blame/master/README.md" class="minibutton js-update-url-with-hash">Blame</a>
+          <a href="/eyecatchup/SEOstats/commits/master/README.md" class="minibutton " rel="nofollow">History</a>
+        </div><!-- /.button-group -->
+          <a class="minibutton danger disabled empty-icon tooltipped tooltipped-w" href="#"
+             aria-label="You must be signed in to make or propose changes">
+          Delete
+        </a>
+      </div><!-- /.actions -->
+    </div>
+      
+  <div id="readme" class="blob instapaper_body">
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><p><a href="https://flattr.com/submit/auto?user_id=eyecatchup&amp;url=https://github.com/eyecatchup/SEOstats&amp;title=SEOstats&amp;language=en&amp;tags=github&amp;category=software"><img src="https://camo.githubusercontent.com/739a757846f69c1cc10163619eec008e871b591b/687474703a2f2f6170692e666c617474722e636f6d2f627574746f6e2f666c617474722d62616467652d6c617267652e706e67" alt="Flattr SEOstats" data-canonical-src="http://api.flattr.com/button/flattr-badge-large.png" style="max-width:100%;"></a></p>
+
+<h1>
+<a name="user-content-seostats-seo-metrics-library-for-php" class="anchor" href="#seostats-seo-metrics-library-for-php" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats: SEO metrics library for PHP</h1>
+
+<p>SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.</p>
+
+<p>SEOstats offers over 50 different methods and gathers data from Alexa, Google, Mozscape (by Moz - f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter &amp; many more.</p>
+
+<h2>
+<a name="user-content-dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>SEOstats requires PHP version 5.3 or greater and the PHP5-CURL and PHP5-JSON extensions.</p>
+
+<h2>
+<a name="user-content-installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>The recommended way to install SEOstats is <a href="http://getcomposer.org">through composer</a>.
+To install SEOstats, just create the following <code>composer.json</code> file</p>
+
+<pre><code>{
+    "require": {
+        "seostats/seostats": "dev-master"
+    }
+}
+</code></pre>
+
+<p>and run the <code>php composer.phar install</code> (Windows: <code>composer install</code>) command in path of the <code>composer.json</code>.  </p>
+
+<h4>
+<a name="user-content-step-by-step-example" class="anchor" href="#step-by-step-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step-by-step example:</h4>
+
+<p>If you haven't installed composer yet, here's the easiest way to do so:</p>
+
+<pre><code># Download the composer installer and execute it with PHP:
+user@host:~/&gt; curl -sS https://getcomposer.org/installer | php
+
+# Copy composer.phar to where your local executables live:
+user@host:~/&gt; mv /path/given/by/composer-installer/composer.phar /usr/local/bin/composer.phar
+
+# Alternatively: For ease of use, you can add an alias to your bash profile:
+# (Note, you need to re-login your terminal for the change to take effect.)
+user@host:~/&gt; echo 'alias composer="php /usr/local/bin/composer.phar"' &gt;&gt; ~/.profile
+</code></pre>
+
+<hr><p>If you have installed composer, follow these steps to install SEOstats:</p>
+
+<pre><code># Create a new directory and cd into it:
+user@host:~/&gt; mkdir /path/to/seostats &amp;&amp; cd /path/to/seostats
+
+# Create the composer.json for SEOstats:
+user@host:/path/to/seostats&gt; echo '{"require":{"seostats/seostats":"dev-master"}}' &gt; composer.json
+
+# Run the install command:
+user@host:/path/to/seostats&gt; composer install
+Loading composer repositories with package information
+Installing dependencies (including require-dev)
+  - Installing seostats/seostats (dev-master 4c192e4)
+    Cloning 4c192e43256c95741cf85d23ea2a0d59a77b7a9a
+
+Writing lock file
+Generating autoload files
+
+# You're done. For a quick start, you can now 
+# copy the example files to the install directory:
+user@host:/path/to/seostats&gt; cp ./vendor/seostats/seostats/example/*.php  ./
+
+# Your SEOstats install directory should look like this now:
+user@host:/path/to/seostats&gt; ls -1
+composer.json
+composer.lock
+get-alexa-graphs.php
+get-alexa-metrics.php
+get-google-pagerank.php
+get-google-pagespeed-analysis.php
+get-google-serps.php
+get-opensiteexplorer-metrics.php
+get-semrush-graphs.php
+get-semrush-metrics.php
+get-sistrix-visibilityindex.php
+get-social-metrics.php
+vendor
+</code></pre>
+
+<hr><h4>
+<a name="user-content-use-seostats-without-composer" class="anchor" href="#use-seostats-without-composer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use SEOstats without composer</h4>
+
+<p>If composer is no option for you, you can still just download the <a href="https://github.com/eyecatchup/SEOstats/archive/master.zip"><code>SEOstats.zip</code></a> file of the current master branch (version 2.5.2) and extract it. However, currently <a href="https://github.com/eyecatchup/SEOstats/issues/49">there is an issues with autoloading</a> and you need to follow the instructions in the comments in the example files in order to use SEOstats (or download zip for the development version of SEOstats (2.5.3) <a href="https://github.com/eyecatchup/SEOstats/archive/dev-253.zip">here</a>).</p>
+
+<h2>
+<a name="user-content-usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="user-content-toc" class="anchor" href="#toc" aria-hidden="true"><span class="octicon octicon-link"></span></a>TOC</h3>
+
+<ul class="task-list">
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#brief-example-of-use">Brief Example of Use</a></li>
+<li>
+<a href="#seostats-alexa-methods">Alexa Methods</a>
+
+<ul class="task-list">
+<li><a href="#alexa-traffic-metrics">Alexa Traffic Metrics</a></li>
+<li><a href="#alexa-traffic-graphs">Alexa Traffic Graphs</a></li>
+</ul>
+</li>
+<li>
+<a href="#seostats-google-methods">Google Methods</a>
+
+<ul class="task-list">
+<li><a href="#google-toolbar-pagerank">Toolbar Pagerank</a></li>
+<li><a href="#google-pagespeed-service">Pagespeed Service</a></li>
+<li><a href="#google-websearch-index">Websearch Index</a></li>
+<li><a href="#google-serp-details">SERP Details</a></li>
+</ul>
+</li>
+<li>
+<a href="#seostats-mozscape-methods">Mozscape Methods</a><br>
+</li>
+<li><a href="#seostats-open-site-explorer-methods">Open Site Explorer Methods</a></li>
+<li>
+<a href="#seostats-semrush-methods">SEMRush Methods</a>
+
+<ul class="task-list">
+<li><a href="#semrush-domain-reports">Domain Reports</a></li>
+<li><a href="#semrush-graphs">Graphs</a></li>
+</ul>
+</li>
+<li>
+<a href="#seostats-sistrix-methods">Sistrix Methods</a>
+
+<ul class="task-list">
+<li><a href="#sistrix-visibility-index">Visibility Index</a></li>
+</ul>
+</li>
+<li><a href="#seostats-social-media-methods">Social Media Methods</a></li>
+</ul><hr><h3>
+<a name="user-content-configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p>There're two configuration files to note:</p>
+
+<ol class="task-list">
+<li>`./SEOstats/Config/ApiKeys.php`<br><em>Client API Keys (currently required for Mozscape and Google's Pagespeed Service only).</em>
+</li>
+<li>`./SEOstats/Config/DefaultSettings.php`<br><em>Some default settings for querying data (mainly locale related stuff).</em>
+</li>
+</ol><hr><h3>
+<a name="user-content-brief-example-of-use" class="anchor" href="#brief-example-of-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Brief Example of Use</h3>
+
+<p>To use the SEOstats methods, you must include one of the Autoloader classes first (For composer installs: <code>./vendor/autoload.php</code>; for zip download: <code>./SEOstats/bootstrap.php</code>).</p>
+
+<p>Now, you can create a new SEOstats instance an bind any URL to the instance for further use with any child class.</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="c1">// Depending on how you installed SEOstats</span>
+<span class="c1">#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span> <span class="o">.</span> <span class="s1">'vendor'</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span> <span class="o">.</span> <span class="s1">'autoload.php'</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">\SEOstats\Services</span> <span class="k">as</span> <span class="nx">SEOstats</span><span class="p">;</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nv">$url</span> <span class="o">=</span> <span class="s1">'http://www.google.com/'</span><span class="p">;</span>
+
+  <span class="c1">// Create a new SEOstats instance.</span>
+  <span class="nv">$seostats</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\SEOstats\SEOstats</span><span class="p">;</span>
+
+  <span class="c1">// Bind the URL to the current SEOstats instance.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$seostats</span><span class="o">-&gt;</span><span class="na">setUrl</span><span class="p">(</span><span class="nv">$url</span><span class="p">))</span> <span class="p">{</span>
+
+    <span class="k">echo</span> <span class="nx">SEOstats\Alexa</span><span class="o">::</span><span class="na">getGlobalRank</span><span class="p">();</span>
+    <span class="k">echo</span> <span class="nx">SEOstats\Google</span><span class="o">::</span><span class="na">getPageRank</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">SEOstatsException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Alternatively, you can call all methods statically passing the URL to the methods directly.</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="c1">// Depending on how you installed SEOstats</span>
+<span class="c1">#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span> <span class="o">.</span> <span class="s1">'vendor'</span> <span class="o">.</span> <span class="nx">DIRECTORY_SEPARATOR</span> <span class="o">.</span> <span class="s1">'autoload.php'</span><span class="p">;</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nv">$url</span> <span class="o">=</span> <span class="s1">'http://www.google.com/'</span><span class="p">;</span>
+
+  <span class="c1">// Get the Google Toolbar Pagerank for the given URL.</span>
+  <span class="k">echo</span> <span class="nx">\SEOstats\Services\Google</span><span class="o">::</span><span class="na">getPageRank</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="nx">SEOstatsException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>More detailed examples can be found in the <code>./example</code> directory.</p>
+
+<hr><h2>
+<a name="user-content-seostats-alexa-methods" class="anchor" href="#seostats-alexa-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Alexa Methods</h2>
+
+<h3>
+<a name="user-content-alexa-traffic-metrics" class="anchor" href="#alexa-traffic-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alexa Traffic Metrics</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns the global Alexa Traffic Rank (last 3 months).</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getGlobalRank</span><span class="p">();</span>
+
+  <span class="c1">// Returns the global Traffic Rank for the last month.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getMonthlyRank</span><span class="p">();</span>
+
+  <span class="c1">// Returns the global Traffic Rank for the last week.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getWeeklyRank</span><span class="p">();</span>
+
+  <span class="c1">// Returns the global Traffic Rank for yesterday.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getDailyRank</span><span class="p">();</span>
+
+  <span class="c1">// Returns the country-specific Alexa Traffic Rank.</span>
+  <span class="nb">print_r</span><span class="p">(</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getCountryRank</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns Alexa's backlink count for the given domain.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getBacklinkCount</span><span class="p">();</span>
+
+  <span class="c1">// Returns Alexa's page load time info for the given domain.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getPageLoadTime</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="user-content-alexa-traffic-graphs" class="anchor" href="#alexa-traffic-graphs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alexa Traffic Graphs</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns HTML code for the 'daily traffic trend'-graph.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'daily pageviews (percent)'-graph.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'daily pageviews per user'-graph.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'time on site (in minutes)'-graph.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'bounce rate (percent)'-graph.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'search visits'-graph, using specific graph dimensions of 320*240 px.</span>
+  <span class="k">print</span> <span class="nx">Alexa</span><span class="o">::</span><span class="na">getTrafficGraph</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">);</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-google-methods" class="anchor" href="#seostats-google-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Google Methods</h2>
+
+<h3>
+<a name="user-content-google-toolbar-pagerank" class="anchor" href="#google-toolbar-pagerank" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Toolbar PageRank</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">//  Returns the Google PageRank for the given URL.</span>
+  <span class="k">print</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getPageRank</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="user-content-google-pagespeed-service" class="anchor" href="#google-pagespeed-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Pagespeed Service</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns the Google Pagespeed analysis' metrics for the given URL.</span>
+  <span class="nb">print_r</span><span class="p">(</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getPagespeedAnalysis</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns the Google Pagespeed analysis' total score.</span>
+  <span class="k">print</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getPagespeedScore</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="user-content-google-websearch-index" class="anchor" href="#google-websearch-index" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google Websearch Index</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns the total amount of results for a Google site-search for the object URL.</span>
+  <span class="k">print</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getSiteindexTotal</span><span class="p">();</span>
+
+  <span class="c1">// Returns the total amount of results for a Google link-search for the object URL.</span>
+  <span class="k">print</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getBacklinksTotal</span><span class="p">();</span>
+
+  <span class="c1">// Returns the total amount of results for a Google search for 'keyword'.</span>
+  <span class="k">print</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getSearchResultsTotal</span><span class="p">(</span><span class="s1">'keyword'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="user-content-google-serp-details" class="anchor" href="#google-serp-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google SERP Details</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns an array of URLs and titles for the first 100 results for a Google web search for 'keyword'.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getSerps</span><span class="p">(</span><span class="s1">'keyword'</span><span class="p">)</span> <span class="p">);</span>
+
+  <span class="c1">// Returns an array of URLs and titles for the first 200 results for a Google site-search for $url.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getSerps</span><span class="p">(</span><span class="s2">"site:</span><span class="si">$url</span><span class="s2">"</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="p">);</span>
+
+  <span class="c1">// Returns an array of URLs, titles and position in SERPS for occurrences of $url</span>
+  <span class="c1">// within the first 1000 results for a Google web search for 'keyword'.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">Google</span><span class="o">::</span><span class="na">getSerps</span><span class="p">(</span><span class="s1">'keyword'</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="nv">$url</span><span class="p">)</span> <span class="p">);</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-mozscape-methods" class="anchor" href="#seostats-mozscape-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Mozscape Methods</h2>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// The normalized 10-point MozRank score of the URL. </span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getMozRank</span><span class="p">();</span>
+
+  <span class="c1">// The raw MozRank score of the URL.</span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getMozRankRaw</span><span class="p">();</span>
+
+  <span class="c1">// The number of links (equity or nonequity or not, internal or external) to the URL.</span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getLinkCount</span><span class="p">();</span>
+
+  <span class="c1">// The number of external equity links to the URL (http://apiwiki.moz.com/glossary#equity).</span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getEquityLinkCount</span><span class="p">();</span>
+
+  <span class="c1">// A normalized 100-point score representing the likelihood</span>
+  <span class="c1">// of the URL to rank well in search engine results.  </span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getPageAuthority</span><span class="p">();</span>
+
+  <span class="c1">// A normalized 100-point score representing the likelihood</span>
+  <span class="c1">// of the root domain of the URL to rank well in search engine results.</span>
+  <span class="k">print</span> <span class="nx">Mozscape</span><span class="o">::</span><span class="na">getDomainAuthority</span><span class="p">();</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-open-site-explorer-by-moz-methods" class="anchor" href="#seostats-open-site-explorer-by-moz-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Open Site Explorer (by MOZ) Methods</h2>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns several metrics from Open Site Explorer (by MOZ)</span>
+  <span class="nv">$ose</span> <span class="o">=</span> <span class="nx">OpenSiteExplorer</span><span class="o">::</span><span class="na">getPageMetrics</span><span class="p">();</span>
+
+  <span class="c1">// MOZ Domain-Authority Rank - Predicts this domain's ranking potential in the search engines </span>
+  <span class="c1">// based on an algorithmic combination of all link metrics.</span>
+  <span class="k">print</span> <span class="s2">"Domain-Authority:         "</span> <span class="o">.</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">domainAuthority</span><span class="o">-&gt;</span><span class="na">result</span> <span class="o">.</span> <span class="s1">' ('</span> <span class="o">.</span>      <span class="c1">// Int - e.g 42</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">domainAuthority</span><span class="o">-&gt;</span><span class="na">unit</span>   <span class="o">.</span> <span class="s1">') - '</span> <span class="o">.</span>    <span class="c1">// String - "/100"</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">domainAuthority</span><span class="o">-&gt;</span><span class="na">descr</span>  <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>    <span class="c1">// String - Result value description</span>
+
+  <span class="c1">// MOZ Page-Authority Rank - Predicts this page's ranking potential in the search engines </span>
+  <span class="c1">// based on an algorithmic combination of all link metrics.</span>
+  <span class="k">print</span> <span class="s2">"Page-Authority:           "</span> <span class="o">.</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">pageAuthority</span><span class="o">-&gt;</span><span class="na">result</span> <span class="o">.</span> <span class="s1">' ('</span> <span class="o">.</span>        <span class="c1">// Int - e.g 48</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">pageAuthority</span><span class="o">-&gt;</span><span class="na">unit</span>   <span class="o">.</span> <span class="s1">') - '</span> <span class="o">.</span>      <span class="c1">// String - "/100"</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">pageAuthority</span><span class="o">-&gt;</span><span class="na">descr</span>  <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>      <span class="c1">// String - Result value description</span>
+
+  <span class="c1">// Just-Discovered Inbound Links - Number of links to this page found over the past %n days, </span>
+  <span class="c1">// indexed within an hour of being shared on Twitter.</span>
+  <span class="k">print</span> <span class="s2">"Just-Discovered Links:    "</span> <span class="o">.</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">justDiscovered</span><span class="o">-&gt;</span><span class="na">result</span> <span class="o">.</span> <span class="s1">' ('</span> <span class="o">.</span>       <span class="c1">// Int - e.g 140</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">justDiscovered</span><span class="o">-&gt;</span><span class="na">unit</span>   <span class="o">.</span> <span class="s1">') - '</span> <span class="o">.</span>     <span class="c1">// String - e.g "32 days"</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">justDiscovered</span><span class="o">-&gt;</span><span class="na">descr</span>  <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>     <span class="c1">// String - Result value description</span>
+
+  <span class="c1">// Root-Domain Inbound Links - Number of unique root domains (e.g., *.example.com) </span>
+  <span class="c1">// containing at least one linking page to this URL.</span>
+  <span class="k">print</span> <span class="s2">"Linking Root Domains:     "</span> <span class="o">.</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">linkingRootDomains</span><span class="o">-&gt;</span><span class="na">result</span> <span class="o">.</span> <span class="s1">' ('</span> <span class="o">.</span>   <span class="c1">// Int - e.g 210</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">linkingRootDomains</span><span class="o">-&gt;</span><span class="na">unit</span>   <span class="o">.</span> <span class="s1">') - '</span> <span class="o">.</span> <span class="c1">// String - "Root Domains"</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">linkingRootDomains</span><span class="o">-&gt;</span><span class="na">descr</span>  <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span> <span class="c1">// String - Result value description</span>
+
+  <span class="c1">// Total Links - All links to this page including internal, external, followed, and nofollowed.</span>
+  <span class="k">print</span> <span class="s2">"Total Links:              "</span> <span class="o">.</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">totalLinks</span><span class="o">-&gt;</span><span class="na">result</span> <span class="o">.</span> <span class="s1">' ('</span> <span class="o">.</span>           <span class="c1">// Int - e.g 31571</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">totalLinks</span><span class="o">-&gt;</span><span class="na">unit</span>   <span class="o">.</span> <span class="s1">') - '</span> <span class="o">.</span>         <span class="c1">// String - "Total Links"</span>
+        <span class="nv">$ose</span><span class="o">-&gt;</span><span class="na">totalLinks</span><span class="o">-&gt;</span><span class="na">descr</span>  <span class="o">.</span> <span class="nx">PHP_EOL</span><span class="p">;</span>         <span class="c1">// String - Result value description</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-semrush-methods" class="anchor" href="#seostats-semrush-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats SEMRush Methods</h2>
+
+<h3>
+<a name="user-content-semrush-domain-reports" class="anchor" href="#semrush-domain-reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEMRush Domain Reports</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns an array containing the SEMRush main report (includes DomainRank, Traffic- &amp; Ads-Data)</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainRank</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns an array containing the domain rank history.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainRankHistory</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns an array containing data for competeing (auto-detected) websites.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getCompetitors</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns an array containing data about organic search engine traffic, using explicitly SEMRush's german database.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getOrganicKeywords</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'de'</span><span class="p">)</span> <span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="user-content-semrush-graphs" class="anchor" href="#semrush-graphs" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEMRush Graphs</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns HTML code for the 'search engine traffic'-graph.</span>
+  <span class="k">print</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainGraph</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'search engine traffic price'-graph.</span>
+  <span class="k">print</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainGraph</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'number of adwords ads'-graph, using explicitly SEMRush's german database.</span>
+  <span class="k">print</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainGraph</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'de'</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'adwords traffic'-graph, using explicitly SEMRush's german database and</span>
+  <span class="c1">// specific graph dimensions of 320*240 px.</span>
+  <span class="k">print</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainGraph</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'de'</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">);</span>
+
+  <span class="c1">// Returns HTML code for the 'adwords traffic price '-graph, using explicitly SEMRush's german database,</span>
+  <span class="c1">// specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).</span>
+  <span class="k">print</span> <span class="nx">SEMRush</span><span class="o">::</span><span class="na">getDomainGraph</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'de'</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="s1">'000000'</span><span class="p">,</span> <span class="s1">'ff0000'</span><span class="p">);</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-sistrix-methods" class="anchor" href="#seostats-sistrix-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Sistrix Methods</h2>
+
+<h3>
+<a name="user-content-sistrix-visibility-index" class="anchor" href="#sistrix-visibility-index" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sistrix Visibility Index</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns the Sistrix visibility index</span>
+  <span class="c1">// @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html</span>
+  <span class="k">print</span> <span class="nx">Sistrix</span><span class="o">::</span><span class="na">getVisibilityIndex</span><span class="p">();</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-seostats-social-media-methods" class="anchor" href="#seostats-social-media-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEOstats Social Media Methods</h2>
+
+<h3>
+<a name="user-content-google-plusones" class="anchor" href="#google-plusones" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google+ PlusOnes</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns integer PlusOne count</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getGooglePlusShares</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="user-content-facebook-interactions" class="anchor" href="#facebook-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Facebook Interactions</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns an array of total counts for overall Facebook interactions count, shares, likes, comments and clicks.</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getFacebookShares</span><span class="p">()</span> <span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="user-content-twitter-mentions" class="anchor" href="#twitter-mentions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Twitter Mentions</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns integer tweet count for URL mentions</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getTwitterShares</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="user-content-other-shares" class="anchor" href="#other-shares" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Shares</h3>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+  <span class="c1">// Returns the total count of URL shares via Delicious</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getDeliciousShares</span><span class="p">();</span>
+
+  <span class="c1">// Returns array of top ten delicious tags for a URL</span>
+  <span class="nb">print_r</span> <span class="p">(</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getDeliciousTopTags</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns the total count of URL shares via Digg</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getDiggShares</span><span class="p">();</span>
+
+  <span class="c1">// Returns the total count of URL shares via LinkedIn</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getLinkedInShares</span><span class="p">();</span>
+
+  <span class="c1">// Returns shares, comments, clicks and reach for the given URL via Xing</span>
+  <span class="nb">print_r</span><span class="p">(</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getXingShares</span><span class="p">()</span> <span class="p">);</span>
+
+  <span class="c1">// Returns the total count of URL shares via Pinterest</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getPinterestShares</span><span class="p">();</span>
+
+  <span class="c1">// Returns the total count of URL shares via StumbleUpon</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getStumbleUponShares</span><span class="p">();</span>
+
+  <span class="c1">// Returns the total count of URL shares via VKontakte</span>
+  <span class="k">print</span> <span class="nx">Social</span><span class="o">::</span><span class="na">getVKontakteShares</span><span class="p">();</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>(c) 2010 - 2014, Stephan Schmitz <a href="mailto:eyecatchup@gmail.com">eyecatchup@gmail.com</a><br>
+License: MIT, <a href="http://eyecatchup.mit-license.org">http://eyecatchup.mit-license.org</a><br>
+URL: <a href="https://github.com/eyecatchup/SEOstats">https://github.com/eyecatchup/SEOstats</a>  </p></article>
+  </div>
+
+  </div>
+</div>
+
+<a href="#jump-to-line" rel="facebox[.linejump]" data-hotkey="l" class="js-jump-to-line" style="display:none">Jump to Line</a>
+<div id="jump-to-line" style="display:none">
+  <form accept-charset="UTF-8" class="js-jump-to-line-form">
+    <input class="linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line&hellip;" autofocus>
+    <button type="submit" class="button">Go</button>
+  </form>
+</div>
+
+        </div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer">
+    <ul class="site-footer-links right">
+      <li><a href="https://status.github.com/">Status</a></li>
+      <li><a href="http://developer.github.com">API</a></li>
+      <li><a href="http://training.github.com">Training</a></li>
+      <li><a href="http://shop.github.com">Shop</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/about">About</a></li>
+
+    </ul>
+
+    <a href="/">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+    </a>
+
+    <ul class="site-footer-links">
+      <li>&copy; 2014 <span title="0.03301s from github-fe116-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="/site/terms">Terms</a></li>
+        <li><a href="/site/privacy">Privacy</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div><!-- /.site-footer -->
+</div><!-- /.container -->
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-fullscreen-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="fullscreen-contents js-fullscreen-contents" placeholder="" data-suggester="fullscreen_suggester"></textarea>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="#" class="exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w" aria-label="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="#" class="theme-switcher js-theme-switcher tooltipped tooltipped-w"
+      aria-label="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="#" class="octicon octicon-x close js-ajax-error-dismiss" aria-label="Dismiss error"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/frameworks-df9e4beac80276ed3dfa56be0d97b536d0f5ee12.js" type="text/javascript"></script>
+      <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-040fe8b89a4441eaff9e4636fa2bbe9ca34fd0d2.js" type="text/javascript"></script>
+      
+      
+        <script async src="https://www.google-analytics.com/analytics.js"></script>
+  </body>
+</html>
+

@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         verbose="true"
+         verbose="false"
 >
 
     <testsuites>
@@ -28,9 +28,14 @@
     <filter>
         <whitelist>
             <directory suffix=".php">../SEOstats</directory>
+            <exclude>
+                <directory suffix=".php">../SEOstats/Services/3rdparty</directory>
+            </exclude>
         </whitelist>
+        <blacklist>
+        </blacklist>
     </filter>
-    
+
     <logging>
         <log type="coverage-text" target="php://stdout"/>
         <log type="coverage-clover" target="../build/logs/clover.xml"/>
