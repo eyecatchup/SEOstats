@@ -77,7 +77,7 @@ class Google extends SEOstats
         $url = parent::getUrl($url);
         $url = sprintf(Config\Services::GOOGLE_APISEARCH_URL, 1, $url);
 
-        $ret = parent::_getPage($url);
+        $ret = static::_getPage($url);
 
         $obj = Helper\Json::decode($ret);
         return !isset($obj->responseData->cursor->estimatedResultCount)
@@ -97,7 +97,7 @@ class Google extends SEOstats
         $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL,
             $url, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
 
-        $ret = parent::_getPage($url);
+        $ret = static::_getPage($url);
 
         return Helper\Json::decode($ret);
     }
@@ -107,7 +107,7 @@ class Google extends SEOstats
         $url = parent::getUrl($url);
         $ret = self::getPagespeedAnalysis($url);
 
-        return !$ret->score ? parent::noDataDefaultValue() :
+        return !isset($ret->score) || !$ret->score ? parent::noDataDefaultValue() :
             intval($ret->score);
     }
 
@@ -129,7 +129,7 @@ class Google extends SEOstats
             $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
             $nextSerp =  0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
 
-            $curledSerp = utf8_decode( self::gCurl($nextSerp, $ref) );
+            $curledSerp = utf8_decode( static::gCurl($nextSerp, $ref) );
 
             if (preg_match("#answer[=|/]86640#i", $curledSerp)) {
                 print('Please read: https://support.google.com/websearch/answer/86640');
@@ -186,13 +186,13 @@ class Google extends SEOstats
         return $result;
     }
 
-    private static function gCurl($path, $ref, $useCookie = Config\DefaultSettings::ALLOW_GOOGLE_COOKIES)
+    protected static function gCurl($path, $ref, $useCookie = Config\DefaultSettings::ALLOW_GOOGLE_COOKIES)
     {
         $url = sprintf('https://www.google.%s/', Config\DefaultSettings::GOOGLE_TLD);
         $referer = $ref == '' ? $url : $ref;
         $url .= $path;
 
-        $ua = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.83 Safari/535.11";
+        $ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36";
         if (isset($_SERVER["HTTP_USER_AGENT"]) && 0 < strlen($_SERVER["HTTP_USER_AGENT"])) {
             $ua = $_SERVER["HTTP_USER_AGENT"];
         }
