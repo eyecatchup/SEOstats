@@ -33,7 +33,8 @@ class AlexaTest extends AbstractServiceTestCase
 
         $noDataDefault = $this->helperMakeAccessable($SUT, 'noDataDefaultValue', array());
 
-        if ($type){
+        // for the case that this version can be invalid
+        if ($type || $noDataDefault != $result) {
             if (is_array($type)) {
                 foreach ($type as $arrayKey=>$arrayValueType) {
                     $this->assertArrayHasKey($arrayKey, $result);
@@ -212,7 +213,6 @@ class AlexaTest extends AbstractServiceTestCase
 
         $versionList = array(
             array('2013',true),
-            array('2014',null),
             array('2014',false) # new version currently not supported
         );
 
