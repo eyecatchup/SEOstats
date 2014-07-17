@@ -117,12 +117,15 @@ class Alexa extends SEOstats
             return parent::noDataDefaultValue();
         }
         */
-        
-        $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a");
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+        $xpath = self::_getXPath($url);
+
+        $xpathQueryList = array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a"
+        );
+
+        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList);
     }
 
     /**
@@ -171,8 +174,15 @@ class Alexa extends SEOstats
     public static function getCountryRank($url = false)
     {
         $xpath = self::_getXPath($url);
-        $node1 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/strong/a");
-        $node2 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong/a");
+        $node1 = self::parseDomByXpaths($xpath, array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/a",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/strong/a",
+        ));
+
+        $node2 = self::parseDomByXpaths($xpath, array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong/a",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong",
+        ));
 
         if ($node2->item(0)) {
             $rank = self::retInt(strip_tags($node2->item(0)->nodeValue));
@@ -190,19 +200,25 @@ class Alexa extends SEOstats
     public static function getBacklinkCount($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='linksin_div']/section/div/div[1]/span");
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt($nodes->item(0)->nodeValue);
+        $queryList = array(
+            "//section[@class='row-fluid panel-wrapper '][6]/section/div/span/div/span",
+            "//*[@id='linksin_div']/section/div/div[1]/span"
+        );
+
+        return static::parseDomByXpathsToInteger($xpath, $queryList);
     }
 
     public static function getPageLoadTime($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query( "//*[@id='section-load']/div/section/p" );
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            strip_tags($nodes->item(0)->nodeValue);
+        $queryList = array(
+            "//section[@class='row-fluid panel-wrapper '][9]/section/p",
+            "//*[@id='section-load']/div/section/p"
+        );
+
+        return static::parseDomByXpathsWithoutTags($xpath, $queryList);
     }
 
     /**
@@ -237,13 +253,13 @@ class Alexa extends SEOstats
     /**
      * @return DOMXPath
      */
-    private static function _getXPath($url) {
+    protected static function _getXPath($url) {
         $url = parent::getUrl($url);
         if (parent::getLastLoadedUrl() == $url && self::$_xpath) {
             return self::$_xpath;
         }
 
-        $html  = self::_getAlexaPage($url);
+        $html  = static::_getAlexaPage($url);
         $doc   = parent::_getDOMDocument($html);
         $xpath = parent::_getDOMXPath($doc);
 
@@ -252,18 +268,91 @@ class Alexa extends SEOstats
         return $xpath;
     }
 
-    private static function _getAlexaPage($url)
+    protected static function _getAlexaPage($url)
     {
         $domain  = Helper\Url::parseHost($url);
         $dataUrl = sprintf(Config\Services::ALEXA_SITEINFO_URL, $domain);
-        $html    = parent::_getPage($dataUrl);
+        $html    = static::_getPage($dataUrl);
         return $html;
     }
 
-    private static function retInt($str)
+    protected static function retInt($str)
     {
         $strim = trim(str_replace(',', '', $str));
         $intStr = 0 < strlen($strim) ? $strim : '0';
         return intval($intStr);
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpaths($xpathDom, $xpathQueryList) {
+
+        foreach ( $xpathQueryList as $query ) {
+            $nodes = @$xpathDom->query($query);
+
+            if ( $nodes->length != 0 ) {
+                return $nodes;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsGetValue($xpathDom, $xpathQueryList)
+    {
+        $nodes = static::parseDomByXpaths($xpathDom, $xpathQueryList);
+
+        return ($nodes) ? $nodes->item(0)->nodeValue : null;
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsToInteger($xpathDom, $xpathQueryList)
+    {
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+        return self::retInt( $nodeValue );
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsWithoutTags($xpathDom, $xpathQueryList)
+    {
+
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+
+        return strip_tags($nodeValue);
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsToIntegerWithoutTags($xpathDom, $xpathQueryList)
+    {
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+
+        return self::retInt(strip_tags($nodeValue));
     }
 }
