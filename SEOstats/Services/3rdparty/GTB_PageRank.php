@@ -74,7 +74,7 @@ class GTB_PageRank implements tbr, pref
 		if( !isset($qStrings[$i])) {
 			break;
 		}
-		$PR = self::getToolbarPageRank($tbUrl . $prString);
+		$PR = self::getToolbarPageRank($tbUrl . $qStrings[$i]);
 		if ($PR === FALSE) {
 		    continue;
 		}

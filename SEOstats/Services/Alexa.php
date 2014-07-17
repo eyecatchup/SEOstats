@@ -237,13 +237,13 @@ class Alexa extends SEOstats
     /**
      * @return DOMXPath
      */
-    private static function _getXPath($url) {
+    protected static function _getXPath($url) {
         $url = parent::getUrl($url);
         if (parent::getLastLoadedUrl() == $url && self::$_xpath) {
             return self::$_xpath;
         }
 
-        $html  = self::_getAlexaPage($url);
+        $html  = static::_getAlexaPage($url);
         $doc   = parent::_getDOMDocument($html);
         $xpath = parent::_getDOMXPath($doc);
 
@@ -252,15 +252,15 @@ class Alexa extends SEOstats
         return $xpath;
     }
 
-    private static function _getAlexaPage($url)
+    protected static function _getAlexaPage($url)
     {
         $domain  = Helper\Url::parseHost($url);
         $dataUrl = sprintf(Config\Services::ALEXA_SITEINFO_URL, $domain);
-        $html    = parent::_getPage($dataUrl);
+        $html    = static::_getPage($dataUrl);
         return $html;
     }
 
-    private static function retInt($str)
+    protected static function retInt($str)
     {
         $strim = trim(str_replace(',', '', $str));
         $intStr = 0 < strlen($strim) ? $strim : '0';

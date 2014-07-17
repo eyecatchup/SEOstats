@@ -11,8 +11,12 @@ before_script:
   - php composer.phar install --dev
 
 script:
-  - phpunit --configuration ./tests/phpunit.xml
-  - ./vendor/bin/phpcs -n --standard=PSR2 ./SEOstats/ ./tests/
+  - cd ./tests/
+  - ../vendor/bin/phpunit
+#  - ./vendor/bin/phpcs -n --standard=PSR2 ./SEOstats/ ./tests/
+
+after_script:
+  - ../vendor/bin/ocular code-coverage:upload --format=php-clover ../build/logs/clover.xml
 
 notifications:
   email: false

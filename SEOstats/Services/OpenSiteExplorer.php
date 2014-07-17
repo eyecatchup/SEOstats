@@ -21,7 +21,7 @@ class OpenSiteExplorer extends SEOstats
         $url     = parent::getUrl($url);
         $dataUrl = sprintf(Config\Services::OPENSITEEXPLORER_URL, 'links', '1', urlencode($url));
 
-        $html  = parent::_getPage($dataUrl);
+        $html  = static::_getPage($dataUrl);
         $doc   = parent::_getDOMDocument($html);
         $xpath = parent::_getDOMXPath(@$doc);
 

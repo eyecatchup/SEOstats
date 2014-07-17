@@ -4,102 +4,111 @@ namespace SEOstatsTest;
 
 use SEOstats\SEOstats;
 
-class SEOstatsTest extends \PHPUnit_Framework_TestCase
+class SEOstatsTest extends AbstractSEOstatsTestCase
 {
     /**
      *
      * @var SEOstats
      */
-    protected $SUT;
+    public $SUT;
 
     public function setUp()
     {
         $this->SUT = new SEOstats();
     }
 
-    public function testAlexa()
+    /**
+     * @dataProvider providerTestServiceMethods
+     */
+    public function testServiceMethods($method, $assertInstance)
     {
-        $this->markTestIncomplete();
+        $object = $this->SUT->{$method}();
+
+        $this->assertInstanceOf($assertInstance, $object);
     }
 
-    public function testGoogle()
+    public function providerTestServiceMethods()
     {
-        $this->markTestIncomplete();
+        return array(
+            array('Alexa', 'SEOstats\Services\Alexa'),
+            array('Google', 'SEOstats\Services\Google'),
+            array('Mozscape', 'SEOstats\Services\Mozscape'),
+            array('OpenSiteExplorer', 'SEOstats\Services\OpenSiteExplorer'),
+            array('SEMRush', 'SEOstats\Services\SEMRush'),
+            array('Sistrix', 'SEOstats\Services\Sistrix'),
+            array('Social', 'SEOstats\Services\Social'),
+        );
     }
 
-    public function testMozscape()
+    public function testSetAndGetUrl()
     {
-        $this->markTestIncomplete();
+        $url = 'http://github.com';
+
+        $result = $this->SUT->getUrl($url);
+        $this->assertSame($url, $result);
+
+        $this->SUT->setUrl($url);
+        $this->assertSame($url, $this->SUT->getUrl());
     }
 
-    public function testOpenSiteExplorer()
+    public function testSetUrlInvalid()
     {
-        $this->markTestIncomplete();
-    }
+        $this->setExpectedException('SEOstats\Common\SEOstatsException' ,'Invalid URL!');
 
-    public function testSEMRush()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testSistrix()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testSocial()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testGetLastLoadedHtml()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testGetLastLoadedUrl()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testGetUrl()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testSetUrl()
-    {
-        $this->markTestIncomplete();
+        $this->SUT->setUrl("github.com");
     }
 
     public function testGetHost()
     {
-        $this->markTestIncomplete();
+        $host = $this->SUT->getHost('http://github.com/path/file.txt');
+        $this->assertEquals('github.com', $host);
     }
 
     public function testGetDomain()
     {
-        $this->markTestIncomplete();
+        $domain = $this->SUT->getDomain('http://github.com/path/file.txt');
+        $this->assertEquals('http://github.com', $domain);
     }
 
     public function testGetDOMDocument()
     {
-        $this->markTestIncomplete();
+        $html = '<html><body>test</body></html>';
+
+        $result = $this->helperMakeAccessable($this->SUT, '_getDOMDocument', array($html));
+        $this->assertInstanceOf('DOMDocument', $result);
     }
 
     public function testGetDOMXPath()
     {
-        $this->markTestIncomplete();
+        $doc = new \DOMDocument('<html><body>test</body></html>');
+
+        $result = $this->helperMakeAccessable($this->SUT, '_getDOMXPath', array($doc));
+        $this->assertInstanceOf('DOMXPath', $result);
     }
 
+    /**
+     *
+     * @group live
+     */
     public function testGetPage()
     {
-        $this->markTestIncomplete();
+        $url = 'http://github.com/test';
+        $result = $this->helperMakeAccessable($this->SUT, '_getPage', array($url));
+
+        $this->assertInternalType('string', $result);
+        $this->assertEquals($url, $this->SUT->getLastLoadedUrl());
     }
 
     public function testSetHtml()
     {
-        $this->markTestIncomplete();
+        $html = '<html><body></body></html>';
+        $this->helperMakeAccessable($this->SUT, '_lastHtml', false);
+
+        $this->assertFalse($this->SUT->getLastLoadedHtml());
+
+        $result = $this->helperMakeAccessable($this->SUT, '_setHtml', array($html));
+
+        $this->assertSame($html, $this->SUT->getLastLoadedHtml());
     }
 
     public function testNoDataDefaultValue()
