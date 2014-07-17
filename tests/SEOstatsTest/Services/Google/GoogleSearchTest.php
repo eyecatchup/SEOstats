@@ -8,7 +8,7 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 {
     protected $standardVersionFile = "google-search-%s.html";
     protected $standardVersionSubFile = "google-search-%s-%s-%s.html";
-    protected $called = 0;
+    public $called = 0;
 
     /**
      * @group google
