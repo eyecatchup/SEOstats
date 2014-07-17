@@ -96,6 +96,10 @@ class GoogleSearchTest extends AbstractGoogleTestCase
         $result[] = array($args, '2014', 11);
         $result[] = array($args, 'failed', 0);
 
+        $args = array( $query, 10, 'https://github.com' );
+        $result[] = array($args, '2014', 8);
+        $result[] = array($args, 'failed', 0);
+
         $args = array( 'some_query_that_dont_give_a_result', 10, false );
         $result[] = array($args, 'failed', 0);
 

@@ -126,7 +126,7 @@ class Google extends SEOstats
         $pages = 1;
         $delay = 0;
 
-        $domainRexExp = $domain ? "#^https?://[^/]*{$domain}#i" : false;
+        $domainRexExp = $domain ? "#^(https?://)?[^/]*{$domain}#i" : false;
 
         for ($start=0; $start<$pages; $start++) {
             $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
