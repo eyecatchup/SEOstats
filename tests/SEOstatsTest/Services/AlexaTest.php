@@ -23,6 +23,7 @@ class AlexaTest extends AbstractServiceTestCase
     /**
      *
      * @dataProvider providerTestSiteinfoMethodWithDiffrentVersion
+     * @group alexa
      */
     public function testSiteinfoMethodWithDiffrentVersion ($method, $version, $type)
     {
@@ -55,6 +56,7 @@ class AlexaTest extends AbstractServiceTestCase
     /**
      *
      * @dataProvider providerTestGetTrafficGraph
+     * @group alexa
      */
     public function testGetTrafficGraph($url, $paramsArray, $assertResult)
     {
@@ -69,6 +71,9 @@ class AlexaTest extends AbstractServiceTestCase
         }
     }
 
+    /**
+     * @group alexa
+     */
     public function testGetXPath()
     {
         $urlList = array(
@@ -102,6 +107,9 @@ class AlexaTest extends AbstractServiceTestCase
         }
     }
 
+    /**
+     * @group alexa
+     */
     public function testGetAlexaPage()
     {
         $this->mockAlexa('_getAlexaPage');
@@ -116,6 +124,7 @@ class AlexaTest extends AbstractServiceTestCase
 
     /**
      * @dataProvider providerTestRetInt
+     * @group alexa
      */
     public function testRetInt($string, $assert)
     {
@@ -194,6 +203,7 @@ class AlexaTest extends AbstractServiceTestCase
 
     public function providerTestSiteinfoMethodWithDiffrentVersion()
     {
+        // @TODO to get the new alexa rank daily/weekly/monthly we need a svg analyse for the site comparisons<
         $result = array();
         $methodList = array(
             'getPageLoadTime'=>'string',

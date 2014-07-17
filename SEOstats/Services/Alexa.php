@@ -117,12 +117,15 @@ class Alexa extends SEOstats
             return parent::noDataDefaultValue();
         }
         */
-        
-        $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a");
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt( strip_tags($nodes->item(0)->nodeValue) );
+        $xpath = self::_getXPath($url);
+
+        $xpathQueryList = array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[1]/span/span/div/strong/a"
+        );
+
+        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList);
     }
 
     /**
@@ -171,8 +174,15 @@ class Alexa extends SEOstats
     public static function getCountryRank($url = false)
     {
         $xpath = self::_getXPath($url);
-        $node1 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/strong/a");
-        $node2 = @$xpath->query("//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong/a");
+        $node1 = self::parseDomByXpaths($xpath, array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/a",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/h4/strong/a",
+        ));
+
+        $node2 = self::parseDomByXpaths($xpath, array(
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong/a",
+            "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong",
+        ));
 
         if ($node2->item(0)) {
             $rank = self::retInt(strip_tags($node2->item(0)->nodeValue));
@@ -190,19 +200,25 @@ class Alexa extends SEOstats
     public static function getBacklinkCount($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query("//*[@id='linksin_div']/section/div/div[1]/span");
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            self::retInt($nodes->item(0)->nodeValue);
+        $queryList = array(
+            "//section[@class='row-fluid panel-wrapper '][6]/section/div/span/div/span",
+            "//*[@id='linksin_div']/section/div/div[1]/span"
+        );
+
+        return static::parseDomByXpathsToInteger($xpath, $queryList);
     }
 
     public static function getPageLoadTime($url = false)
     {
         $xpath = self::_getXPath($url);
-        $nodes = @$xpath->query( "//*[@id='section-load']/div/section/p" );
 
-        return !$nodes->item(0) ? parent::noDataDefaultValue() :
-            strip_tags($nodes->item(0)->nodeValue);
+        $queryList = array(
+            "//section[@class='row-fluid panel-wrapper '][9]/section/p",
+            "//*[@id='section-load']/div/section/p"
+        );
+
+        return static::parseDomByXpathsWithoutTags($xpath, $queryList);
     }
 
     /**
