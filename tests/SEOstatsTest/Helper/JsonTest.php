@@ -54,7 +54,13 @@ class JsonTest extends AbstractSEOstatsTestCase
         return array(
             array($arrayValid, $jsonValid),
             array(utf8_decode("json-with-uml-äöü"),
-                  version_compare(PHP_VERSION, '5.5', '<') ? 'null' : false),
+                  $this->helperJsonGivesFalseOrNull() ? false : 'null'
+            ),
         );
+    }
+
+    public function helperJsonGivesFalseOrNull ()
+    {
+        return defined('HHVM_VERSION') || version_compare(PHP_VERSION, '5.5', '>');
     }
 }
