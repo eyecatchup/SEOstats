@@ -92,9 +92,11 @@ class GoogleSearchTest extends AbstractGoogleTestCase
         $result[] = array($args, '2014', 15); // github.com result gives more than 10 results on first page
         $result[] = array($args, 'failed', 0);
 
-        // @TODO fix domain filter regexp
         $args = array( $query, 10, 'github.com' );
-        $result[] = array($args, '2014', 0);
+        $result[] = array($args, '2014', 11);
+        $result[] = array($args, 'failed', 0);
+
+        $args = array( 'some_query_that_dont_give_a_result', 10, false );
         $result[] = array($args, 'failed', 0);
 
 
@@ -111,20 +113,13 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 
 
 
-
-        // @TODO fix domain filter regexp
-        // $args = array( $query, 10, 'github.com' );
-        // $result[] = array($args, '2014', 0);
-        // $result[] = array($args, 'failed', 0);
-
         $args = array( $query, 20, false );
         $result[] = array($args, '2014', 25);
         $result[] = array($args, 'failed', 0);
 
-        // @TODO fix domain filter regexp
-        // $args = array( $query, 20, 'github.com' );
-        // $result[] = array($args, '2014', 20);
-        // $result[] = array($args, 'failed', 0);
+        $args = array( $query, 20, 'github.com' );
+        $result[] = array($args, '2014', 22);
+        $result[] = array($args, 'failed', 0);
 
 
         return $result;
