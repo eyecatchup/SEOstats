@@ -12,9 +12,7 @@ abstract class AbstractSEOstatsTestCase extends \PHPUnit_Framework_TestCase
 
     protected $assertDirectory;
 
-    protected $SUT;
-
-    protected $mockedSUT;
+    public $mockedSUT;
 
 
     /**
@@ -48,7 +46,7 @@ abstract class AbstractSEOstatsTestCase extends \PHPUnit_Framework_TestCase
     }
 
 
-    protected function getStandardVersions ($version, $methode)
+    public function getStandardVersions ($version, $methode)
     {
         $filePattern = $this->standardVersionSubFile;
         $methodeFile = sprintf($this->getAssertDirectory($filePattern), $version, $methode, 1);
@@ -71,7 +69,7 @@ abstract class AbstractSEOstatsTestCase extends \PHPUnit_Framework_TestCase
         return $result;
     }
 
-    protected function helperMakeAccessable ($object, $propertyOrMethod, $value = null)
+    public function helperMakeAccessable ($object, $propertyOrMethod, $value = null)
     {
         if ( is_string($object) ) {
             $objectClass = $object;
@@ -85,7 +83,7 @@ abstract class AbstractSEOstatsTestCase extends \PHPUnit_Framework_TestCase
         }
         $reflection = $this->reflection[$objectClass];
         $isMethod = $reflection->hasMethod($propertyOrMethod);
-        
+
         if ($isMethod) {
             $reflectionSub = $reflection->getMethod($propertyOrMethod);
         } else {
@@ -105,7 +103,7 @@ abstract class AbstractSEOstatsTestCase extends \PHPUnit_Framework_TestCase
         return $reflectionSub;
     }
 
-    protected function mockGetPage($arg = null)
+    public function mockGetPage($arg = null)
     {
         if (is_callable($arg)) {
             $this->mockedSUT->staticExpects($this->any())

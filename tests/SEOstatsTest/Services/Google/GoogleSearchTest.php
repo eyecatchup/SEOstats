@@ -52,7 +52,7 @@ class GoogleSearchTest extends AbstractGoogleTestCase
     {
         $this->mockSUT('getSerps');
         $this->mockGCurl ($version);
-        
+
         $result = $this->helperMakeAccessable($this->mockedSUT, 'getSerps', $args);
 
         $this->assertEquals($assertResultCount, count($result));

@@ -10,7 +10,7 @@ class SEOstatsTest extends AbstractSEOstatsTestCase
      *
      * @var SEOstats
      */
-    protected $SUT;
+    public $SUT;
 
     public function setUp()
     {

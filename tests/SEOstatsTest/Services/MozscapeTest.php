@@ -72,17 +72,18 @@ class MozscapeTest extends AbstractServiceTestCase
     public function testGetCols($callbackReturn, $assertResult)
     {
         $this->mockSUT('getCols');
-        $this->mockGetPage(function($url) use($callbackReturn) {
+        $that = $this;
+        $this->mockGetPage(function($url) use($callbackReturn, $that) {
             $parse = parse_url($url);
             parse_str($parse['query'], $query);
 
-            $assertSignature = $this->helperMakeAccessable(
-                $this->SUT,
+            $assertSignature = $that->helperMakeAccessable(
+                $that->SUT,
                 '_getUrlSafeSignature',
                 array($query['Expires'], basename($parse['path']))
             );
 
-            $this->assertEquals($assertSignature, $query['Signature']);
+            $that->assertEquals($assertSignature, $query['Signature']);
 
             return $callbackReturn;
         });
@@ -151,12 +152,13 @@ class MozscapeTest extends AbstractServiceTestCase
 
     protected function mockGetCols ($assertParams, $returnValue)
     {
+        $that = $this;
         $this->mockedSUT->staticExpects($this->any())
                         ->method('getCols')
-                        ->will($this->returnCallback(function ($cols, $url = null) use($assertParams, $returnValue) {
+                        ->will($this->returnCallback(function ($cols, $url = null) use($assertParams, $returnValue, $that) {
 
-                            $this->assertEquals($assertParams[0], $cols);
-                            $this->assertEquals($assertParams[1], $url);
+                            $that->assertEquals($assertParams[0], $cols);
+                            $that->assertEquals($assertParams[1], $url);
 
                             return $returnValue;
                         }));
