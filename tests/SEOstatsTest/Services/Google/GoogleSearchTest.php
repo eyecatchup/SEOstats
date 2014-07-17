@@ -93,9 +93,9 @@ class GoogleSearchTest extends AbstractGoogleTestCase
         $result[] = array($args, 'failed', 0);
 
         // @TODO fix domain filter regexp
-        // $args = array( $query, 10, 'github.com' );
-        // $result[] = array($args, '2014', 0);
-        // $result[] = array($args, 'failed', 0);
+        $args = array( $query, 10, 'github.com' );
+        $result[] = array($args, '2014', 0);
+        $result[] = array($args, 'failed', 0);
 
 
 
