@@ -125,6 +125,9 @@ class Google extends SEOstats
         $result = array ();
         $pages = 1;
         $delay = 0;
+
+        $domainRexExp = $domain ? "#^https?://[^/]*{$domain}#i" : false;
+
         for ($start=0; $start<$pages; $start++) {
             $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
             $nextSerp =  0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
@@ -153,12 +156,12 @@ class Google extends SEOstats
 
                     $c++;
                     $resCnt = ($start * 10) + $c;
-                    if (FALSE === $domain) {
+                    if (! $domainRexExp) {
                         $result[$resCnt] = array(
                             'url' => $match[1],
                             'headline' => trim(strip_tags($match[2]))
                         );
-                    } elseif (preg_match("#^{$domain}#i", $match[1])) {
+                    } elseif (preg_match($domainRexExp, $match[1])) {
                         $result[] = array(
                             'position' => $resCnt,
                             'url' => $match[1],
