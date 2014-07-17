@@ -266,4 +266,77 @@ class Alexa extends SEOstats
         $intStr = 0 < strlen($strim) ? $strim : '0';
         return intval($intStr);
     }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpaths($xpathDom, $xpathQueryList) {
+
+        foreach ( $xpathQueryList as $query ) {
+            $nodes = @$xpathDom->query($query);
+
+            if ( $nodes->length != 0 ) {
+                return $nodes;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsGetValue($xpathDom, $xpathQueryList)
+    {
+        $nodes = static::parseDomByXpaths($xpathDom, $xpathQueryList);
+
+        return ($nodes) ? $nodes->item(0)->nodeValue : null;
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsToInteger($xpathDom, $xpathQueryList)
+    {
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+        return self::retInt( $nodeValue );
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsWithoutTags($xpathDom, $xpathQueryList)
+    {
+
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+
+        return strip_tags($nodeValue);
+    }
+
+    /**
+     *
+     * @return mixed nodeValue
+     */
+    protected static function parseDomByXpathsToIntegerWithoutTags($xpathDom, $xpathQueryList)
+    {
+        $nodeValue = static::parseDomByXpathsGetValue($xpathDom, $xpathQueryList);
+
+        if ($nodeValue === null) {
+            return parent::noDataDefaultValue();
+        }
+
+        return self::retInt(strip_tags($nodeValue));
+    }
 }
