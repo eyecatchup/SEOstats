@@ -4,3 +4,11 @@ imports:
 tools:
     external_code_coverage:
         timeout: 2100
+
+filter:
+    excluded_paths:
+        - SEOstats/Services/3rdparty/*
+        - vendor/*
+        - tests/*
+        - app/*
+        - bin/*
