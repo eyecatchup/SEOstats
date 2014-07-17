@@ -139,10 +139,11 @@ class GoogleSearchTest extends AbstractGoogleTestCase
     protected function mockGCurl ($version)
     {
         $standardFile = $this->getAssertDirectory() . $this->standardVersionFile;
+        $that = $this;
 
         $this->mockedSUT->staticExpects($this->any())
                         ->method('gCurl')
-                        ->will($this->returnCallback(function() use ($standardFile, $version) {
+                        ->will($this->returnCallback(function() use ($standardFile, $version, $that) {
                             $file = sprintf($standardFile, $version . '-page-' . $this->called);
 
                             if (!file_exists($file)) {
