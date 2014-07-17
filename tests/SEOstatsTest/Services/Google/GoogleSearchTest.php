@@ -144,12 +144,12 @@ class GoogleSearchTest extends AbstractGoogleTestCase
         $this->mockedSUT->staticExpects($this->any())
                         ->method('gCurl')
                         ->will($this->returnCallback(function() use ($standardFile, $version, $that) {
-                            $file = sprintf($standardFile, $version . '-page-' . $this->called);
+                            $file = sprintf($standardFile, $version . '-page-' . $that->called);
 
                             if (!file_exists($file)) {
                                 $file = sprintf($standardFile, $version);
                             }
-                            $this->called++;
+                            $that->called++;
 
                             return file_get_contents($file);
                         }));
