@@ -126,8 +126,6 @@ class Google extends SEOstats
         $pages = 1;
         $delay = 0;
 
-        $domainRexExp = $domain ? "#^(https?://)?[^/]*{$domain}#i" : false;
-
         for ($start=0; $start<$pages; $start++) {
             $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
             $nextSerp =  0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
@@ -146,30 +144,8 @@ class Google extends SEOstats
                 // No [@id="rso"]/li/h3 on currect page
                 $pages -= 1;
             } else {
-                $c = 0;
-                foreach ($matches[1] as $link) {
-                    if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
-                          preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
-                    {
-                        continue;
-                    }
 
-                    $c++;
-                    $resCnt = ($start * 10) + $c;
-                    if (! $domainRexExp) {
-                        $result[$resCnt] = array(
-                            'url' => $match[1],
-                            'headline' => trim(strip_tags($match[2]))
-                        );
-                    } elseif (preg_match($domainRexExp, $match[1])) {
-                        $result[] = array(
-                            'position' => $resCnt,
-                            'url' => $match[1],
-                            'headline' => trim(strip_tags($match[2]))
-                        );
-                    }
-                } // foreach ($matches[1] as $link)
-
+                static::getSerpsMatches($matches, $domain, $start * 10, $result);
 
                 if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
                     // Found 'Next'-link on currect page
@@ -186,6 +162,38 @@ class Google extends SEOstats
                 $pages -= 1;
             }
         } // for ($start=0; $start<$pages; $start++)
+        return $result;
+    }
+
+    protected static function getSerpsMatches ($matches, $domain, $start, &$result)
+    {
+        $domainRexExp = $domain ? "#^(https?://)?[^/]*{$domain}#i" : false;
+
+        $c = 0;
+
+        foreach ($matches[1] as $link) {
+            if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
+                  preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
+            {
+                continue;
+            }
+
+            $c++;
+            $resCnt = $start + $c;
+            if (! $domainRexExp) {
+                $result[$resCnt] = array(
+                    'url' => $match[1],
+                    'headline' => trim(strip_tags($match[2]))
+                );
+            } elseif (preg_match($domainRexExp, $match[1])) {
+                $result[] = array(
+                    'position' => $resCnt,
+                    'url' => $match[1],
+                    'headline' => trim(strip_tags($match[2]))
+                );
+            }
+        } // foreach ($matches[1] as $link)
+
         return $result;
     }
 
