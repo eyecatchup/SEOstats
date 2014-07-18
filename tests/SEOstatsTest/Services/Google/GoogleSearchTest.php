@@ -119,11 +119,11 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 
 
         $args = array( $query, 20, false );
-        $result[] = array($args, '2014', 25);
+        $result[] = array($args, '2014', 15);
         $result[] = array($args, 'failed', 0);
 
         $args = array( $query, 20, 'github.com' );
-        $result[] = array($args, '2014', 22);
+        $result[] = array($args, '2014', 11);
         $result[] = array($args, 'failed', 0);
 
 
