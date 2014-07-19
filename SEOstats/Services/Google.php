@@ -33,8 +33,9 @@ class Google extends SEOstats
         }
 
         $gtb = new \GTB_PageRank(parent::getUrl($url));
+        $result = $gtb->getPageRank();
 
-        return $gtb->getPageRank();
+        return $result != "" ? $result : static::noDataDefaultValue();
     }
 
     /**
