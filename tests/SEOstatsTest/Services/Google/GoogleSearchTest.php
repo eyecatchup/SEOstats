@@ -11,19 +11,6 @@ class GoogleSearchTest extends AbstractGoogleTestCase
     public $called = 0;
 
     /**
-     * @group google
-     * @group google-search
-     * @group live
-     */
-    public function testGetPageRank()
-    {
-        $result = $this->SUT->getPageRank();
-
-        $this->assertInternalType('string', $result);
-        $this->assertGreaterThanOrEqual(0, $result);
-    }
-
-    /**
      * @dataProvider providerTestGoogleCurl
      * @group google
      * @group google-search
