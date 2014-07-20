@@ -11,6 +11,7 @@ class GoogleApiTest extends AbstractGoogleTestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->reflection = array();
 
         $this->url = 'http://github.com';

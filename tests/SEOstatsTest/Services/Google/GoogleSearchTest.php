@@ -2,13 +2,26 @@
 
 namespace SEOstatsTest\Services\Google;
 
-use SEOstats\Services\Sitrix;
+use SEOstats\Services\Google;
+use SEOstats\Services\Google\Search as GoogleSearch;
 
 class GoogleSearchTest extends AbstractGoogleTestCase
 {
     protected $standardVersionFile = "google-search-%s.html";
     protected $standardVersionSubFile = "google-search-%s-%s-%s.html";
     public $called = 0;
+
+    public function setup()
+    {
+        parent::setup();
+        $this->reflection = array();
+
+        $this->url = 'http://github.com';
+        $this->SUT = new GoogleSearch();
+        $this->SUT->setUrl($this->url);
+
+        $this->called = 1;
+    }
 
     /**
      * @dataProvider providerTestGoogleCurl
@@ -115,12 +128,6 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 
 
         return $result;
-    }
-
-    public function setUp ()
-    {
-        parent::setUp();
-        $this->called = 1;
     }
 
     protected function mockGCurl ($version)
