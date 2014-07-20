@@ -123,79 +123,125 @@ class Google extends SEOstats
     {
         $q = rawurlencode($query);
         $maxResults = ($maxResults/10)-1;
-        $result = array ();
+        $result = new Helper\ArrayHandle ();
         $pages = 1;
         $delay = 0;
 
+        $domainRexExp = static::getSerpsGetDomainFilter($domain);
+
         for ($start=0; $start<$pages; $start++) {
-            $ref = 0 == $start ? 'ncr' : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $q, $start);
-            $nextSerp =  0 == $start ? sprintf('search?q=%s&filter=0', $q) : sprintf('search?q=%s&filter=0&start=%s0', $q, $start);
 
-            $curledSerp = utf8_decode( static::gCurl($nextSerp, $ref) );
-
-            if (preg_match("#answer[=|/]86640#i", $curledSerp)) {
-                print('Please read: https://support.google.com/websearch/answer/86640');
-                exit();
-            }
-
-
-            $matches = array();
-            preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
-            if (empty($matches[1])) {
-                // No [@id="rso"]/li/h3 on currect page
+            $haveNextPage = static::getSerpsMakeRequest ($start, $query, $result, $domainRexExp);
+            if ($haveNextPage) {
                 $pages -= 1;
             } else {
-
-                static::getSerpsMatches($matches, $domain, $start * 10, $result);
-
-                if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
-                    // Found 'Next'-link on currect page
-                    $pages += 1;
-                    $delay += 200000;
-                    usleep($delay);
-                } else {
-                    // No 'Next'-link on currect page
-                    $pages -= 1;
-                }
+                $pages += 1;
+                $delay += 200000;
+                usleep($delay);
             }
 
             if ($start == $maxResults) {
                 $pages -= 1;
             }
         } // for ($start=0; $start<$pages; $start++)
-        return $result;
+
+        return $result->toArray();
     }
 
-    protected static function getSerpsMatches ($matches, $domain, $start, &$result)
+    protected static function getSerpsMakeRequest ($start, $query, $result, $domainRexExp)
     {
-        $domainRexExp = $domain ? "#^(https?://)?[^/]*{$domain}#i" : false;
+        $ref = static::getSerpsGetReference($start, $query);
+        $nextSerp = static::getSerpsGetNextSerp($start, $query);
 
+        $curledSerp = utf8_decode( static::gCurl($nextSerp, $ref) );
+
+        static::getSerpsGuardNoCaptcha($curledSerp);
+
+        $matches = array();
+        preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
+
+        if (empty($matches[1])) {
+            // No [@id="rso"]/li/h3 on currect page
+            return false;
+        }
+
+        static::getSerpsMatches($matches, $domainRexExp, $start * 10, $result);
+
+        if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
+            // Found 'Next'-link on currect page
+            return true;
+        }
+
+        // No 'Next'-link on currect page
+        return false;
+    }
+
+    protected static function getSerpsGetReference ($start, $query)
+    {
+        return 0 == $start
+            ? 'ncr'
+            : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $query, $start);
+    }
+
+    protected static function getSerpsGetDomainFilter ($domain)
+    {
+        return $domain
+            ? "#^(https?://)?[^/]*{$domain}#i"
+            : false;
+    }
+
+    protected static function getSerpsGetNextSerp ($start, $query)
+    {
+        return 0 == $start
+            ? sprintf('search?q=%s&filter=0', $query)
+            : sprintf('search?q=%s&filter=0&start=%s0', $query, $start);
+    }
+
+    protected static function getSerpsGuardNoCaptcha ($response)
+    {
+        if (preg_match("#answer[=|/]86640#i", $response)) {
+            print('Please read: https://support.google.com/websearch/answer/86640');
+            exit();
+        }
+    }
+
+    protected static function getSerpsMatches ($matches, $domainRexExp, $start, $result)
+    {
         $c = 0;
 
         foreach ($matches[1] as $link) {
-            if ( !preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match) ||
-                  preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $match[1]))
-            {
-                continue;
-            }
+            $match = static::getSerpsParseLink($link);
 
             $c++;
             $resCnt = $start + $c;
             if (! $domainRexExp) {
-                $result[$resCnt] = array(
+                $result->setElement($resCnt, array(
                     'url' => $match[1],
                     'headline' => trim(strip_tags($match[2]))
-                );
+                ));
             } elseif (preg_match($domainRexExp, $match[1])) {
-                $result[] = array(
+                $result->push(array(
                     'position' => $resCnt,
                     'url' => $match[1],
                     'headline' => trim(strip_tags($match[2]))
-                );
+                ));
             }
         } // foreach ($matches[1] as $link)
+    }
 
-        return $result;
+    protected static function getSerpsParseLink($link)
+    {
+        $isValidLink = preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match);
+
+        // is valid and not webmaster link
+        return ( !$isValidLink || self::getSerpsIsAGoogleWebmasterLink($match[1]) )
+            ? false
+            : $match;
+    }
+
+    protected static function getSerpsIsAGoogleWebmasterLink($url)
+    {
+        return preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $url);
     }
 
     protected static function gCurl($path, $ref, $useCookie = Config\DefaultSettings::ALLOW_GOOGLE_COOKIES)
