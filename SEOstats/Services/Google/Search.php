@@ -34,11 +34,11 @@ class Search extends SEOstats
         $pages = 1;
         $delay = 0;
 
-        $domainRexExp = static::getSerpsGetDomainFilter($domain);
+        $domainRexExp = static::getDomainFilter($domain);
 
         for ($start=0; $start<$pages; $start++) {
 
-            $haveNextPage = static::getSerpsMakeRequest ($start, $query, $result, $domainRexExp);
+            $haveNextPage = static::makeRequest ($start, $query, $result, $domainRexExp);
             if ($haveNextPage) {
                 $pages -= 1;
             } else {
@@ -55,14 +55,14 @@ class Search extends SEOstats
         return $result->toArray();
     }
 
-    protected static function getSerpsMakeRequest ($start, $query, $result, $domainRexExp)
+    protected static function makeRequest ($start, $query, $result, $domainRexExp)
     {
-        $ref = static::getSerpsGetReference($start, $query);
-        $nextSerp = static::getSerpsGetNextSerp($start, $query);
+        $ref = static::getReference($start, $query);
+        $nextSerp = static::getNextSerp($start, $query);
 
         $curledSerp = utf8_decode( static::gCurl($nextSerp, $ref) );
 
-        static::getSerpsGuardNoCaptcha($curledSerp);
+        static::guardNoCaptcha($curledSerp);
 
         $matches = array();
         preg_match_all('#<h3 class="?r"?>(.*?)</h3>#', $curledSerp, $matches);
@@ -72,7 +72,7 @@ class Search extends SEOstats
             return false;
         }
 
-        static::getSerpsMatches($matches, $domainRexExp, $start * 10, $result);
+        static::parseResults($matches, $domainRexExp, $start * 10, $result);
 
         if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
             // Found 'Next'-link on currect page
@@ -83,28 +83,28 @@ class Search extends SEOstats
         return false;
     }
 
-    protected static function getSerpsGetReference ($start, $query)
+    protected static function getReference ($start, $query)
     {
         return 0 == $start
             ? 'ncr'
             : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $query, $start);
     }
 
-    protected static function getSerpsGetDomainFilter ($domain)
+    protected static function getDomainFilter ($domain)
     {
         return $domain
             ? "#^(https?://)?[^/]*{$domain}#i"
             : false;
     }
 
-    protected static function getSerpsGetNextSerp ($start, $query)
+    protected static function getNextSerp ($start, $query)
     {
         return 0 == $start
             ? sprintf('search?q=%s&filter=0', $query)
             : sprintf('search?q=%s&filter=0&start=%s0', $query, $start);
     }
 
-    protected static function getSerpsGuardNoCaptcha ($response)
+    protected static function guardNoCaptcha ($response)
     {
         if (preg_match("#answer[=|/]86640#i", $response)) {
             print('Please read: https://support.google.com/websearch/answer/86640');
@@ -112,12 +112,12 @@ class Search extends SEOstats
         }
     }
 
-    protected static function getSerpsMatches ($matches, $domainRexExp, $start, $result)
+    protected static function parseResults ($matches, $domainRexExp, $start, $result)
     {
         $c = 0;
 
         foreach ($matches[1] as $link) {
-            $match = static::getSerpsParseLink($link);
+            $match = static::parseLink($link);
 
             $c++;
             $resCnt = $start + $c;
@@ -136,17 +136,17 @@ class Search extends SEOstats
         } // foreach ($matches[1] as $link)
     }
 
-    protected static function getSerpsParseLink($link)
+    protected static function parseLink($link)
     {
         $isValidLink = preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match);
 
         // is valid and not webmaster link
-        return ( !$isValidLink || self::getSerpsIsAGoogleWebmasterLink($match[1]) )
+        return ( !$isValidLink || self::isAGoogleWebmasterLink($match[1]) )
             ? false
             : $match;
     }
 
-    protected static function getSerpsIsAGoogleWebmasterLink($url)
+    protected static function isAGoogleWebmasterLink($url)
     {
         return preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $url);
     }
