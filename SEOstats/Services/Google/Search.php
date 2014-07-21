@@ -29,7 +29,7 @@ class Search extends SEOstats
     public static function getSerps($query, $maxResults=100, $domain=false)
     {
         $q = rawurlencode($query);
-        $maxResults = ($maxResults/10)-1;
+        $maxPage = ceil(($maxResults/10)-1);
         $result = new Helper\ArrayHandle ();
         $pages = 1;
         $delay = 0;
@@ -47,7 +47,7 @@ class Search extends SEOstats
                 usleep($delay);
             }
 
-            if ($start == $maxResults) {
+            if ($start == $maxPage) {
                 $pages -= 1;
             }
         } // for ($start=0; $start<$pages; $start++)
