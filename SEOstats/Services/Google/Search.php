@@ -38,7 +38,7 @@ class Search extends SEOstats
 
         for ($start=0; $start<$pages; $start++) {
 
-            $haveNextPage = static::makeRequest ($start, $query, $result, $domainRexExp);
+            $haveNextPage = static::makeRequest ($start, $q, $result, $domainRexExp);
             if ($haveNextPage) {
                 $pages -= 1;
             } else {
