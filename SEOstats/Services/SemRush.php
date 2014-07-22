@@ -132,9 +132,7 @@ class SemRush extends SEOstats
         $domain   = Helper\Url::parseHost($url);
         static::guardDomainIsValid($domain);
 
-        $db       = static::getSemRushDatabase($db);
-        $database = self::checkDatabase($db);
-        static::guardDatabaseIsValid($database);
+        $database = static::getValidDatabase($db);
 
         static::guardValidArgsForGetDomainGraph($reportType, $w, $h, $lang);
 
@@ -219,8 +217,7 @@ class SemRush extends SEOstats
         $domain   = Helper\Url::parseHost($url);
         static::guardDomainIsValid($domain);
 
-        $database = self::checkDatabase($db);
-        static::guardDatabaseIsValid($database);
+        $database = static::getValidDatabase($db);
 
         $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
         return sprintf($widgetUrl, $reportType, $database, $domain);
@@ -237,5 +234,13 @@ class SemRush extends SEOstats
             substr( implode(", ", self::getDBs()), 0, -2) : $err;
         throw new E($e);
         exit(0);
+    }
+
+    private static function getValidDatabase($db)
+    {
+        $database = self::checkDatabase($db);
+        static::guardDatabaseIsValid($database);
+
+        return $database;
     }
 }
