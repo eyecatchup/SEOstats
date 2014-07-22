@@ -128,10 +128,7 @@ class SemRush extends SEOstats
 
     public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-        $url      = self::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        static::guardDomainIsValid($domain);
-
+        $domain = static::getDomainFormUrl($url);
         $database = static::getValidDatabase($db);
 
         static::guardValidArgsForGetDomainGraph($reportType, $w, $h, $lang);
@@ -213,10 +210,7 @@ class SemRush extends SEOstats
 
     private static function getWidgetUrl($url, $db, $reportType)
     {
-        $url      = parent::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        static::guardDomainIsValid($domain);
-
+        $domain = static::getDomainFormUrl($url);
         $database = static::getValidDatabase($db);
 
         $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
@@ -234,6 +228,15 @@ class SemRush extends SEOstats
             substr( implode(", ", self::getDBs()), 0, -2) : $err;
         throw new E($e);
         exit(0);
+    }
+
+    private static function getDomainFormUrl($url)
+    {
+        $url      = parent::getUrl($url);
+        $domain   = Helper\Url::parseHost($url);
+        static::guardDomainIsValid($domain);
+
+        return $domain;
     }
 
     private static function getValidDatabase($db)
