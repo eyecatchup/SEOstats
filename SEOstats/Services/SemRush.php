@@ -181,13 +181,16 @@ class SemRush extends SEOstats
         if ($reportType > 5 || $reportType < 1) {
             self::exc('Report type must be between 1 (one) and 5 (five).');
         }
-        else if ($width > 400 || $width < 200) {
+
+        if ($width > 400 || $width < 200) {
             self::exc('Image width must be between 200 and 400 px.');
         }
-        else if ($height > 300 || $height < 150) {
+
+        if ($height > 300 || $height < 150) {
             self::exc('Image height must be between 150 and 300 px.');
         }
-        else if (strlen($lang) != 2) {
+
+        if (strlen($lang) != 2) {
             self::exc('You must specify a valid language code.');
         }
     }
