@@ -140,7 +140,8 @@ class SemRush extends SEOstats
 
         $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
             $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
-        if (true != $html) {
+
+        if (! $html) {
             return $imgUrl;
         } else {
             $imgTag = '<img src="%s" width="%s" height="%s" alt="SEMRush Domain Trend Graph for %s"/>';
