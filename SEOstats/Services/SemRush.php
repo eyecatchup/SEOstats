@@ -136,27 +136,15 @@ class SemRush extends SEOstats
         $database = self::checkDatabase($db);
         static::guardDatabaseIsValid($database);
 
-        if ($reportType > 5 || $reportType < 1) {
-            self::exc('Report type must be between 1 (one) and 5 (five).');
-        }
-        else if ($w > 400 || $w < 200) {
-            self::exc('Image width must be between 200 and 400 px.');
-        }
-        else if ($h > 300 || $h < 150) {
-            self::exc('Image height must be between 150 and 300 px.');
-        }
-        else if (strlen($lang) != 2) {
-            self::exc('You must specify a valid language code.');
-        }
-        else {
-            $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
-                $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
-            if (true != $html) {
-                return $imgUrl;
-            } else {
-                $imgTag = '<img src="%s" width="%s" height="%s" alt="SEMRush Domain Trend Graph for %s"/>';
-                return sprintf($imgTag, $imgUrl, $w, $h, $domain);
-            }
+        static::guardValidArgsForGetDomainGraph($reportType, $w, $h, $lang);
+
+        $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
+            $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
+        if (true != $html) {
+            return $imgUrl;
+        } else {
+            $imgTag = '<img src="%s" width="%s" height="%s" alt="SEMRush Domain Trend Graph for %s"/>';
+            return sprintf($imgTag, $imgUrl, $w, $h, $domain);
         }
     }
 
@@ -184,6 +172,22 @@ class SemRush extends SEOstats
     {
         if (false === $database) {
             self::exc('db');
+        }
+    }
+
+    protected static function guardValidArgsForGetDomainGraph($reportType, $width, $height, $lang)
+    {
+        if ($reportType > 5 || $reportType < 1) {
+            self::exc('Report type must be between 1 (one) and 5 (five).');
+        }
+        else if ($width > 400 || $width < 200) {
+            self::exc('Image width must be between 200 and 400 px.');
+        }
+        else if ($height > 300 || $height < 150) {
+            self::exc('Image height must be between 150 and 300 px.');
+        }
+        else if (strlen($lang) != 2) {
+            self::exc('You must specify a valid language code.');
         }
     }
 
