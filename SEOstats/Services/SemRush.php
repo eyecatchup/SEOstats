@@ -128,18 +128,15 @@ class SemRush extends SEOstats
 
     public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-        $db       = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $url      = self::getUrl($url);
         $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
+        static::guardDomainIsValid($domain);
 
-        if (false == $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else if ($reportType > 5 || $reportType < 1) {
+        $db       = static::getSemRushDatabase($db);
+        $database = self::checkDatabase($db);
+        static::guardDatabaseIsValid($database);
+
+        if ($reportType > 5 || $reportType < 1) {
             self::exc('Report type must be between 1 (one) and 5 (five).');
         }
         else if ($w > 400 || $w < 200) {
@@ -167,6 +164,27 @@ class SemRush extends SEOstats
     {
         $json = parent::_getPage($url);
         return Helper\Json::decode($json, true);
+    }
+
+    protected static function getSemRushDatabase($db)
+    {
+        return false !== $db
+            ? $db
+            : Config\DefaultSettings::SEMRUSH_DB;
+    }
+
+    protected static function guardDomainIsValid($domain)
+    {
+        if (false == $domain) {
+            self::exc('Invalid domain name.');
+        }
+    }
+
+    protected static function guardDatabaseIsValid($database)
+    {
+        if (false === $database) {
+            self::exc('db');
+        }
     }
 
     private static function getBackendUrl($url, $db, $reportType)
