@@ -85,14 +85,57 @@ class SemRushTest extends AbstractServiceTestCase
         $this->markTestIncomplete();
     }
 
-    public function testGetWidgetUrl()
+    /**
+     * @group semrush
+     * @dataProvider providerTestGetWidgetUrl
+     */
+    public function testGetWidgetUrl($args, $status)
     {
-        $this->markTestIncomplete();
+        if (!$status) {
+            $this->setExpectedException('\SEOstats\Common\SEOstatsException');
+        }
+
+
+        $result = $this->helperMakeAccessable($this->SUT, 'getWidgetUrl', $args);
+
+        if ($status) {
+            $this->assertInternalType('string', $result);
+
+            preg_match('#(?<url>.+)\?(?<query>.+)#', $result, $urlSplit);
+
+            parse_str($urlSplit['query'], $query);
+
+            $this->assertContains($args[0],$query);
+            $this->assertContains($args[1],$query);
+            $this->assertContains($args[2],$query);
+        }
     }
 
     public function testExc()
     {
         $this->markTestIncomplete();
+    }
+
+
+    public function providerTestGetWidgetUrl()
+    {
+        $result = array();
+        // $url, $db, $reportType)
+
+        $argsValid = array('github.com', 'de', 'reportType');
+
+        $args = $argsValid;
+        $result[]= array($args, true);
+
+        $args = $argsValid;
+        $args[0] = 'http://';
+        $result[]= array($args, false);
+
+        $args = $argsValid;
+        $args[1] = 'WhatEverLang';
+        $result[]= array($args, false);
+
+        return $result;
     }
 
 
@@ -111,7 +154,11 @@ class SemRushTest extends AbstractServiceTestCase
         $result[]= array($args, 'assertValidImageUrlResult');
 
         $args = $argsValid;
-        $args[0] = 0;
+        $args[0] = 'http://';
+        $result[]= array($args, false);
+
+        $args = $argsValid;
+        $args[1] = 0;
         $result[]= array($args, false);
 
         $args = $argsValid;
@@ -149,7 +196,6 @@ class SemRushTest extends AbstractServiceTestCase
         // count without html
         $this->assertEquals(count($args) - 1, count($query));
     }
-
 
     public function assertValidImageHtmlResult($result, $args)
     {
