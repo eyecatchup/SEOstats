@@ -217,18 +217,13 @@ class SemRush extends SEOstats
     {
         $url      = parent::getUrl($url);
         $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
+        static::guardDomainIsValid($domain);
 
-        if (false === $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else {
-            $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
-            return sprintf($widgetUrl, $reportType, $database, $domain);
-        }
+        $database = self::checkDatabase($db);
+        static::guardDatabaseIsValid($database);
+
+        $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
+        return sprintf($widgetUrl, $reportType, $database, $domain);
     }
 
     private static function checkDatabase($db)
