@@ -151,7 +151,7 @@ class SemRush extends SEOstats
 
     private static function getApiData($url)
     {
-        $json = parent::_getPage($url);
+        $json = static::_getPage($url);
         return Helper\Json::decode($json, true);
     }
 
