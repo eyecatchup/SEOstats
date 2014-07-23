@@ -41,18 +41,32 @@ class SemRushTest extends AbstractServiceTestCase
 
     /**
      * @group semrush
+     * @dataProvider providerTestSpecificalBackendUrl
      */
-    public function testGetDomainRank()
+    public function testSpecificalBackendUrl($method, $args, $jsonData, $assertResult, $apiOrBackend = false)
     {
-        $this->markTestIncomplete();
-    }
+        if (!$assertResult) {
+            $this->setExpectedException('\SEOstats\Common\SEOstatsException');
+        }
 
-    /**
-     * @group semrush
-     */
-    public function testGetDomainRankHistory()
-    {
-        $this->markTestIncomplete();
+        $this->mockSUT($method);
+
+        $this->mockGetPage(function ($url) use ($jsonData, $apiOrBackend) {
+
+            if ($apiOrBackend == 'api' && !preg_match('#api#', $url)) {
+                return "false";
+            } elseif ($apiOrBackend == 'backend' && !preg_match('#backend#', $url)) {
+                return "false";
+            }
+
+            return $jsonData;
+        });
+
+        $result = call_user_func_array(array($this->mockedSUT, $method), $args);
+
+        if ($assertResult) {
+            $this->assertEquals($assertResult, $result);
+        }
     }
 
     /**
@@ -75,14 +89,6 @@ class SemRushTest extends AbstractServiceTestCase
         if ($assertResult) {
             $this->assertEquals($assertResult, $result);
         }
-    }
-
-    /**
-     * @group semrush
-     */
-    public function testGetCompetitors()
-    {
-        $this->markTestIncomplete();
     }
 
     /**
@@ -276,6 +282,45 @@ class SemRushTest extends AbstractServiceTestCase
         $args[1] = 'WhatEverDb';
         $result[]= array('getOrganicKeywords', $args, false, false);
         $result[]= array('getCompetitors', $args, false, false);
+
+        return $result;
+    }
+
+
+    public function providerTestSpecificalBackendUrl()
+    {
+        $result = array();
+
+        // $url = false, $db = false
+        $argsValid = array('github.com', 'de');
+        $jsonDomainRankValid = '{"rank":{"data":["foobar","bar","baz"]}}';
+        $jsonDomainRankHistoryValid = '{"rank_history":"foobar"}';
+        $jsonNoDataValid = 'false';
+
+        $noData = $this->helperMakeAccessable('SeoStats\SeoStats','noDataDefaultValue', array());
+
+        $args = $argsValid;
+        $result[]= array('getDomainRank', $args, $jsonDomainRankValid, 'foobar', 'api');
+        $result[]= array('getDomainRank', $args, $jsonDomainRankValid, 'foobar', 'backend');
+        $result[]= array('getDomainRankHistory', $args, $jsonDomainRankHistoryValid, 'foobar', 'api');
+        $result[]= array('getDomainRankHistory', $args, $jsonDomainRankHistoryValid, 'foobar', 'backend');
+
+        $args = $argsValid;
+        $result[]= array('getDomainRank', $args, $jsonNoDataValid, $noData, 'api');
+        $result[]= array('getDomainRank', $args, $jsonNoDataValid, $noData, 'backend');
+        $result[]= array('getDomainRankHistory', $args, $jsonNoDataValid, $noData, 'api');
+        $result[]= array('getDomainRankHistory', $args, $jsonNoDataValid, $noData, 'backend');
+
+
+        $args = $argsValid;
+        $args[0] = 'http://';
+        $result[]= array('getDomainRank', $args, false, false);
+        $result[]= array('getDomainRankHistory', $args, false, false);
+
+        $args = $argsValid;
+        $args[1] = 'WhatEverDb';
+        $result[]= array('getDomainRank', $args, false, false);
+        $result[]= array('getDomainRankHistory', $args, false, false);
 
         return $result;
     }
