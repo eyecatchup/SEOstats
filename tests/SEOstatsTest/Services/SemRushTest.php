@@ -53,9 +53,9 @@ class SemRushTest extends AbstractServiceTestCase
 
         $this->mockGetPage(function ($url) use ($jsonData, $apiOrBackend) {
 
-            if ($apiOrBackend == 'api' && !preg_match('#api#', $url)) {
+            if ($apiOrBackend == 'api' && !preg_match('#.api.#', $url)) {
                 return "false";
-            } elseif ($apiOrBackend == 'backend' && !preg_match('#backend#', $url)) {
+            } elseif ($apiOrBackend == 'backend' && !preg_match('#.backend.#', $url)) {
                 return "false";
             }
 
