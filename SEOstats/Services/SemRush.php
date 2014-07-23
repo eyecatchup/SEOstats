@@ -209,7 +209,7 @@ class SemRush extends SEOstats
         return sprintf($widgetUrl, $reportType, $database, $domain);
     }
 
-    private static function getWidgetData($url, $db, $reportType, $valueKey)
+    protected static function getWidgetData($url, $db, $reportType, $valueKey)
     {
         $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
         $dataUrl = self::getWidgetUrl($url, $db, $reportType);
