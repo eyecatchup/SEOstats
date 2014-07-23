@@ -135,16 +135,16 @@ class SemRushTest extends AbstractServiceTestCase
 
     /**
      * @group semrush
-     * @dataProvider providerTestGetWidgetUrl
+     * @dataProvider providerTestGetWidgetAndBackendUrl
      */
-    public function testGetWidgetUrl($args, $status)
+    public function testGetWidgetAndBackendUrl($method, $args, $status)
     {
         if (!$status) {
             $this->setExpectedException('\SEOstats\Common\SEOstatsException');
         }
 
 
-        $result = $this->helperMakeAccessable($this->SUT, 'getWidgetUrl', $args);
+        $result = $this->helperMakeAccessable($this->SUT, $method, $args);
 
         if ($status) {
             $this->assertInternalType('string', $result);
@@ -154,7 +154,11 @@ class SemRushTest extends AbstractServiceTestCase
             parse_str($urlSplit['query'], $query);
 
             $this->assertContains($args[0],$query);
-            $this->assertContains($args[1],$query);
+            if ($method == 'getWidgetUrl') {
+                $this->assertContains($args[1],$query);
+            } else {
+                $this->assertRegExp(sprintf('#^(https?://)?%s#',$args[1]), $urlSplit['url']);
+            }
             $this->assertContains($args[2],$query);
         }
     }
@@ -168,7 +172,7 @@ class SemRushTest extends AbstractServiceTestCase
     }
 
 
-    public function providerTestGetWidgetUrl()
+    public function providerTestGetWidgetAndBackendUrl()
     {
         $result = array();
         // $url, $db, $reportType)
@@ -176,15 +180,18 @@ class SemRushTest extends AbstractServiceTestCase
         $argsValid = array('github.com', 'de', 'reportType');
 
         $args = $argsValid;
-        $result[]= array($args, true);
+        $result[]= array('getWidgetUrl', $args, true);
+        $result[]= array('getBackendUrl', $args, true);
 
         $args = $argsValid;
         $args[0] = 'http://';
-        $result[]= array($args, false);
+        $result[]= array('getWidgetUrl', $args, false);
+        $result[]= array('getBackendUrl', $args, false);
 
         $args = $argsValid;
-        $args[1] = 'WhatEverLang';
-        $result[]= array($args, false);
+        $args[1] = 'WhatEverDb';
+        $result[]= array('getWidgetUrl', $args, false);
+        $result[]= array('getBackendUrl', $args, false);
 
         return $result;
     }
