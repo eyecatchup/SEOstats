@@ -205,4 +205,40 @@ class SemRushTest extends AbstractServiceTestCase
         $this->assertSame(1, $matchResult);
         $this->assertValidImageUrlResult($matches[1], $args);
     }
+
+    protected function mockSUT($method=null, $vars=array())
+    {
+        switch($method) {
+            case 'getOrganicKeywords':
+            case 'getCompetitors':
+                $methods = array('getApiData');
+                break;
+            default:
+                $methods = array('_getPage');
+                break;
+        }
+
+        $this->mockedSUT = $this->getMock(get_class($this->SUT), $methods);
+        $this->mockedSUT->setUrl(array_key_exists('url',$vars) ? $vars['url'] : $this->url);
+    }
+
+    protected function mockGetApiData($arg = null)
+    {
+        if (is_callable($arg)) {
+            $this->mockedSUT->staticExpects($this->any())
+                            ->method('getApiData')
+                            ->will($this->returnCallback($arg));
+            return;
+        }
+
+        if (! is_string($arg)) {
+            $arg = 2013;
+        }
+
+        $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionFile, $arg);
+
+        $this->mockedSUT->staticExpects($this->any())
+                        ->method('_getPage')
+                        ->will($this->returnValue(file_get_contents($standardFile)));
+    }
 }
