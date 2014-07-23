@@ -57,10 +57,24 @@ class SemRushTest extends AbstractServiceTestCase
 
     /**
      * @group semrush
+     * @dataProvider providerTestSpecificalWidgetUrl
      */
-    public function testGetOrganicKeywords()
+    public function testSpecificalWidgetUrl($method, $args, $jsonData, $assertResult)
     {
-        $this->markTestIncomplete();
+        if (!$assertResult) {
+            $this->setExpectedException('\SEOstats\Common\SEOstatsException');
+        }
+
+        $this->mockSUT($method);
+        $this->mockGetPage(function ($url) use ($jsonData) {
+            return $jsonData;
+        });
+
+        $result = call_user_func_array(array($this->mockedSUT, $method), $args);
+
+        if ($assertResult) {
+            $this->assertEquals($assertResult, $result);
+        }
     }
 
     /**
@@ -223,6 +237,42 @@ class SemRushTest extends AbstractServiceTestCase
 
         return $result;
     }
+
+
+    public function providerTestSpecificalWidgetUrl()
+    {
+        $result = array();
+
+        // $url = false, $db = false
+        $argsValid = array('github.com', 'de');
+        $jsonOrganicValid = '{"organic":"foobar"}';
+        $jsonCompetitorsValid = '{"organic_organic":"foobar"}';
+        $jsonNoDataValid = 'false';
+
+        $noData = $this->helperMakeAccessable('SeoStats\SeoStats','noDataDefaultValue', array());
+
+        $args = $argsValid;
+        $result[]= array('getOrganicKeywords', $args, $jsonOrganicValid, 'foobar');
+        $result[]= array('getCompetitors', $args, $jsonCompetitorsValid, 'foobar');
+
+        $args = $argsValid;
+        $result[]= array('getOrganicKeywords', $args, $jsonNoDataValid, $noData);
+        $result[]= array('getCompetitors', $args, $jsonNoDataValid, $noData);
+
+
+        $args = $argsValid;
+        $args[0] = 'http://';
+        $result[]= array('getOrganicKeywords', $args, false, false);
+        $result[]= array('getCompetitors', $args, false, false);
+
+        $args = $argsValid;
+        $args[1] = 'WhatEverDb';
+        $result[]= array('getOrganicKeywords', $args, false, false);
+        $result[]= array('getCompetitors', $args, false, false);
+
+        return $result;
+    }
+
 
     public function assertValidImageUrlResult($result, $args)
     {
