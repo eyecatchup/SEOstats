@@ -80,32 +80,16 @@ class SemRush extends SEOstats
      */
     public static function getDomainRank($url = false, $db = false)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank');
-        $data    = self::getApiData($dataUrl);
+        $data = self::getBackendData($url, $db, 'domain_rank');
 
-        if (!is_array($data)) {
-            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
-            if (!is_array($data)) {
-                return parent::noDataDefaultValue();
-            }
-        }
-        return $data['rank']['data'][0];
+        return is_array($data) ? $data['rank']['data'][0] : $data;
     }
 
     public static function getDomainRankHistory($url = false, $db = false)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank_history');
-        $data    = self::getApiData($dataUrl);
+        $data = self::getBackendData($url, $db, 'domain_rank_history');
 
-        if (!is_array($data)) {
-            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
-            if (!is_array($data)) {
-                return parent::noDataDefaultValue();
-            }
-        }
-        return $data['rank_history'];
+        return is_array($data) ? $data['rank_history'] : $data;
     }
 
     public static function getOrganicKeywords($url = false, $db = false)
@@ -180,6 +164,22 @@ class SemRush extends SEOstats
         if (strlen($lang) != 2) {
             self::exc('You must specify a valid language code.');
         }
+    }
+
+    protected static function getBackendData($url, $db, $reportType)
+    {
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
+        $dataUrl = self::getBackendUrl($url, $db, $reportType);
+        $data    = self::getApiData($dataUrl);
+
+        if (!is_array($data)) {
+            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
+            if (!is_array($data)) {
+                return parent::noDataDefaultValue();
+            }
+        }
+
+        return $data;
     }
 
     private static function getBackendUrl($url, $db, $reportType)
