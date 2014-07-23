@@ -184,20 +184,11 @@ class SemRush extends SEOstats
 
     private static function getBackendUrl($url, $db, $reportType)
     {
-        $url      = parent::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
-
-        if (false === $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else {
-            $backendUrl = Config\Services::SEMRUSH_BE_URL;
-            return sprintf($backendUrl, $database, $reportType, $domain);
-        }
+        $domain = static::getDomainFormUrl($url);
+        $database = static::getValidDatabase($db);
+        
+        $backendUrl = Config\Services::SEMRUSH_BE_URL;
+        return sprintf($backendUrl, $database, $reportType, $domain);
     }
 
     private static function getWidgetUrl($url, $db, $reportType)
