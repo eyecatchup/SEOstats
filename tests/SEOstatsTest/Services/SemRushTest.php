@@ -246,10 +246,6 @@ class SemRushTest extends AbstractServiceTestCase
     protected function mockSUT($method=null, $vars=array())
     {
         switch($method) {
-            case 'getOrganicKeywords':
-            case 'getCompetitors':
-                $methods = array('getApiData');
-                break;
             default:
                 $methods = array('_getPage');
                 break;
@@ -268,14 +264,8 @@ class SemRushTest extends AbstractServiceTestCase
             return;
         }
 
-        if (! is_string($arg)) {
-            $arg = 2013;
-        }
-
-        $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionFile, $arg);
-
         $this->mockedSUT->staticExpects($this->any())
-                        ->method('_getPage')
-                        ->will($this->returnValue(file_get_contents($standardFile)));
+                        ->method('getApiData')
+                        ->will($this->returnValue($arg));
     }
 }
