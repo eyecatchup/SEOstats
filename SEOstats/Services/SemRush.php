@@ -242,6 +242,7 @@ class SemRush extends SEOstats
 
     private static function getValidDatabase($db)
     {
+        $db = self::getSemRushDatabase($db);
         $database = self::checkDatabase($db);
         static::guardDatabaseIsValid($database);
 
