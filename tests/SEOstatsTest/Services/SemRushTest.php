@@ -95,7 +95,20 @@ class SemRushTest extends AbstractServiceTestCase
      */
     public function testGetApiData()
     {
-        $this->markTestIncomplete();
+        $that = $this;
+
+        $jsonData = '{"foo":"bar"}';
+        $data = array('foo'=>'bar');
+
+        $this->mockSUT('getApiData');
+        $this->mockGetPage(function ($url) use ($that, $jsonData) {
+            $that->assertEquals('github.com', $url);
+            return $jsonData;
+        });
+
+        $result = $this->helperMakeAccessable($this->mockedSUT, 'getApiData', array('github.com'));
+
+        $this->assertEquals($data, $result);
     }
 
     /**
