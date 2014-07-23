@@ -120,7 +120,7 @@ class SemRush extends SEOstats
         }
     }
 
-    private static function getApiData($url)
+    protected static function getApiData($url)
     {
         $json = static::_getPage($url);
         return Helper\Json::decode($json, true);
@@ -182,16 +182,16 @@ class SemRush extends SEOstats
         return $data;
     }
 
-    private static function getBackendUrl($url, $db, $reportType)
+    protected static function getBackendUrl($url, $db, $reportType)
     {
         $domain = static::getDomainFormUrl($url);
         $database = static::getValidDatabase($db);
-        
+
         $backendUrl = Config\Services::SEMRUSH_BE_URL;
         return sprintf($backendUrl, $database, $reportType, $domain);
     }
 
-    private static function getWidgetUrl($url, $db, $reportType)
+    protected static function getWidgetUrl($url, $db, $reportType)
     {
         $domain = static::getDomainFormUrl($url);
         $database = static::getValidDatabase($db);
@@ -209,7 +209,7 @@ class SemRush extends SEOstats
         return !is_array($data) ? parent::noDataDefaultValue() : $data[ $valueKey ];
     }
 
-    private static function checkDatabase($db)
+    protected static function checkDatabase($db)
     {
         return !in_array($db, self::getDBs()) ? false : $db;
     }
@@ -218,7 +218,7 @@ class SemRush extends SEOstats
      *
      * @throws E
      */
-    private static function exc($err)
+    protected static function exc($err)
     {
         $e = ($err == 'db') ? "Invalid database. Choose one of: " .
             substr( implode(", ", self::getDBs()), 0, -2) : $err;
@@ -226,7 +226,7 @@ class SemRush extends SEOstats
         exit(0);
     }
 
-    private static function getDomainFormUrl($url)
+    protected static function getDomainFormUrl($url)
     {
         $url      = parent::getUrl($url);
         $domain   = Helper\Url::parseHost($url);
@@ -235,7 +235,7 @@ class SemRush extends SEOstats
         return $domain;
     }
 
-    private static function getValidDatabase($db)
+    protected static function getValidDatabase($db)
     {
         $db = self::getSemRushDatabase($db);
         $database = self::checkDatabase($db);
