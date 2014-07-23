@@ -223,6 +223,10 @@ class SemRush extends SEOstats
         return !in_array($db, self::getDBs()) ? false : $db;
     }
 
+    /**
+     *
+     * @throws E
+     */
     private static function exc($err)
     {
         $e = ($err == 'db') ? "Invalid database. Choose one of: " .
