@@ -31,26 +31,41 @@ class SemRushTest extends AbstractServiceTestCase
         $this->assertGreaterThanOrEqual(1, count($result));
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetParams()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetDomainRank()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetDomainRankHistory()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetOrganicKeywords()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetCompetitors()
     {
         $this->markTestIncomplete();
@@ -75,11 +90,17 @@ class SemRushTest extends AbstractServiceTestCase
         }
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetApiData()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @group semrush
+     */
     public function testGetBackendUrl()
     {
         $this->markTestIncomplete();
@@ -111,6 +132,9 @@ class SemRushTest extends AbstractServiceTestCase
         }
     }
 
+    /**
+     * @group semrush
+     */
     public function testExc()
     {
         $this->markTestIncomplete();
