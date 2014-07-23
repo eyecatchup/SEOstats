@@ -110,20 +110,12 @@ class SemRush extends SEOstats
 
     public static function getOrganicKeywords($url = false, $db = false)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getWidgetUrl($url, $db, 'organic');
-        $data    = self::getApiData($dataUrl);
-
-        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic'];
+        return static::getWidgetData($url, $db, 'organic', 'organic');
     }
 
     public static function getCompetitors($url = false, $db = false)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getWidgetUrl($url, $db, 'organic_organic');
-        $data    = self::getApiData($dataUrl);
-
-        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic_organic'];
+        return static::getWidgetData($url, $db, 'organic_organic', 'organic_organic');
     }
 
     public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
@@ -215,6 +207,15 @@ class SemRush extends SEOstats
 
         $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
         return sprintf($widgetUrl, $reportType, $database, $domain);
+    }
+
+    private static function getWidgetData($url, $db, $reportType, $valueKey)
+    {
+        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
+        $dataUrl = self::getWidgetUrl($url, $db, $reportType);
+        $data    = self::getApiData($dataUrl);
+
+        return !is_array($data) ? parent::noDataDefaultValue() : $data[ $valueKey ];
     }
 
     private static function checkDatabase($db)
