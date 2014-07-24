@@ -36,7 +36,15 @@ class SemRushTest extends AbstractServiceTestCase
      */
     public function testGetParams()
     {
-        $this->markTestIncomplete();
+        $result = $this->SUT->getParams();
+
+        $this->assertInternalType('array', $result);
+        $this->assertEquals(2, count($result));
+
+        foreach ($result as $paramBranch) {
+            $this->assertInternalType('array', $paramBranch);
+            $this->assertGreaterThanOrEqual(1, count($paramBranch));
+        }
     }
 
     /**
