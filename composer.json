@@ -4,6 +4,8 @@
 	"description" : "SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics for any website.",
 	"keywords" : [
 		"SEO",
+		"SEOStats",
+		"SEO-Stats",
 		"Pagerank",
 		"Backlinks",
 		"Google",
@@ -15,7 +17,7 @@
 		"Alexa"
 	],
 	"homepage" : "http://github.com/eyecatchup/SEOstats",
-	"version" : "2.5.2",
+	"version" : "2.5.3-beta2",
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Stephan Schmitz",
