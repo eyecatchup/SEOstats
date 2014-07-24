@@ -15,7 +15,7 @@
 		"Alexa"
 	],
 	"homepage" : "http://github.com/eyecatchup/SEOstats",
-	"version" : "2.5.2",
+	"version" : "2.5.3-beta2",
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Stephan Schmitz",
