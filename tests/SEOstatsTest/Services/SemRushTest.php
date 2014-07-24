@@ -133,14 +133,6 @@ class SemRushTest extends AbstractServiceTestCase
 
     /**
      * @group semrush
-     */
-    public function testGetBackendUrl()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
-     * @group semrush
      * @dataProvider providerTestGetWidgetAndBackendUrl
      */
     public function testGetWidgetAndBackendUrl($method, $args, $status)
@@ -168,15 +160,6 @@ class SemRushTest extends AbstractServiceTestCase
             $this->assertContains($args[2],$query);
         }
     }
-
-    /**
-     * @group semrush
-     */
-    public function testExc()
-    {
-        $this->markTestIncomplete();
-    }
-
 
     public function providerTestGetWidgetAndBackendUrl()
     {
