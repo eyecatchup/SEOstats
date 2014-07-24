@@ -26,12 +26,12 @@ class EventManager
         return static::$instance;
     }
 
-    public static function add($eventKey, $callback)
+    public function add($eventKey, $callback)
     {
         $this->listeners[$eventKey][] = $callback;
     }
 
-    public static function remove($eventKey, $callback = null)
+    public function remove($eventKey, $callback = null)
     {
         if (is_callable($callback)) {
             // remove only one callback
@@ -45,7 +45,7 @@ class EventManager
         }
     }
 
-    public static function trigger($eventKey, Event $event)
+    public function trigger($eventKey, Event $event)
     {
         $event->startProgress();
 
