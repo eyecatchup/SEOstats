@@ -31,6 +31,13 @@ class EventManager
         $this->listeners[$eventKey][] = $callback;
     }
 
+    public function canonicalizeName($name)
+    {
+        $replace = array('-' => '', '_' => '', ' ' => '', '\\' => '', '/' => '');
+
+        return strtolower(strtr($name, $replace));
+    }
+
     public function remove($eventKey, $callback = null)
     {
         if (is_callable($callback)) {
