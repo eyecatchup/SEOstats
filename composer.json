@@ -17,7 +17,6 @@
 		"Alexa"
 	],
 	"homepage" : "http://github.com/eyecatchup/SEOstats",
-	"version" : "2.5.3-beta2",
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Stephan Schmitz",
@@ -48,5 +47,10 @@
 		"classmap" : [
 			"SEOstats/Services/3rdparty"
 		]
-	}
+	},
+    "extra": {
+        "branch-alias": {
+			"dev-master": "2.5-dev"
+        }
+    }
 }
