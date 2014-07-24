@@ -28,7 +28,9 @@ class EventManager
 
     public function add($eventKey, $callback)
     {
-        $this->listeners[$eventKey][] = $callback;
+        $cEventKey = $this->canonicalizeName($eventKey);
+
+        $this->listeners[$cEventKey][] = $callback;
     }
 
     public function canonicalizeName($name)
@@ -40,20 +42,24 @@ class EventManager
 
     public function remove($eventKey, $callback = null)
     {
+        $cEventKey = $this->canonicalizeName($eventKey);
+
         if (is_callable($callback)) {
             // remove only one callback
-            $this->listeners[$eventKey] = array_diff($this->listeners[$eventKey], array($callback));
+            $this->listeners[$cEventKey] = array_diff($this->listeners[$cEventKey], array($callback));
         } elseif (is_array($callback)) {
             // remove only more callback's
-            $this->listeners[$eventKey] = array_diff($this->listeners[$eventKey], $callback);
+            $this->listeners[$cEventKey] = array_diff($this->listeners[$cEventKey], $callback);
         } else {
             // remove all callback's
-            $this->listeners[$eventKey] = array();
+            $this->listeners[$cEventKey] = array();
         }
     }
 
     public function trigger($eventKey, Event $event)
     {
+        $cEventKey = $this->canonicalizeName($eventKey);
+
         $event->startProgress();
 
         foreach ($this->listeners[$eventKey] as $listener) {
