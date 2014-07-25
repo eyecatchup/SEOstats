@@ -348,16 +348,16 @@ More detailed examples can be found in the `./example` directory.
 ```php
 <?php
   // Returns an array containing the SEMRush main report (includes DomainRank, Traffic- & Ads-Data)
-  print_r ( SEMRush::getDomainRank() );
+  print_r ( SemRush::getDomainRank() );
 
   // Returns an array containing the domain rank history.
-  print_r ( SEMRush::getDomainRankHistory() );
+  print_r ( SemRush::getDomainRankHistory() );
 
   // Returns an array containing data for competeing (auto-detected) websites.
-  print_r ( SEMRush::getCompetitors() );
+  print_r ( SemRush::getCompetitors() );
 
   // Returns an array containing data about organic search engine traffic, using explicitly SEMRush's german database.
-  print_r ( SEMRush::getOrganicKeywords(0, 'de') );
+  print_r ( SemRush::getOrganicKeywords(0, 'de') );
 ```
 
 ### SEMRush Graphs
@@ -365,21 +365,21 @@ More detailed examples can be found in the `./example` directory.
 ```php
 <?php
   // Returns HTML code for the 'search engine traffic'-graph.
-  print SEMRush::getDomainGraph(1);
+  print SemRush::getDomainGraph(1);
 
   // Returns HTML code for the 'search engine traffic price'-graph.
-  print SEMRush::getDomainGraph(2);
+  print SemRush::getDomainGraph(2);
 
   // Returns HTML code for the 'number of adwords ads'-graph, using explicitly SEMRush's german database.
-  print SEMRush::getDomainGraph(3, 0, 'de');
+  print SemRush::getDomainGraph(3, 0, 'de');
 
   // Returns HTML code for the 'adwords traffic'-graph, using explicitly SEMRush's german database and
   // specific graph dimensions of 320*240 px.
-  print SEMRush::getDomainGraph(4, 0, 'de', 320, 240);
+  print SemRush::getDomainGraph(4, 0, 'de', 320, 240);
 
   // Returns HTML code for the 'adwords traffic price '-graph, using explicitly SEMRush's german database,
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
-  print SEMRush::getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
+  print SemRush::getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
 <hr>
 
