@@ -6,7 +6,7 @@
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/12/17
+ * @updated    2014/07/26
  */
 
 // NOTE: The given path to the autoload.php assumes that you installed SEOstats via composer 
@@ -24,10 +24,10 @@
 #require_once realpath(__DIR__ . '/SEOstats/bootstrap.php');
 require_once realpath(__DIR__ . '/vendor/autoload.php');
 
-use \SEOstats\Services\SEMRush as SEMrush;
+use \SEOstats\Services\SemRush;
 
 try {
-    $url = 'http://www.nahklick.de/';
+    $url = 'http://www.google.de/';
 
     // Create a new SEOstats instance.
     $seostats = new \SEOstats\SEOstats;
@@ -38,18 +38,18 @@ try {
         /**
          *  Get the current SEMrush DomainRank metrics for the given URL.
          */
-        print_r(SEMrush::getDomainRank());
+        print_r(SemRush::getDomainRank());
 
         /**
          *  Get historical SEMrush DomainRank metrics for the given URL.
          */
-        //print_r(SEMrush::getDomainRankHistory());
+        //print_r(SemRush::getDomainRankHistory());
 
         /**
          *  Get competing domains for the given URL
          *  and their basic SEMrush DomainRank metrics.
          */
-        //print_r(SEMrush::getCompetitors());
+        //print_r(SemRush::getCompetitors());
 
         /**
          *  Get organic search engine traffic data for the given URL.
@@ -60,13 +60,13 @@ try {
          *  Get organic search engine traffic metrics for the given URL,
          *  using explicitly SEMrush's data for google.de (german index).
          */
-        //print_r(SEMrush::getOrganicKeywords(false, 'de'));
+        //print_r(SemRush::getOrganicKeywords(false, 'de'));
 
         /**
          *  Get an array containing explainations for the
          *  result keys of the DomainRank metric methods.
          */
-        //print_r(SEMrush::getParams());
+        //print_r(SemRush::getParams());
     }
 }
 catch (\Exception $e) {
