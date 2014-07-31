@@ -54,4 +54,16 @@ interface DefaultSettings
     //   uk - Google.co.uk (United Kingdom)
     //   us - Google.com (United States)
     const SEMRUSH_DB = 'us';
+
+    // Choose the local SISTRIX database to use.
+    // Valid values are:
+    //   de – Germany
+    //   at – Austria
+    //   ch – Switzerland
+    //   us – USA
+    //   uk – England
+    //   es – Spain
+    //   fr – France
+    //   it – Italy
+    const SISTRIX_DB = 'de';
 }
