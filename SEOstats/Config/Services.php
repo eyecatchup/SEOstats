@@ -26,6 +26,7 @@ interface Services
     // Sistrix Visibility Index public report URL.
     // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
     const SISTRIX_VI_URL = 'http://www.sichtbarkeitsindex.de/%s';
+    const SISTRIX_API_VI_URL = 'http://api.sistrix.net/domain.sichtbarkeitsindex?api_key=%s&domain=%s&country=%s&format=json';
 
     // SEMrush API Endpoints.
     const SEMRUSH_BE_URL = 'http://%s.backend.semrush.com/?action=report&type=%s&domain=%s';
