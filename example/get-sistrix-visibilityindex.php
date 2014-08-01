@@ -32,11 +32,11 @@ try {
     echo "The current Sistrix Visibility-Index for {$url} is {$vi}." . PHP_EOL;
 
     // Get the current available credits for the SISTRIX API (this API call does cost 0 credits currently).
-    $credits = \SEOstats\Services\Sistrix::getAPICredits();
+    $credits = \SEOstats\Services\Sistrix::getApiCredits();
     echo "Currently your Sistrix API Key has {$credits} credits available." . PHP_EOL;
 
     // Get the Sistrix Visibility-Index for the given URL by using the SISTRIX API
-    $vi = \SEOstats\Services\Sistrix::getVisibilityIndexByAPI($url);
+    $vi = \SEOstats\Services\Sistrix::getVisibilityIndexByApi($url);
     echo "The current Sistrix Visibility-Index for {$url} is {$vi}." . PHP_EOL;
 }
 catch (\Exception $e) {

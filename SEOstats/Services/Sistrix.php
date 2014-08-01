@@ -49,7 +49,9 @@ class Sistrix extends SEOstats
         $html = parent::_getPage($dataUrl);
         @preg_match_all('#<h3>(.*?)<\/h3>#si', $html, $matches);
 
-        return isset($matches[1][0]) ? $matches[1][0] : parent::noDataDefaultValue();
+        $vi = str_replace(',','.',$matches[1][0]);
+
+        return isset($vi) ? $vi : parent::noDataDefaultValue();
     }
 
     /**
@@ -60,43 +62,39 @@ class Sistrix extends SEOstats
      * @return        integer    Returns the Sistrix visibility index.
      * @link    http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
      */
-    public static function getVisibilityIndexByAPI($url = false, $db = false)
+    public static function getVisibilityIndexByApi($url = false, $db = false)
     {
-      self::checkAPIKey();
+      self::guardApiKey();
+      self::guardApiCredits();
 
-      if(self::checkAPICredits()) {
-        $db = ($db == false) ? Config\DefaultSettings::SISTRIX_DB : $db;
+      $db = ($db == false) ? Config\DefaultSettings::SISTRIX_DB : $db;
 
-        $url     = parent::getUrl($url);
-        $domain  = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
+      $url     = parent::getUrl($url);
+      $domain  = Helper\Url::parseHost($url);
+      $database = self::checkDatabase($db);
 
-        if (false === $domain) {
-          self::exc('Invalid domain name.');
+      if (false === $domain) {
+        self::exc('Invalid domain name.');
+      }
+      else if (false === $database) {
+        self::exc('db');
+      }
+      else {
+        $dataUrl = sprintf(Config\Services::SISTRIX_API_VI_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY, urlencode($domain), $database);
+
+        $json = parent::_getPage($dataUrl);
+
+        if(!empty($json)) {
+          $json_decoded = (Helper\Json::decode($json, true));
+          return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
+        } else {
+          return parent::noDataDefaultValue();
         }
-        else if (false === $database) {
-          self::exc('db');
-        }
-        else {
-          $dataUrl = sprintf(Config\Services::SISTRIX_API_VI_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY, urlencode($domain), $database);
-
-          $json = parent::_getPage($dataUrl);
-
-          if(!empty($json)) {
-            $json_decoded = (Helper\Json::decode($json, true));
-            return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
-          } else {
-            return parent::noDataDefaultValue();
-          }
-        }
-      } else {
-        // not enough api credits
-        self::exc('Not enough API credits');
       }
     }
 
-    public static function getAPICredits() {
-      self::checkAPIKey();
+    public static function getApiCredits() {
+      self::guardApiKey();
 
       $dataUrl = sprintf(Config\Services::SISTRIX_API_CREDITS_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY);
 
@@ -110,15 +108,20 @@ class Sistrix extends SEOstats
       }
     }
 
-    private static function checkAPICredits() {
-      return self::getAPICredits() > 0;
+    private static function checkApiCredits() {
+      return self::getApiCredits() > 0;
     }
 
-    private static function checkAPIKey() {
+    private static function guardApiKey() {
       if ('' == Config\ApiKeys::SISTRIX_API_ACCESS_KEY) {
-        throw new E('In order to use the SISTRIX API, you must obtain
-                and set an API key first (see SEOstats\Config\ApiKeys.php).');
-        exit(0);
+        self::exc('In order to use the SISTRIX API, you must obtain and set an
+        API key first (see SEOstats\Config\ApiKeys.php).'.PHP_EOL);
+      }
+    }
+
+    private static function guardApiCredits() {
+      if(!self::checkApiCredits()) {
+        self::exc('Not enough API credits.'.PHP_EOL);
       }
     }
 
@@ -132,6 +135,5 @@ class Sistrix extends SEOstats
       $e = ($err == 'db') ? "Invalid database. Choose one of: " .
         substr( implode(", ", self::getDBs()), 0, -2) : $err;
       throw new E($e);
-      exit(0);
     }
 }
