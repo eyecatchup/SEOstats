@@ -453,6 +453,6 @@ More detailed examples can be found in the `./example` directory.
 
 ## License
 
-(c) 2010 - 2013, Stephan Schmitz eyecatchup@gmail.com  
+(c) 2010 - 2014, Stephan Schmitz eyecatchup@gmail.com  
 License: MIT, http://eyecatchup.mit-license.org  
 URL: https://github.com/eyecatchup/SEOstats  

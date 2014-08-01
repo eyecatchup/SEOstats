@@ -1,31 +1,56 @@
 {
-    "name": "seostats/seostats",
-    "type": "library",
-    "description": "SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics for any website.",
-    "keywords": ["SEO","Pagerank","Backlinks","Google","Mozscape","SEOmoz","Sistrix","Open Site Explorer","SEMRush","Alexa"],
-    "homepage": "http://github.com/eyecatchup/SEOstats",
-    "version": "2.5.2",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Stephan Schmitz",
-            "email": "eyecatchup@gmail.com",
-            "homepage": "https://github.com/eyecatchup",
-            "role": "Creator, Developer, Maintainer"
-        },
-        {
-            "name": "SEOstats Community",
-            "homepage": "https://github.com/eyecatchup/seostats/contributors",
-            "role": "Contributor, Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.3",
-        "ext-curl": "*",
-        "ext-json": "*"
+	"name" : "seostats/seostats",
+	"type" : "library",
+	"description" : "SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics for any website.",
+	"keywords" : [
+		"SEO",
+		"SEOStats",
+		"SEO-Stats",
+		"Pagerank",
+		"Backlinks",
+		"Google",
+		"Mozscape",
+		"SEOmoz",
+		"Sistrix",
+		"Open Site Explorer",
+		"SEMRush",
+		"Alexa"
+	],
+	"homepage" : "http://github.com/eyecatchup/SEOstats",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Stephan Schmitz",
+			"email" : "eyecatchup@gmail.com",
+			"homepage" : "https://github.com/eyecatchup",
+			"role" : "Creator, Developer, Maintainer"
+		}, {
+			"name" : "SEOstats Community",
+			"homepage" : "https://github.com/eyecatchup/seostats/contributors",
+			"role" : "Contributor, Developer"
+		}
+	],
+	"require" : {
+		"php" : ">=5.3",
+		"ext-curl" : "*",
+		"ext-json" : "*"
+	},
+    "require-dev" : {
+				"squizlabs/php_codesniffer" : "~1",
+		"composer/composer": "1.0.*@dev",
+        "phpunit/phpunit" : ">=3.7,<4",
+				"scrutinizer/ocular" : "~1"
     },
-    "autoload": {
-        "psr-0": { "SEOstats\\": "" },
-        "classmap": ["SEOstats/Services/3rdparty"]
+	"autoload" : {
+		"psr-0" : {
+			"SEOstats\\" : ""
+		},
+		"classmap" : [
+			"SEOstats/Services/3rdparty"
+		]
+	},
+    "extra": {
+        "branch-alias": {
+			"dev-master": "2.5-dev"
+        }
     }
 }
