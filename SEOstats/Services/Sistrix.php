@@ -69,27 +69,19 @@ class Sistrix extends SEOstats
 
       $db = ($db == false) ? Config\DefaultSettings::SISTRIX_DB : $db;
 
-      $url     = parent::getUrl($url);
-      $domain  = Helper\Url::parseHost($url);
-      $database = self::checkDatabase($db);
+      $url = parent::getUrl($url);
+      $domain = static::getDomainFromUrl($url);
+      $database = static::getValidDatabase($db);
 
-      if (false === $domain) {
-        self::exc('Invalid domain name.');
-      }
-      else if (false === $database) {
-        self::exc('db');
-      }
-      else {
-        $dataUrl = sprintf(Config\Services::SISTRIX_API_VI_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY, urlencode($domain), $database);
+      $dataUrl = sprintf(Config\Services::SISTRIX_API_VI_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY, urlencode($domain), $database);
 
-        $json = parent::_getPage($dataUrl);
+      $json = parent::_getPage($dataUrl);
 
-        if(!empty($json)) {
-          $json_decoded = (Helper\Json::decode($json, true));
-          return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
-        } else {
-          return parent::noDataDefaultValue();
-        }
+      if(!empty($json)) {
+        $json_decoded = (Helper\Json::decode($json, true));
+        return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
+      } else {
+        return parent::noDataDefaultValue();
       }
     }
 
@@ -128,6 +120,37 @@ class Sistrix extends SEOstats
     private static function checkDatabase($db)
     {
       return !in_array($db, self::getDBs()) ? false : $db;
+    }
+
+    protected static function getDomainFromUrl($url)
+    {
+      $url      = parent::getUrl($url);
+      $domain   = Helper\Url::parseHost($url);
+      static::guardDomainIsValid($domain);
+
+      return $domain;
+    }
+
+    protected static function getValidDatabase($db)
+    {
+      $database = self::checkDatabase($db);
+      static::guardDatabaseIsValid($database);
+
+      return $database;
+    }
+
+    protected static function guardDatabaseIsValid($database)
+    {
+      if (false === $database) {
+        self::exc('db');
+      }
+    }
+
+    protected static function guardDomainIsValid($domain)
+    {
+      if (false == $domain) {
+        self::exc('Invalid domain name.');
+      }
     }
 
     private static function exc($err)
