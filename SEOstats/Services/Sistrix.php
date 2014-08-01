@@ -49,9 +49,12 @@ class Sistrix extends SEOstats
         $html = parent::_getPage($dataUrl);
         @preg_match_all('#<h3>(.*?)<\/h3>#si', $html, $matches);
 
-        $vi = str_replace(',','.',$matches[1][0]);
-
-        return isset($vi) ? $vi : parent::noDataDefaultValue();
+        if(isset($matches[1][0])) {
+          $vi = str_replace(',','.',$matches[1][0]);
+          return $vi;
+        } else {
+          return parent::noDataDefaultValue();
+        }
     }
 
     /**
