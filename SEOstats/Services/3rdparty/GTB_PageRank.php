@@ -85,7 +85,11 @@ class GTB_PageRank implements tbr, pref
   public function getToolbarPageRank($toolbarUrl) {
 	$ret = GTB_Request::_get($toolbarUrl);
 	$pagerank = trim(substr($ret, 9));
-	return (!preg_match('/^[0-9]/',$pagerank)) ? FALSE : $pagerank;
+	return ($this->isResultValid($pagerank)) ? $pagerank : false;
+  }
+
+  public function isResultValid($result) {
+    return preg_match('/^[0-9]/',$result) || $result === "";
   }
 
   /** getQueryURL - Get the object query url.

@@ -2,7 +2,8 @@
 
 namespace SEOstatsTest\Services\Google;
 
-use SEOstats\Services\Sitrix;
+use SEOstats\Services\Google;
+use SEOstats\Services\Google\Search as GoogleSearch;
 
 class GoogleSearchTest extends AbstractGoogleTestCase
 {
@@ -10,17 +11,16 @@ class GoogleSearchTest extends AbstractGoogleTestCase
     protected $standardVersionSubFile = "google-search-%s-%s-%s.html";
     public $called = 0;
 
-    /**
-     * @group google
-     * @group google-search
-     * @group live
-     */
-    public function testGetPageRank()
+    public function setup()
     {
-        $result = $this->SUT->getPageRank();
+        parent::setup();
+        $this->reflection = array();
 
-        $this->assertInternalType('string', $result);
-        $this->assertGreaterThanOrEqual(0, $result);
+        $this->url = 'http://github.com';
+        $this->SUT = new GoogleSearch();
+        $this->SUT->setUrl($this->url);
+
+        $this->called = 1;
     }
 
     /**
@@ -90,12 +90,19 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 
         $args = array( $query, 10, false );
         $result[] = array($args, '2014', 15); // github.com result gives more than 10 results on first page
+        $result[] = array($args, '2014-with-one-page', 13);
         $result[] = array($args, 'failed', 0);
 
-        // @TODO fix domain filter regexp
-        // $args = array( $query, 10, 'github.com' );
-        // $result[] = array($args, '2014', 0);
-        // $result[] = array($args, 'failed', 0);
+        $args = array( $query, 10, 'github.com' );
+        $result[] = array($args, '2014', 11);
+        $result[] = array($args, 'failed', 0);
+
+        $args = array( $query, 10, 'https://github.com' );
+        $result[] = array($args, '2014', 4);
+        $result[] = array($args, 'failed', 0);
+
+        $args = array( 'some_query_that_dont_give_a_result', 20, false );
+        $result[] = array($args, 'failed', 0);
 
 
 
@@ -111,29 +118,16 @@ class GoogleSearchTest extends AbstractGoogleTestCase
 
 
 
-
-        // @TODO fix domain filter regexp
-        // $args = array( $query, 10, 'github.com' );
-        // $result[] = array($args, '2014', 0);
-        // $result[] = array($args, 'failed', 0);
-
         $args = array( $query, 20, false );
-        $result[] = array($args, '2014', 25);
+        $result[] = array($args, '2014', 15);
         $result[] = array($args, 'failed', 0);
 
-        // @TODO fix domain filter regexp
-        // $args = array( $query, 20, 'github.com' );
-        // $result[] = array($args, '2014', 20);
-        // $result[] = array($args, 'failed', 0);
+        $args = array( $query, 20, 'github.com' );
+        $result[] = array($args, '2014', 11);
+        $result[] = array($args, 'failed', 0);
 
 
         return $result;
-    }
-
-    public function setUp ()
-    {
-        parent::setUp();
-        $this->called = 1;
     }
 
     protected function mockGCurl ($version)
