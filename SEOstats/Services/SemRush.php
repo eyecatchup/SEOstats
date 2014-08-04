@@ -104,7 +104,7 @@ class SemRush extends SEOstats
 
     public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
     {
-        $domain = static::getDomainFormUrl($url);
+        $domain = static::getDomainFromUrl($url);
         $database = static::getValidDatabase($db);
 
         static::guardValidArgsForGetDomainGraph($reportType, $w, $h, $lang);
@@ -184,7 +184,7 @@ class SemRush extends SEOstats
 
     protected static function getBackendUrl($url, $db, $reportType)
     {
-        $domain = static::getDomainFormUrl($url);
+        $domain = static::getDomainFromUrl($url);
         $database = static::getValidDatabase($db);
 
         $backendUrl = Config\Services::SEMRUSH_BE_URL;
@@ -193,7 +193,7 @@ class SemRush extends SEOstats
 
     protected static function getWidgetUrl($url, $db, $reportType)
     {
-        $domain = static::getDomainFormUrl($url);
+        $domain = static::getDomainFromUrl($url);
         $database = static::getValidDatabase($db);
 
         $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
@@ -226,7 +226,7 @@ class SemRush extends SEOstats
         exit(0);
     }
 
-    protected static function getDomainFormUrl($url)
+    protected static function getDomainFromUrl($url)
     {
         $url      = parent::getUrl($url);
         $domain   = Helper\Url::parseHost($url);
