@@ -80,23 +80,96 @@ class SemRush extends SEOstats
      */
     public static function getDomainRank($url = false, $db = false)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank');
-        $data    = self::getApiData($dataUrl);
+        $data = self::getBackendData($url, $db, 'domain_rank');
 
-        if (!is_array($data)) {
-            $data = self::getApiData(str_replace('.backend.', '.api.', $dataUrl));
-            if (!is_array($data)) {
-                return parent::noDataDefaultValue();
-            }
-        }
-        return $data['rank']['data'][0];
+        return is_array($data) ? $data['rank']['data'][0] : $data;
     }
 
     public static function getDomainRankHistory($url = false, $db = false)
     {
+        $data = self::getBackendData($url, $db, 'domain_rank_history');
+
+        return is_array($data) ? $data['rank_history'] : $data;
+    }
+
+    public static function getOrganicKeywords($url = false, $db = false)
+    {
+        return static::getWidgetData($url, $db, 'organic', 'organic');
+    }
+
+    public static function getCompetitors($url = false, $db = false)
+    {
+        return static::getWidgetData($url, $db, 'organic_organic', 'organic_organic');
+    }
+
+    public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
+    {
+        $domain = static::getDomainFromUrl($url);
+        $database = static::getValidDatabase($db);
+
+        static::guardValidArgsForGetDomainGraph($reportType, $w, $h, $lang);
+
+        $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
+            $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
+
+        if (! $html) {
+            return $imgUrl;
+        } else {
+            $imgTag = '<img src="%s" width="%s" height="%s" alt="SEMRush Domain Trend Graph for %s"/>';
+            return sprintf($imgTag, $imgUrl, $w, $h, $domain);
+        }
+    }
+
+    protected static function getApiData($url)
+    {
+        $json = static::_getPage($url);
+        return Helper\Json::decode($json, true);
+    }
+
+    protected static function getSemRushDatabase($db)
+    {
+        return false !== $db
+            ? $db
+            : Config\DefaultSettings::SEMRUSH_DB;
+    }
+
+    protected static function guardDomainIsValid($domain)
+    {
+        if (false == $domain) {
+            self::exc('Invalid domain name.');
+        }
+    }
+
+    protected static function guardDatabaseIsValid($database)
+    {
+        if (false === $database) {
+            self::exc('db');
+        }
+    }
+
+    protected static function guardValidArgsForGetDomainGraph($reportType, $width, $height, $lang)
+    {
+        if ($reportType > 5 || $reportType < 1) {
+            self::exc('Report type must be between 1 (one) and 5 (five).');
+        }
+
+        if ($width > 400 || $width < 200) {
+            self::exc('Image width must be between 200 and 400 px.');
+        }
+
+        if ($height > 300 || $height < 150) {
+            self::exc('Image height must be between 150 and 300 px.');
+        }
+
+        if (strlen($lang) != 2) {
+            self::exc('You must specify a valid language code.');
+        }
+    }
+
+    protected static function getBackendData($url, $db, $reportType)
+    {
         $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getBackendUrl($url, $db, 'domain_rank_history');
+        $dataUrl = self::getBackendUrl($url, $db, $reportType);
         $data    = self::getApiData($dataUrl);
 
         if (!is_array($data)) {
@@ -105,116 +178,69 @@ class SemRush extends SEOstats
                 return parent::noDataDefaultValue();
             }
         }
-        return $data['rank_history'];
+
+        return $data;
     }
 
-    public static function getOrganicKeywords($url = false, $db = false)
+    protected static function getBackendUrl($url, $db, $reportType)
+    {
+        $domain = static::getDomainFromUrl($url);
+        $database = static::getValidDatabase($db);
+
+        $backendUrl = Config\Services::SEMRUSH_BE_URL;
+        return sprintf($backendUrl, $database, $reportType, $domain);
+    }
+
+    protected static function getWidgetUrl($url, $db, $reportType)
+    {
+        $domain = static::getDomainFromUrl($url);
+        $database = static::getValidDatabase($db);
+
+        $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
+        return sprintf($widgetUrl, $reportType, $database, $domain);
+    }
+
+    protected static function getWidgetData($url, $db, $reportType, $valueKey)
     {
         $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getWidgetUrl($url, $db, 'organic');
+        $dataUrl = self::getWidgetUrl($url, $db, $reportType);
         $data    = self::getApiData($dataUrl);
 
-        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic'];
+        return !is_array($data) ? parent::noDataDefaultValue() : $data[ $valueKey ];
     }
 
-    public static function getCompetitors($url = false, $db = false)
-    {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $dataUrl = self::getWidgetUrl($url, $db, 'organic_organic');
-        $data    = self::getApiData($dataUrl);
-
-        return !is_array($data) ? parent::noDataDefaultValue() : $data['organic_organic'];
-    }
-
-    public static function getDomainGraph($reportType = 1, $url = false, $db = false, $w = 400, $h = 300, $lc = 'e43011', $dc = 'e43011', $lang = 'en', $html = true)
-    {
-        $db       = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
-        $url      = self::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
-
-        if (false == $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else if ($reportType > 5 || $reportType < 1) {
-            self::exc('Report type must be between 1 (one) and 5 (five).');
-        }
-        else if ($w > 400 || $w < 200) {
-            self::exc('Image width must be between 200 and 400 px.');
-        }
-        else if ($h > 300 || $h < 150) {
-            self::exc('Image height must be between 150 and 300 px.');
-        }
-        else if (strlen($lang) != 2) {
-            self::exc('You must specify a valid language code.');
-        }
-        else {
-            $imgUrl = sprintf(Config\Services::SEMRUSH_GRAPH_URL,
-                $domain, $database, $reportType, $w, $h, $lc, $dc, $lang);
-            if (true != $html) {
-                return $imgUrl;
-            } else {
-                $imgTag = '<img src="%s" width="%s" height="%s" alt="SEMRush Domain Trend Graph for %s"/>';
-                return sprintf($imgTag, $imgUrl, $w, $h, $domain);
-            }
-        }
-    }
-
-    private static function getApiData($url)
-    {
-        $json = parent::_getPage($url);
-        return Helper\Json::decode($json, true);
-    }
-
-    private static function getBackendUrl($url, $db, $reportType)
-    {
-        $url      = parent::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
-
-        if (false === $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else {
-            $backendUrl = Config\Services::SEMRUSH_BE_URL;
-            return sprintf($backendUrl, $database, $reportType, $domain);
-        }
-    }
-
-    private static function getWidgetUrl($url, $db, $reportType)
-    {
-        $url      = parent::getUrl($url);
-        $domain   = Helper\Url::parseHost($url);
-        $database = self::checkDatabase($db);
-
-        if (false === $domain) {
-            self::exc('Invalid domain name.');
-        }
-        else if (false === $database) {
-            self::exc('db');
-        }
-        else {
-            $widgetUrl = Config\Services::SEMRUSH_WIDGET_URL;
-            return sprintf($widgetUrl, $reportType, $database, $domain);
-        }
-    }
-
-    private static function checkDatabase($db)
+    protected static function checkDatabase($db)
     {
         return !in_array($db, self::getDBs()) ? false : $db;
     }
 
-    private static function exc($err)
+    /**
+     *
+     * @throws E
+     */
+    protected static function exc($err)
     {
         $e = ($err == 'db') ? "Invalid database. Choose one of: " .
             substr( implode(", ", self::getDBs()), 0, -2) : $err;
         throw new E($e);
         exit(0);
+    }
+
+    protected static function getDomainFromUrl($url)
+    {
+        $url      = parent::getUrl($url);
+        $domain   = Helper\Url::parseHost($url);
+        static::guardDomainIsValid($domain);
+
+        return $domain;
+    }
+
+    protected static function getValidDatabase($db)
+    {
+        $db = self::getSemRushDatabase($db);
+        $database = self::checkDatabase($db);
+        static::guardDatabaseIsValid($database);
+
+        return $database;
     }
 }
