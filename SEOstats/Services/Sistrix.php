@@ -49,12 +49,7 @@ class Sistrix extends SEOstats
         $html = parent::_getPage($dataUrl);
         @preg_match_all('#<h3>(.*?)<\/h3>#si', $html, $matches);
 
-        if(isset($matches[1][0])) {
-          $vi = str_replace(',','.',$matches[1][0]);
-          return $vi;
-        } else {
-          return parent::noDataDefaultValue();
-        }
+        return isset($matches[1][0]) ? $matches[1][0] : parent::noDataDefaultValue();
     }
 
     /**
@@ -70,8 +65,6 @@ class Sistrix extends SEOstats
       self::guardApiKey();
       self::guardApiCredits();
 
-      $db = ($db == false) ? Config\DefaultSettings::SISTRIX_DB : $db;
-
       $url = parent::getUrl($url);
       $domain = static::getDomainFromUrl($url);
       $database = static::getValidDatabase($db);
@@ -80,12 +73,11 @@ class Sistrix extends SEOstats
 
       $json = parent::_getPage($dataUrl);
 
-      if(!empty($json)) {
-        $json_decoded = (Helper\Json::decode($json, true));
-        return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
-      } else {
+      if(empty($json)) {
         return parent::noDataDefaultValue();
       }
+      $json_decoded = (Helper\Json::decode($json, true));
+      return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
     }
 
     public static function getApiCredits() {
@@ -95,12 +87,11 @@ class Sistrix extends SEOstats
 
       $json = parent::_getPage($dataUrl);
 
-      if(!empty($json)) {
-        $json_decoded = (Helper\Json::decode($json, true));
-        return $json_decoded['answer'][0]['credits'][0]['value'];
-      } else {
+      if(empty($json)) {
         return parent::noDataDefaultValue();
       }
+      $json_decoded = (Helper\Json::decode($json, true));
+      return $json_decoded['answer'][0]['credits'][0]['value'];
     }
 
     private static function checkApiCredits() {
@@ -136,6 +127,8 @@ class Sistrix extends SEOstats
 
     protected static function getValidDatabase($db)
     {
+      $db = ($db == false) ? Config\DefaultSettings::SISTRIX_DB : $db;
+
       $database = self::checkDatabase($db);
       static::guardDatabaseIsValid($database);
 
