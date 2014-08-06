@@ -46,7 +46,7 @@ class Sistrix extends SEOstats
         $domain  = Helper\Url::parseHost($url);
         $dataUrl = sprintf(Config\Services::SISTRIX_VI_URL, urlencode($domain));
 
-        $html = parent::_getPage($dataUrl);
+        $html = static::_getPage($dataUrl);
         @preg_match_all('#<h3>(.*?)<\/h3>#si', $html, $matches);
 
         return isset($matches[1][0]) ? $matches[1][0] : parent::noDataDefaultValue();
