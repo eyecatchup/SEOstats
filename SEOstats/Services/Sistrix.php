@@ -76,7 +76,11 @@ class Sistrix extends SEOstats
       if(empty($json)) {
         return parent::noDataDefaultValue();
       }
+      
       $json_decoded = (Helper\Json::decode($json, true));
+      if (!isset($json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'])) {
+        return parent::noDataDefaultValue();
+      }
       return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
     }
 
