@@ -63,7 +63,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGetApiCredits()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -71,7 +71,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testCheckApiCredits()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -79,7 +79,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testHasApiKey()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -87,7 +87,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGuardApiCredits()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -95,7 +95,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testCheckDatabase()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -103,7 +103,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGetDomainFromUrl()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -111,7 +111,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGetValidDatabase()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -119,7 +119,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGuardDatabaseIsValid()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
     /**
@@ -127,7 +127,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGuardDomainIsValid()
     {
-        $this->markAsIncomplete();
+        $this->markTestIncomplete();
     }
 
 
