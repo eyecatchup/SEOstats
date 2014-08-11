@@ -71,12 +71,16 @@ class Sistrix extends SEOstats
 
       $dataUrl = sprintf(Config\Services::SISTRIX_API_VI_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY, urlencode($domain), $database);
 
-      $json = parent::_getPage($dataUrl);
+      $json = static::_getPage($dataUrl);
 
       if(empty($json)) {
         return parent::noDataDefaultValue();
       }
+      
       $json_decoded = (Helper\Json::decode($json, true));
+      if (!isset($json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'])) {
+        return parent::noDataDefaultValue();
+      }
       return $json_decoded['answer'][0]['sichtbarkeitsindex'][0]['value'];
     }
 
@@ -94,26 +98,27 @@ class Sistrix extends SEOstats
       return $json_decoded['answer'][0]['credits'][0]['value'];
     }
 
-    private static function checkApiCredits() {
-      return self::getApiCredits() > 0;
+    protected static function checkApiCredits() {
+      return static::getApiCredits() > 0;
     }
 
-    private static function guardApiKey() {
-      if(!self::hasApiKey()) {
+    protected static function guardApiKey()
+    {
+      if(!static::hasApiKey()) {
         self::exc('In order to use the SISTRIX API, you must obtain and set an
           API key first (see SEOstats\Config\ApiKeys.php).'.PHP_EOL);
       }
     }
 
-    private static function hasApiKey() {
+    protected static function hasApiKey() {
       if ('' == Config\ApiKeys::SISTRIX_API_ACCESS_KEY) {
         return false;
       }
       return true;
     }
 
-    private static function guardApiCredits() {
-      if(!self::checkApiCredits()) {
+    protected static function guardApiCredits() {
+      if(!static::checkApiCredits()) {
         self::exc('Not enough API credits.'.PHP_EOL);
       }
     }

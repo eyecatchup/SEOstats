@@ -17,6 +17,7 @@ class SistrixTest extends AbstractServiceTestCase
     /**
      * @dataProvider providerTestGetVisibilityIndex
      * @todo value control
+     * @group sistrix
      */
     public function testGetVisibilityIndex($version, $status)
     {
@@ -37,11 +38,14 @@ class SistrixTest extends AbstractServiceTestCase
 
     /**
      * @dataProvider providerTestGetVisibilityIndexByApi
+     * @group sistrix
      */
     public function testGetVisibilityIndexByApi($version, $result, $status)
     {
       $this->mockSUT('api',array('url'=>'http://www.spiegel.de'));
       $this->mockGetApi($version, $result);
+      $this->mockHasApiKey(true);
+      $this->mockCheckApiCredits(true);
 
       $result = call_user_func(get_class($this->mockedSUT) . '::getVisibilityIndexByApi', $this->url);
 
@@ -74,16 +78,29 @@ class SistrixTest extends AbstractServiceTestCase
     public function providerTestGetVisibilityIndexByApi()
     {
       return array(
-        array('2014', 'vi', true),
-        array('2014','failed', false)
+        array('2014', 'valid', true),
+        array('2014','failed', false),
+        array('2014','empty', false)
       );
-    }
+  }
 
     protected function mockGetApi($version, $result) {
-      $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionSubFileJson, $version, 'api', $result);
+      $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionSubFileJson, $version, 'viOverApi', $result);
       $this->mockedSUT->staticExpects($this->any())
-        ->method('_getApi')
-        ->will($this->returnValue(file_get_contents($standardFile)));
+                      ->method('_getPage')
+                      ->will($this->returnValue(file_get_contents($standardFile)));
+    }
+
+    protected function mockHasApiKey($result) {
+      $this->mockedSUT->staticExpects($this->any())
+                      ->method('hasApiKey')
+                      ->will($this->returnValue($result));
+    }
+
+    protected function mockCheckApiCredits($result) {
+      $this->mockedSUT->staticExpects($this->any())
+                      ->method('checkApiCredits')
+                      ->will($this->returnValue($result));
     }
 
     protected function hasApiKey() {
@@ -94,7 +111,7 @@ class SistrixTest extends AbstractServiceTestCase
     {
         switch($method) {
           case 'api':
-            $methods = array('hasApiKey');
+            $methods = array('hasApiKey', '_getPage', 'checkApiCredits');
             break;
           default:
             $methods = array('_getPage');
