@@ -17,6 +17,7 @@ class SistrixTest extends AbstractServiceTestCase
     /**
      * @dataProvider providerTestGetVisibilityIndex
      * @todo value control
+     * @group sistrix
      */
     public function testGetVisibilityIndex($version, $status)
     {
@@ -37,6 +38,7 @@ class SistrixTest extends AbstractServiceTestCase
 
     /**
      * @dataProvider providerTestGetVisibilityIndexByApi
+     * @group sistrix
      */
     public function testGetVisibilityIndexByApi($version, $result, $status)
     {
