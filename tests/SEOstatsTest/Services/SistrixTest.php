@@ -78,13 +78,14 @@ class SistrixTest extends AbstractServiceTestCase
     public function providerTestGetVisibilityIndexByApi()
     {
       return array(
-        array('2014', 'vi', true),
-        array('2014','failed', false)
+        array('2014', 'valid', true),
+        array('2014','failed', false),
+        array('2014','empty', false)
       );
   }
 
     protected function mockGetApi($version, $result) {
-      $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionSubFileJson, $version, 'api', $result);
+      $standardFile = sprintf($this->getAssertDirectory() . $this->standardVersionSubFileJson, $version, 'viOverApi', $result);
       $this->mockedSUT->staticExpects($this->any())
                       ->method('_getPage')
                       ->will($this->returnValue(file_get_contents($standardFile)));
