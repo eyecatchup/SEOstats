@@ -56,7 +56,82 @@ class SistrixTest extends AbstractServiceTestCase
       }
 
       $this->assertEquals($assertValue, $result);
+  }
+
+    /**
+     * @group sistrix
+     */
+    public function testGetApiCredits()
+    {
+        $this->markAsIncomplete();
     }
+
+    /**
+     * @group sistrix
+     */
+    public function testCheckApiCredits()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testHasApiKey()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testGuardApiCredits()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testCheckDatabase()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testGetDomainFromUrl()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testGetValidDatabase()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testGuardDatabaseIsValid()
+    {
+        $this->markAsIncomplete();
+    }
+
+    /**
+     * @group sistrix
+     */
+    public function testGuardDomainIsValid()
+    {
+        $this->markAsIncomplete();
+    }
+
+
+
 
 
     public function providerTestGetPageMetrics()
