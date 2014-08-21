@@ -88,17 +88,16 @@ class Sistrix extends SEOstats
       self::guardApiKey();
 
       $dataUrl = sprintf(Config\Services::SISTRIX_API_CREDITS_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY);
+      $json = static::_getPage($dataUrl);
 
-      $json = parent::_getPage($dataUrl);
-
-      if(empty($json)) {
+      if(empty($json) || $json == '{}') {
         return parent::noDataDefaultValue();
       }
       $json_decoded = (Helper\Json::decode($json, true));
       return $json_decoded['answer'][0]['credits'][0]['value'];
     }
 
-    protected static function checkApiCredits() {
+    public static function checkApiCredits() {
       return static::getApiCredits() > 0;
     }
 
