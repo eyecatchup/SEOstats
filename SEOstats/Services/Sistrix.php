@@ -91,10 +91,14 @@ class Sistrix extends SEOstats
         $dataUrl = sprintf(Config\Services::SISTRIX_API_CREDITS_URL, Config\ApiKeys::SISTRIX_API_ACCESS_KEY);
         $json = static::_getPage($dataUrl);
 
-        if(empty($json) || $json == '{}') {
+        if(empty($json)) {
             return parent::noDataDefaultValue();
         }
+
         $json_decoded = (Helper\Json::decode($json, true));
+        if (!isset($json_decoded['answer'][0]['credits'][0]['value'])) {
+            return parent::noDataDefaultValue();
+        }
         return $json_decoded['answer'][0]['credits'][0]['value'];
     }
 
