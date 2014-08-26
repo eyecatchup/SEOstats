@@ -64,7 +64,7 @@ class SistrixTest extends AbstractServiceTestCase
      */
     public function testGetApiCredits($version, $result, $status)
     {
-        $this->mockSUT('api');
+        $this->mockSUT('apicredits');
         $this->mockGetApi($version, 'apiCredits', $result);
         $this->mockHasApiKey(true);
 
