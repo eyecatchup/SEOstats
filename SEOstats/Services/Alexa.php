@@ -184,7 +184,7 @@ class Alexa extends SEOstats
             "//*[@id='traffic-rank-content']/div/span[2]/div[2]/span/span/div/strong",
         ));
 
-        if ($node2->item(0)) {
+        if (!is_null($node2) && $node2->item(0)) {
             $rank = self::retInt(strip_tags($node2->item(0)->nodeValue));
             if ($node1->item(0) && 0 != $rank) {
                 return array(
