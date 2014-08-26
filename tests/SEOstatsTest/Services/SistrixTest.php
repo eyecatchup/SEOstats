@@ -185,6 +185,8 @@ class SistrixTest extends AbstractServiceTestCase
     {
         return array(
             array('2014', 'valid', true),
+            array('2014', 'invalid', false),
+            array('2014', 'empty-response', false),
             array('2014', 'failed', false),
             array('2014', 'empty', false)
         );
@@ -194,6 +196,8 @@ class SistrixTest extends AbstractServiceTestCase
     {
         return array(
             array('2014', 'valid', true),
+            array('2014', 'invalid', false),
+            array('2014', 'empty-response', false),
             array('2014', 'failed', false),
             array('2014', 'empty', false)
         );
