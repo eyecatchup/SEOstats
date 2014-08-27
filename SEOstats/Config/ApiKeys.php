@@ -28,4 +28,8 @@ interface ApiKeys
     //      https://moz.com/products/api/keys
     const MOZSCAPE_ACCESS_ID  = '';
     const MOZSCAPE_SECRET_KEY = '';
+
+    // To acquire a SISTRIX API key, visit:
+    //      http://www.sistrix.de
+    const SISTRIX_API_ACCESS_KEY = '';
 }
