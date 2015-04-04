@@ -108,8 +108,8 @@ class Google extends SEOstats
         $url = parent::getUrl($url);
         $ret = self::getPagespeedAnalysis($url, $strategy);
 
-        return !isset($ret->score) || !$ret->score ? parent::noDataDefaultValue() :
-            intval($ret->score);
+        return !isset($ret->ruleGroups->SPEED->score) || !$ret->ruleGroups->SPEED->score ? parent::noDataDefaultValue() :
+            intval($ret->ruleGroups->SPEED->score);
     }
 
     /**
