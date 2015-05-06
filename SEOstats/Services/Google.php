@@ -86,7 +86,7 @@ class Google extends SEOstats
                : intval($obj->responseData->cursor->estimatedResultCount);
     }
 
-    public static function getPagespeedAnalysis($url = false)
+    public static function getPagespeedAnalysis($url = false, $strategy = 'desktop')
     {
         if ('' == Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY) {
             throw new E('In order to use the PageSpeed API, you must obtain
@@ -96,20 +96,26 @@ class Google extends SEOstats
 
         $url = parent::getUrl($url);
         $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL,
-            $url, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
+            $url, $strategy, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
 
         $ret = static::_getPage($url);
 
         return Helper\Json::decode($ret);
     }
 
-    public static function getPagespeedScore($url = false)
+    public static function getPagespeedScore($url = false, $strategy = 'desktop')
     {
         $url = parent::getUrl($url);
-        $ret = self::getPagespeedAnalysis($url);
+        $ret = self::getPagespeedAnalysis($url, $strategy);
 
-        return !isset($ret->score) || !$ret->score ? parent::noDataDefaultValue() :
-            intval($ret->score);
+        // Check if $ret->score exists for backwards compatibility with v1.
+        if (!isset($ret->score)) {
+            return !isset($ret->ruleGroups->SPEED->score) || !$ret->ruleGroups->SPEED->score ? parent::noDataDefaultValue() :
+                intval($ret->ruleGroups->SPEED->score);
+        }
+        else {
+            return $ret->score;
+        }
     }
 
     /**

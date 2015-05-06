@@ -41,7 +41,7 @@ interface Services
     const GOOGLE_APISEARCH_URL = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=%s&q=%s';
 
     // Google Pagespeed Insights API Endpoint.
-    const GOOGLE_PAGESPEED_URL = 'https://www.googleapis.com/pagespeedonline/v1/runPagespeed?url=%s&key=%s';
+    const GOOGLE_PAGESPEED_URL = 'https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url=%s&strategy=%s&key=%s';
 
     // Google +1 Fastbutton URL.
     const GOOGLE_PLUSONE_URL = 'https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url=%s';
