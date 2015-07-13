@@ -1,4 +1,5 @@
-[![Flattr SEOstats](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=eyecatchup&url=https://github.com/eyecatchup/SEOstats&title=SEOstats&language=en&tags=github&category=software)
+[![Build Status](https://travis-ci.org/eyecatchup/SEOstats.svg?branch=master)](https://travis-ci.org/eyecatchup/SEOstats) 
+[![Donate via Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=eyecatchup&url=https://github.com/eyecatchup/SEOstats&title=SEOstats&language=en&tags=github&category=software)
 
 # SEOstats: SEO metrics library for PHP
 
