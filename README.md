@@ -1,11 +1,14 @@
-[![Build Status](https://travis-ci.org/eyecatchup/SEOstats.svg?branch=master)](https://travis-ci.org/eyecatchup/SEOstats) 
-[![Donate via Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=eyecatchup&url=https://github.com/eyecatchup/SEOstats&title=SEOstats&language=en&tags=github&category=software)
-
 # SEOstats: SEO metrics library for PHP
 
-SEOstats is a powerful open source PHP library to request a bunch of SEO relevant metrics such as detailed backlink analyses, keyword and traffic statistics, website trends, page authority, the Google Pagerank, the Alexa Trafficrank and much more.
+[![Latest Stable Version](https://poser.pugx.org/seostats/seostats/v/stable)](https://packagist.org/packages/seostats/seostats) [![Latest Unstable Version](https://poser.pugx.org/seostats/seostats/v/unstable)](https://packagist.org/packages/seostats/seostats) [![Build Status](https://travis-ci.org/eyecatchup/SEOstats.svg?branch=master)](https://travis-ci.org/eyecatchup/SEOstats) [![License](https://poser.pugx.org/seostats/seostats/license)](https://github.com/eyecatchup/SEOstats) [![Monthly Downloads](https://poser.pugx.org/seostats/seostats/d/monthly)](https://packagist.org/packages/seostats/seostats)
 
-SEOstats offers over 50 different methods and gathers data from Alexa, Google, Mozscape (by Moz - f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook, Twitter & many more.
+SEOstats is _the_ open source PHP library to get SEO-relevant website metrics. 
+
+SEOstats is used to gather metrics such as detailed searchindex & backlink data, keyword & traffic statistics, website trends, page authority, social visibility, Google Pagerank, Alexa Trafficrank and more. 
+
+It offers over 50 different methods to fetch data from sources like Alexa, Google, Mozscape (by Moz - f.k.a. Seomoz), SEMRush, Open-Site-Explorer, Sistrix, Facebook or Twitter.
+
+A variety of *(private as well as enterprise)* SEO tools have been built using SEOstats.
 
 ## Dependencies
 
