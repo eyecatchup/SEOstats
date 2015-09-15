@@ -22,23 +22,23 @@ class Search extends SEOstats
     /**
      * Returns array, containing detailed results for any Google search.
      *
-     * @param     string    $query  String, containing the search query.
-     * @param     string    $tld    String, containing the desired Google top level domain.
+     * @param     string $query String, containing the search query.
+     * @param     string $tld String, containing the desired Google top level domain.
      * @return    array             Returns array, containing the keys 'URL', 'Title' and 'Description'.
      */
-    public static function getSerps($query, $maxResults=100, $domain=false)
+    public static function getSerps($query, $maxResults = 100, $domain = false)
     {
         $q = rawurlencode($query);
-        $maxPage = ceil(($maxResults/10)-1);
+        $maxPage = ceil(($maxResults / 10) - 1);
         $result = new Helper\ArrayHandle ();
         $pages = 1;
         $delay = 0;
 
         $domainRexExp = static::getDomainFilter($domain);
 
-        for ($start=0; $start<$pages; $start++) {
+        for ($start = 0; $start < $pages; $start++) {
 
-            $haveNextPage = static::makeRequest ($start, $q, $result, $domainRexExp);
+            $haveNextPage = static::makeRequest($start, $q, $result, $domainRexExp);
             if (!$haveNextPage) {
                 $pages -= 1;
             } else {
@@ -55,12 +55,12 @@ class Search extends SEOstats
         return $result->toArray();
     }
 
-    protected static function makeRequest ($start, $query, $result, $domainRexExp)
+    protected static function makeRequest($start, $query, $result, $domainRexExp)
     {
         $ref = static::getReference($start, $query);
         $nextSerp = static::getNextSerp($start, $query);
 
-        $curledSerp = utf8_decode( static::gCurl($nextSerp, $ref) );
+        $curledSerp = utf8_decode(static::gCurl($nextSerp, $ref));
 
         static::guardNoCaptcha($curledSerp);
 
@@ -74,7 +74,7 @@ class Search extends SEOstats
 
         static::parseResults($matches, $domainRexExp, $start * 10, $result);
 
-        if ( preg_match('#id="?pnnext"?#', $curledSerp) ) {
+        if (preg_match('#id="?pnnext"?#', $curledSerp)) {
             // Found 'Next'-link on currect page
             return true;
         }
@@ -83,28 +83,28 @@ class Search extends SEOstats
         return false;
     }
 
-    protected static function getReference ($start, $query)
+    protected static function getReference($start, $query)
     {
         return 0 == $start
             ? 'ncr'
             : sprintf('search?q=%s&hl=en&prmd=imvns&start=%s0&sa=N', $query, $start);
     }
 
-    protected static function getDomainFilter ($domain)
+    protected static function getDomainFilter($domain)
     {
         return $domain
             ? "#^(https?://)?[^/]*{$domain}#i"
             : false;
     }
 
-    protected static function getNextSerp ($start, $query)
+    protected static function getNextSerp($start, $query)
     {
         return 0 == $start
             ? sprintf('search?q=%s&filter=0', $query)
             : sprintf('search?q=%s&filter=0&start=%s0', $query, $start);
     }
 
-    protected static function guardNoCaptcha ($response)
+    protected static function guardNoCaptcha($response)
     {
         if (preg_match("#answer[=|/]86640#i", $response)) {
             print('Please read: https://support.google.com/websearch/answer/86640');
@@ -112,7 +112,7 @@ class Search extends SEOstats
         }
     }
 
-    protected static function parseResults ($matches, $domainRexExp, $start, $result)
+    protected static function parseResults($matches, $domainRexExp, $start, $result)
     {
         $c = 0;
 
@@ -121,7 +121,7 @@ class Search extends SEOstats
 
             $c++;
             $resCnt = $start + $c;
-            if (! $domainRexExp) {
+            if (!$domainRexExp) {
                 $result->setElement($resCnt, array(
                     'url' => $match[1],
                     'headline' => trim(strip_tags($match[2]))
@@ -141,7 +141,7 @@ class Search extends SEOstats
         $isValidLink = preg_match('#<a\s+[^>]*href=[\'"]?([^\'" ]+)[\'"]?[^>]*>(.*?)</a>#', $link, $match);
 
         // is valid and not webmaster link
-        return ( !$isValidLink || self::isAGoogleWebmasterLink($match[1]) )
+        return (!$isValidLink || self::isAGoogleWebmasterLink($match[1]))
             ? false
             : $match;
     }
@@ -151,9 +151,12 @@ class Search extends SEOstats
         return preg_match('#^https?://www.google.com/(?:intl/.+/)?webmasters#', $url);
     }
 
-    protected static function gCurl($path, $ref, $useCookie = Config\DefaultSettings::ALLOW_GOOGLE_COOKIES)
+    protected static function gCurl($path, $ref, $useCookie = null)
     {
-        $url = sprintf('https://www.google.%s/', Config\DefaultSettings::GOOGLE_TLD);
+        if (!$useCookie) {
+            $useCookie = Config\DefaultSettings::get('ALLOW_GOOGLE_COOKIES');
+        }
+        $url = sprintf('https://www.google.%s/', Config\DefaultSettings::get('GOOGLE_TLD'));
         $referer = $ref == '' ? $url : $ref;
         $url .= $path;
 
@@ -163,13 +166,13 @@ class Search extends SEOstats
         }
 
         $header = array(
-            'Host: www.google.' . Config\DefaultSettings::GOOGLE_TLD,
+            'Host: www.google.' . Config\DefaultSettings::get('GOOGLE_TLD'),
             'Connection: keep-alive',
             'Cache-Control: max-age=0',
             'User-Agent: ' . $ua,
             'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Referer: ' . $referer,
-            'Accept-Language: ' . Config\DefaultSettings::HTTP_HEADER_ACCEPT_LANGUAGE,
+            'Accept-Language: ' . Config\DefaultSettings::get('HTTP_HEADER_ACCEPT_LANGUAGE'),
             'Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7'
         );
 
@@ -187,6 +190,6 @@ class Search extends SEOstats
         $result = curl_exec($ch);
         $info = curl_getinfo($ch);
         curl_close($ch);
-        return ($info['http_code']!=200) ? false : $result;
+        return ($info['http_code'] != 200) ? false : $result;
     }
 }

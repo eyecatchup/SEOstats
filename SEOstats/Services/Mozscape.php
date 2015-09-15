@@ -78,11 +78,11 @@ class Mozscape extends SEOstats
      */
     public static function getCols($cols, $url = false)
     {
-        if ('' == Config\ApiKeys::MOZSCAPE_ACCESS_ID ||
-            '' == Config\ApiKeys::MOZSCAPE_SECRET_KEY) {
+        if ('' == Config\ApiKeys::get('MOZSCAPE_ACCESS_ID') ||
+            '' == Config\ApiKeys::get('MOZSCAPE_SECRET_KEY')
+        ) {
             throw new E('In order to use the Mozscape API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
-            exit(0);
         }
 
         $expires = time() + 300;
@@ -90,7 +90,7 @@ class Mozscape extends SEOstats
         $apiEndpoint = sprintf(Config\Services::MOZSCAPE_API_URL,
             urlencode(Helper\Url::parseHost(parent::getUrl($url))),
             $cols,
-            Config\ApiKeys::MOZSCAPE_ACCESS_ID,
+            Config\ApiKeys::get('MOZSCAPE_ACCESS_ID'),
             $expires,
             urlencode(self::_getUrlSafeSignature($expires))
         );
@@ -98,14 +98,14 @@ class Mozscape extends SEOstats
         $ret = static::_getPage($apiEndpoint);
 
         return (!$ret || empty($ret) || '{}' == (string)$ret)
-                ? parent::noDataDefaultValue()
-                : Helper\Json::decode($ret, true);
+            ? parent::noDataDefaultValue()
+            : Helper\Json::decode($ret, true);
     }
 
     private static function _getUrlSafeSignature($expires)
     {
-        $data = Config\ApiKeys::MOZSCAPE_ACCESS_ID . "\n{$expires}";
-        $sig  = self::_hmacsha1($data, Config\ApiKeys::MOZSCAPE_SECRET_KEY);
+        $data = Config\ApiKeys::get('MOZSCAPE_ACCESS_ID') . "\n{$expires}";
+        $sig = self::_hmacsha1($data, Config\ApiKeys::get('MOZSCAPE_SECRET_KEY'));
 
         return base64_encode($sig);
     }
@@ -124,17 +124,17 @@ class Mozscape extends SEOstats
     private static function _hmacsha1Rebuild($data, $key)
     {
         $blocksize = 64;
-        $hashfunc  = 'sha1';
+        $hashfunc = 'sha1';
 
         if (strlen($key) > $blocksize) {
             $key = pack('H*', $hashfunc($key));
         }
 
-        $key  = str_pad($key, $blocksize, chr(0x00));
+        $key = str_pad($key, $blocksize, chr(0x00));
         $ipad = str_repeat(chr(0x36), $blocksize);
         $opad = str_repeat(chr(0x5c), $blocksize);
-        $hmac = pack('H*', $hashfunc(($key^$opad) .
-                    pack('H*', $hashfunc(($key^$ipad) . $data))));
+        $hmac = pack('H*', $hashfunc(($key ^ $opad) .
+            pack('H*', $hashfunc(($key ^ $ipad) . $data))));
         return $hmac;
     }
 }

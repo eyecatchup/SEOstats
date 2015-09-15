@@ -130,7 +130,7 @@ class SemRush extends SEOstats
     {
         return false !== $db
             ? $db
-            : Config\DefaultSettings::SEMRUSH_DB;
+            : Config\DefaultSettings::get('SEMRUSH_DB');
     }
 
     protected static function guardDomainIsValid($domain)
@@ -168,7 +168,7 @@ class SemRush extends SEOstats
 
     protected static function getBackendData($url, $db, $reportType)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::get('SEMRUSH_DB');
         $dataUrl = self::getBackendUrl($url, $db, $reportType);
         $data    = self::getApiData($dataUrl);
 
@@ -202,7 +202,7 @@ class SemRush extends SEOstats
 
     protected static function getWidgetData($url, $db, $reportType, $valueKey)
     {
-        $db      = false !== $db ? $db : Config\DefaultSettings::SEMRUSH_DB;
+        $db      = false !== $db ? $db : Config\DefaultSettings::get('SEMRUSH_DB');
         $dataUrl = self::getWidgetUrl($url, $db, $reportType);
         $data    = self::getApiData($dataUrl);
 

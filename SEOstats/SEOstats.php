@@ -166,7 +166,7 @@ class SEOstats
     {
         return Helper\Url::parseHost(self::getUrl($url));
     }
-        
+
     public static function getDomain($url = false)
     {
         return 'http://' . self::getHost($url = false);
@@ -216,6 +216,6 @@ class SEOstats
 
     protected static function noDataDefaultValue()
     {
-        return Config\DefaultSettings::DEFAULT_RETURN_NO_DATA;
+        return Config\DefaultSettings::get('DEFAULT_RETURN_NO_DATA');
     }
 }
