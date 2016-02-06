@@ -1,6 +1,6 @@
 # SEOstats: SEO metrics library for PHP
 
-[![License](https://poser.pugx.org/seostats/seostats/license)](https://github.com/eyecatchup/SEOstats) [![Scrutinizer Code Quality Rating](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/badges/quality-score.png?b=master "Image title")](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/ "'Very good' code quality, says Scrutinizer C.I.") [![Build Status](https://travis-ci.org/eyecatchup/SEOstats.svg?branch=master)](https://travis-ci.org/eyecatchup/SEOstats) [![Scrutinizer Test Coverage Report](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/badges/coverage.png?b=master "Image title")](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/code-structure/master?elementType=class&orderField=test_coverage&order=desc&changesExpanded=0 "Test coverage report by Scrutinizer C.I.") [![Latest Stable Version](https://poser.pugx.org/seostats/seostats/v/stable)](https://packagist.org/packages/seostats/seostats) [![Latest Unstable Version](https://poser.pugx.org/seostats/seostats/v/unstable)](https://packagist.org/packages/seostats/seostats) [![Monthly Downloads](https://poser.pugx.org/seostats/seostats/d/monthly)](https://packagist.org/packages/seostats/seostats)
+[![License](https://poser.pugx.org/seostats/seostats/license "SEOstats is licensed under the M.I.T.")](https://github.com/eyecatchup/SEOstats) [![Scrutinizer Code Quality Rating](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/badges/quality-score.png?b=master "Scrutinizer Code Quality Rating: Very Good!")](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/ "'Very good' code quality, says Scrutinizer C.I.") [![Build Status](https://travis-ci.org/eyecatchup/SEOstats.svg?branch=master "Travis C.I. Build Status")](https://travis-ci.org/eyecatchup/SEOstats) [![Scrutinizer Test Coverage Report](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/badges/coverage.png?b=master "Scrutinizer Test Coverage Report")](https://scrutinizer-ci.com/g/eyecatchup/SEOstats/code-structure/master?elementType=class&orderField=test_coverage&order=desc&changesExpanded=0 "Test coverage report by Scrutinizer C.I.") [![Latest Stable Version](https://poser.pugx.org/seostats/seostats/v/stable "Latest Stable Version")](https://packagist.org/packages/seostats/seostats) [![Latest Unstable Version](https://poser.pugx.org/seostats/seostats/v/unstable "Latest Unstable Version")](https://packagist.org/packages/seostats/seostats) [![Monthly Downloads](https://poser.pugx.org/seostats/seostats/d/monthly "That many people downloaded SEOstats from Github or Packagist this month.")](https://packagist.org/packages/seostats/seostats)
 
 SEOstats is _the_ open source PHP library to get SEO-relevant website metrics. 
 
@@ -457,6 +457,6 @@ More detailed examples can be found in the `./example` directory.
 
 ## License
 
-(c) 2010 - 2014, Stephan Schmitz eyecatchup@gmail.com  
+(c) 2010 - 2016, Stephan Schmitz eyecatchup@gmail.com   
 License: MIT, http://eyecatchup.mit-license.org  
-URL: https://github.com/eyecatchup/SEOstats  
+URL: https://eyecatchup.github.io  
