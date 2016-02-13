@@ -18,11 +18,14 @@ use SEOstats\Helper as Helper;
 
 class Mozscape extends SEOstats
 {
+
+    protected static $lastLoadedDomain;
+    protected static $lastLoadedPage;
     // A normalized 100-point score representing the likelihood
     // of the URL to rank well in search engine results.
     public static function getPageAuthority($url = false)
     {
-        $data = static::getCols('34359738368', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['upa'];
     }
@@ -31,7 +34,7 @@ class Mozscape extends SEOstats
     // of the domain of the URL to rank well in search engine results.
     public static function getDomainAuthority($url = false)
     {
-        $data = static::getCols('68719476736', Helper\Url::parseHost($url));
+        $data = static::getCols(Helper\Url::parseHost($url));
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['pda'];
     }
@@ -40,7 +43,7 @@ class Mozscape extends SEOstats
     // http://apiwiki.moz.com/glossary#equity
     public static function getEquityLinkCount($url = false)
     {
-        $data = static::getCols('2048', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['uid'];
     }
@@ -48,7 +51,7 @@ class Mozscape extends SEOstats
     // The number of links (equity or nonequity or not, internal or external) to the URL.
     public static function getLinkCount($url = false)
     {
-        $data = static::getCols('2048', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['uid'];
     }
@@ -56,7 +59,7 @@ class Mozscape extends SEOstats
     // The normalized 10-point MozRank score of the URL.
     public static function getMozRank($url = false)
     {
-        $data = static::getCols('16384', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['umrp'];
     }
@@ -64,7 +67,7 @@ class Mozscape extends SEOstats
     // The raw MozRank score of the URL.
     public static function getMozRankRaw($url = false)
     {
-        $data = static::getCols('16384', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             number_format($data['umrr'], 16);
     }
@@ -76,7 +79,7 @@ class Mozscape extends SEOstats
      * @param   cols  string     The bit flags you want returned.
      * @param   url   string     The URL to get metrics for.
      */
-    public static function getCols($cols, $url = false)
+    public static function getCols($url = false)
     {
         if ('' == Config\ApiKeys::get('MOZSCAPE_ACCESS_ID') ||
             '' == Config\ApiKeys::get('MOZSCAPE_SECRET_KEY')
@@ -84,12 +87,17 @@ class Mozscape extends SEOstats
             throw new E('In order to use the Mozscape API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
         }
+        $host = Helper\Url::parseHost(parent::getUrl($url));
+
+        if (static::$lastLoadedDomain == $host) {
+            return static::$lastLoadedPage;
+        }
+
+        static::$lastLoadedDomain = $host;
 
         $expires = time() + 300;
-
         $apiEndpoint = sprintf(Config\Services::MOZSCAPE_API_URL,
-            urlencode(Helper\Url::parseHost(parent::getUrl($url))),
-            $cols,
+            urlencode($host),
             Config\ApiKeys::get('MOZSCAPE_ACCESS_ID'),
             $expires,
             urlencode(self::_getUrlSafeSignature($expires))
@@ -97,9 +105,10 @@ class Mozscape extends SEOstats
 
         $ret = static::_getPage($apiEndpoint);
 
-        return (!$ret || empty($ret) || '{}' == (string)$ret)
+        static::$lastLoadedPage = (!$ret || empty($ret) || '{}' == (string)$ret)
             ? parent::noDataDefaultValue()
             : Helper\Json::decode($ret, true);
+        return static::$lastLoadedPage;
     }
 
     private static function _getUrlSafeSignature($expires)

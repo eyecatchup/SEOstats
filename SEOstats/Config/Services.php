@@ -35,7 +35,7 @@ interface Services
     const SEMRUSH_WIDGET_URL = 'http://widget.semrush.com/widget.php?action=report&type=%s&db=%s&domain=%s';
 
     // Mozscape (f.k.a. Seomoz) Link metrics API Endpoint.
-    const MOZSCAPE_API_URL = 'http://lsapi.seomoz.com/linkscape/url-metrics/%s?Cols=%s&AccessID=%s&Expires=%s&Signature=%s';
+    const MOZSCAPE_API_URL = 'http://lsapi.seomoz.com/linkscape/url-metrics/%s?AccessID=%s&Expires=%s&Signature=%s';
 
     // Google Websearch API Endpoint.
     const GOOGLE_APISEARCH_URL = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&rsz=%s&q=%s';
