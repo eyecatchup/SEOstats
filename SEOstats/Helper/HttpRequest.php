@@ -53,7 +53,7 @@ class HttpRequest
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         if (429 == (int)$httpCode) {
-            throw new ToManyRequestsException("To many requests");
+            throw new TooManyRequestsException("To many requests");
         }
         return (200 == (int)$httpCode) ? $response : false;
     }

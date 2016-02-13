@@ -216,7 +216,7 @@ class SEOstats
         self::$_lastHtml = $str;
     }
 
-    protected static function noDataDefaultValue()
+    public static function noDataDefaultValue()
     {
         return Config\DefaultSettings::get('DEFAULT_RETURN_NO_DATA');
     }
