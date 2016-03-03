@@ -209,7 +209,7 @@ class Alexa extends SEOstats
         $xpath = self::_getXPath($url);
 
         $queryList = array(
-            "//section[@class='row-fluid panel-wrapper '][6]/section/div/span/div/span",
+            "//section[@id='linksin-panel-content']/div/span/div/span",
             "//*[@id='linksin_div']/section/div/div[1]/span"
         );
 
