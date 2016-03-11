@@ -78,6 +78,7 @@ class Mozscape extends SEOstats
      * @access        public
      * @param   cols  string     The bit flags you want returned.
      * @param   url   string     The URL to get metrics for.
+     * @return mixed
      */
     public static function getCols($url = false)
     {
@@ -87,9 +88,20 @@ class Mozscape extends SEOstats
             throw new E('In order to use the Mozscape API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
         }
+
+        $verbose = getenv('SEOSTATS_VERBOSE');
         $host = Helper\Url::parseHost(parent::getUrl($url));
+        if ($verbose) {
+            print "Request for url $url\n";
+            print "Request host $host\n";
+        }
 
         if (static::$lastLoadedDomain == $host) {
+            if ($verbose) {
+                print "Return value:\n";
+                print_r(static::$lastLoadedPage);
+                print "\n";
+            }
             return static::$lastLoadedPage;
         }
 
@@ -102,12 +114,25 @@ class Mozscape extends SEOstats
             $expires,
             urlencode(self::_getUrlSafeSignature($expires))
         );
-
+        if ($verbose) {
+            print "Endpoint url:\n";
+            print_r($apiEndpoint);
+            print "\n";
+        }
         $ret = static::_getPage($apiEndpoint);
-
+        if ($verbose) {
+            print "Raw responce:\n";
+            print_r($ret);
+            print "\n";
+        }
         static::$lastLoadedPage = (!$ret || empty($ret) || '{}' == (string)$ret)
             ? parent::noDataDefaultValue()
             : Helper\Json::decode($ret, true);
+        if ($verbose) {
+            print "Return value:\n";
+            print_r(static::$lastLoadedPage);
+            print "\n";
+        }
         return static::$lastLoadedPage;
     }
 
