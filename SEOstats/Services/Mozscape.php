@@ -92,13 +92,13 @@ class Mozscape extends SEOstats
         $verbose = getenv('SEOSTATS_VERBOSE');
         $host = Helper\Url::parseHost(parent::getUrl($url));
         if ($verbose) {
-            print "Request for url $url\n";
-            print "Request host $host\n";
+            print "[SEOSTATS] Request for url $url\n";
+            print "[SEOSTATS] Request host $host\n";
         }
 
         if (static::$lastLoadedDomain == $host) {
             if ($verbose) {
-                print "Return value:\n";
+                print "[SEOSTATS] Return value:\n";
                 print_r(static::$lastLoadedPage);
                 print "\n";
             }
@@ -115,13 +115,13 @@ class Mozscape extends SEOstats
             urlencode(self::_getUrlSafeSignature($expires))
         );
         if ($verbose) {
-            print "Endpoint url:\n";
+            print "[SEOSTATS] Endpoint url:\n";
             print_r($apiEndpoint);
             print "\n";
         }
         $ret = static::_getPage($apiEndpoint);
         if ($verbose) {
-            print "Raw responce:\n";
+            print "[SEOSTATS] Raw responce:\n";
             print_r($ret);
             print "\n";
         }
@@ -129,7 +129,7 @@ class Mozscape extends SEOstats
             ? parent::noDataDefaultValue()
             : Helper\Json::decode($ret, true);
         if ($verbose) {
-            print "Return value:\n";
+            print "[SEOSTATS] Return value:\n";
             print_r(static::$lastLoadedPage);
             print "\n";
         }
