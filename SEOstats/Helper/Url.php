@@ -15,8 +15,7 @@ class Url
 {
     public static function parseHost($url)
     {
-        $url = @parse_url('http://' . preg_replace('#^https?://#', '', $url));
-        return (isset($url['host']) && !empty($url['host'])) ? $url['host'] : false;
+        return parse_url($url, PHP_URL_HOST);
     }
 
     /**
