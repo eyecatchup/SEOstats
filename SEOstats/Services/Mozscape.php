@@ -105,8 +105,6 @@ class Mozscape extends SEOstats
             return static::$lastLoadedPage;
         }
 
-        static::$lastLoadedDomain = $host;
-
         $expires = time() + 300;
         $apiEndpoint = sprintf(Config\Services::MOZSCAPE_API_URL,
             urlencode($host),
@@ -125,6 +123,7 @@ class Mozscape extends SEOstats
             print_r($ret);
             print "\n";
         }
+        static::$lastLoadedDomain = $host;
         static::$lastLoadedPage = (!$ret || empty($ret) || '{}' == (string)$ret)
             ? parent::noDataDefaultValue()
             : Helper\Json::decode($ret, true);
