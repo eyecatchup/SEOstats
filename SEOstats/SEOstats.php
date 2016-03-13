@@ -13,12 +13,12 @@ use SEOstats\Services as Service;
  *  Google Toolbar PageRank, Page-Authority, Backlink-Details, Traffic Statistics,
  *  social media relevance, comparing competing websites and a lot more.
  *  ================================================================================
- *  @package     SEOstats
- *  @author      Stephan Schmitz <eyecatchup@gmail.com>
- *  @copyright   Copyright (c) 2010 - present Stephan Schmitz
- *  @license     http://eyecatchup.mit-license.org
- *  @version     CVS: $Id: SEOstats.php, v2.5.2 Rev 31 2013/08/14 13:57:17 ssc Exp $
- *  @link        https://github.com/eyecatchup/SEOstats/
+ * @package     SEOstats
+ * @author      Stephan Schmitz <eyecatchup@gmail.com>
+ * @copyright   Copyright (c) 2010 - present Stephan Schmitz
+ * @license     http://eyecatchup.mit-license.org
+ * @version     CVS: $Id: SEOstats.php, v2.5.2 Rev 31 2013/08/14 13:57:17 ssc Exp $
+ * @link        https://github.com/eyecatchup/SEOstats/
  *  ================================================================================
  *  LICENSE: Permission is hereby granted, free of charge, to any person obtaining
  *  a copy of this software and associated documentation files (the "Software'),
@@ -82,10 +82,10 @@ class SEOstats
     const BUILD_NO = Config\Package::VERSION_CODE;
 
     protected static $_url,
-                     $_host,
-                     $_lastHtml,
-                     $_lastLoadedUrl
-                     = false;
+        $_host,
+        $_lastHtml,
+        $_lastLoadedUrl
+        = false;
 
     public function __construct($url = false)
     {
@@ -152,10 +152,9 @@ class SEOstats
     public function setUrl($url)
     {
         if (false !== Helper\Url::isRfc($url)) {
-            self::$_url  = $url;
+            self::$_url = $url;
             self::$_host = Helper\Url::parseHost($url);
-        }
-        else {
+        } else {
             throw new E('Invalid URL!');
             exit();
         }
@@ -166,7 +165,7 @@ class SEOstats
     {
         return Helper\Url::parseHost(self::getUrl($url));
     }
-        
+
     public static function getDomain($url = false)
     {
         return 'http://' . self::getHost($url = false);
@@ -175,7 +174,8 @@ class SEOstats
     /**
      * @return DOMDocument
      */
-    protected static function _getDOMDocument($html) {
+    protected static function _getDOMDocument($html)
+    {
         $doc = new \DOMDocument;
         @$doc->loadHtml($html);
         return $doc;
@@ -184,7 +184,8 @@ class SEOstats
     /**
      * @return DOMXPath
      */
-    protected static function _getDOMXPath($doc) {
+    protected static function _getDOMXPath($doc)
+    {
         $xpath = new \DOMXPath($doc);
         return $xpath;
     }
@@ -192,7 +193,8 @@ class SEOstats
     /**
      * @return HTML string
      */
-    protected static function _getPage($url) {
+    protected static function _getPage($url)
+    {
         $url = self::getUrl($url);
         if (self::getLastLoadedUrl() == $url) {
             return self::getLastLoadedHtml();
@@ -203,9 +205,9 @@ class SEOstats
             self::$_lastLoadedUrl = $url;
             self::_setHtml($html);
             return $html;
-        }
-        else {
-            self::noDataDefaultValue();
+        } else {
+            return false;
+            // return self::noDataDefaultValue();
         }
     }
 
@@ -214,8 +216,8 @@ class SEOstats
         self::$_lastHtml = $str;
     }
 
-    protected static function noDataDefaultValue()
+    public static function noDataDefaultValue()
     {
-        return Config\DefaultSettings::DEFAULT_RETURN_NO_DATA;
+        return Config\DefaultSettings::get('DEFAULT_RETURN_NO_DATA');
     }
 }

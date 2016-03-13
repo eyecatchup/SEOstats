@@ -18,11 +18,14 @@ use SEOstats\Helper as Helper;
 
 class Mozscape extends SEOstats
 {
+
+    protected static $lastLoadedDomain;
+    protected static $lastLoadedPage;
     // A normalized 100-point score representing the likelihood
     // of the URL to rank well in search engine results.
     public static function getPageAuthority($url = false)
     {
-        $data = static::getCols('34359738368', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['upa'];
     }
@@ -31,7 +34,7 @@ class Mozscape extends SEOstats
     // of the domain of the URL to rank well in search engine results.
     public static function getDomainAuthority($url = false)
     {
-        $data = static::getCols('68719476736', Helper\Url::parseHost($url));
+        $data = static::getCols(Helper\Url::parseHost($url));
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['pda'];
     }
@@ -40,7 +43,7 @@ class Mozscape extends SEOstats
     // http://apiwiki.moz.com/glossary#equity
     public static function getEquityLinkCount($url = false)
     {
-        $data = static::getCols('2048', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['uid'];
     }
@@ -48,7 +51,7 @@ class Mozscape extends SEOstats
     // The number of links (equity or nonequity or not, internal or external) to the URL.
     public static function getLinkCount($url = false)
     {
-        $data = static::getCols('2048', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['uid'];
     }
@@ -56,7 +59,7 @@ class Mozscape extends SEOstats
     // The normalized 10-point MozRank score of the URL.
     public static function getMozRank($url = false)
     {
-        $data = static::getCols('16384', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             $data['umrp'];
     }
@@ -64,7 +67,7 @@ class Mozscape extends SEOstats
     // The raw MozRank score of the URL.
     public static function getMozRankRaw($url = false)
     {
-        $data = static::getCols('16384', $url);
+        $data = static::getCols($url);
         return (parent::noDataDefaultValue() == $data) ? $data :
             number_format($data['umrr'], 16);
     }
@@ -75,37 +78,67 @@ class Mozscape extends SEOstats
      * @access        public
      * @param   cols  string     The bit flags you want returned.
      * @param   url   string     The URL to get metrics for.
+     * @return mixed
      */
-    public static function getCols($cols, $url = false)
+    public static function getCols($url = false)
     {
-        if ('' == Config\ApiKeys::MOZSCAPE_ACCESS_ID ||
-            '' == Config\ApiKeys::MOZSCAPE_SECRET_KEY) {
+        if ('' == Config\ApiKeys::get('MOZSCAPE_ACCESS_ID') ||
+            '' == Config\ApiKeys::get('MOZSCAPE_SECRET_KEY')
+        ) {
             throw new E('In order to use the Mozscape API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
-            exit(0);
+        }
+
+        $verbose = getenv('SEOSTATS_VERBOSE');
+        $host = Helper\Url::parseHost(parent::getUrl($url));
+        if ($verbose) {
+            print "[SEOSTATS] Request for url $url\n";
+            print "[SEOSTATS] Request host $host\n";
+        }
+
+        if (static::$lastLoadedDomain == $host) {
+            if ($verbose) {
+                print "[SEOSTATS] Return value:\n";
+                print_r(static::$lastLoadedPage);
+                print "\n";
+            }
+            return static::$lastLoadedPage;
         }
 
         $expires = time() + 300;
-
         $apiEndpoint = sprintf(Config\Services::MOZSCAPE_API_URL,
-            urlencode(Helper\Url::parseHost(parent::getUrl($url))),
-            $cols,
-            Config\ApiKeys::MOZSCAPE_ACCESS_ID,
+            urlencode($host),
+            Config\ApiKeys::get('MOZSCAPE_ACCESS_ID'),
             $expires,
             urlencode(self::_getUrlSafeSignature($expires))
         );
-
+        if ($verbose) {
+            print "[SEOSTATS] Endpoint url:\n";
+            print_r($apiEndpoint);
+            print "\n";
+        }
         $ret = static::_getPage($apiEndpoint);
-
-        return (!$ret || empty($ret) || '{}' == (string)$ret)
-                ? parent::noDataDefaultValue()
-                : Helper\Json::decode($ret, true);
+        if ($verbose) {
+            print "[SEOSTATS] Raw responce:\n";
+            print_r($ret);
+            print "\n";
+        }
+        static::$lastLoadedDomain = $host;
+        static::$lastLoadedPage = (!$ret || empty($ret) || '{}' == (string)$ret)
+            ? parent::noDataDefaultValue()
+            : Helper\Json::decode($ret, true);
+        if ($verbose) {
+            print "[SEOSTATS] Return value:\n";
+            print_r(static::$lastLoadedPage);
+            print "\n";
+        }
+        return static::$lastLoadedPage;
     }
 
     private static function _getUrlSafeSignature($expires)
     {
-        $data = Config\ApiKeys::MOZSCAPE_ACCESS_ID . "\n{$expires}";
-        $sig  = self::_hmacsha1($data, Config\ApiKeys::MOZSCAPE_SECRET_KEY);
+        $data = Config\ApiKeys::get('MOZSCAPE_ACCESS_ID') . "\n{$expires}";
+        $sig = self::_hmacsha1($data, Config\ApiKeys::get('MOZSCAPE_SECRET_KEY'));
 
         return base64_encode($sig);
     }
@@ -124,17 +157,17 @@ class Mozscape extends SEOstats
     private static function _hmacsha1Rebuild($data, $key)
     {
         $blocksize = 64;
-        $hashfunc  = 'sha1';
+        $hashfunc = 'sha1';
 
         if (strlen($key) > $blocksize) {
             $key = pack('H*', $hashfunc($key));
         }
 
-        $key  = str_pad($key, $blocksize, chr(0x00));
+        $key = str_pad($key, $blocksize, chr(0x00));
         $ipad = str_repeat(chr(0x36), $blocksize);
         $opad = str_repeat(chr(0x5c), $blocksize);
-        $hmac = pack('H*', $hashfunc(($key^$opad) .
-                    pack('H*', $hashfunc(($key^$ipad) . $data))));
+        $hmac = pack('H*', $hashfunc(($key ^ $opad) .
+            pack('H*', $hashfunc(($key ^ $ipad) . $data))));
         return $hmac;
     }
 }

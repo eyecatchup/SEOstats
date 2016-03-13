@@ -21,14 +21,14 @@ class Google extends SEOstats
     /**
      *  Gets the Google Pagerank
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the Google PageRank.
+     * @param    string $url String, containing the query URL.
+     * @return   integer           Returns the Google PageRank.
      */
     public static function getPageRank($url = false)
     {
         // Composer autoloads classes out of the SEOstats namespace.
         // The custom autolader, however, does not. So we need to include it first.
-        if(!class_exists('\GTB_PageRank')) {
+        if (!class_exists('\GTB_PageRank')) {
             require_once realpath(__DIR__ . '/3rdparty/GTB_PageRank.php');
         }
 
@@ -41,12 +41,12 @@ class Google extends SEOstats
     /**
      *  Returns the total amount of results for a Google 'site:'-search for the object URL.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total site-search result count.
+     * @param    string $url String, containing the query URL.
+     * @return   integer           Returns the total site-search result count.
      */
     public static function getSiteindexTotal($url = false)
     {
-        $url   = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $query = urlencode("site:{$url}");
 
         return self::getSearchResultsTotal($query);
@@ -55,12 +55,12 @@ class Google extends SEOstats
     /**
      *  Returns the total amount of results for a Google 'link:'-search for the object URL.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total link-search result count.
+     * @param    string $url String, containing the query URL.
+     * @return   integer           Returns the total link-search result count.
      */
     public static function getBacklinksTotal($url = false)
     {
-        $url   = parent::getUrl($url);
+        $url = parent::getUrl($url);
         $query = urlencode("link:{$url}");
 
         return self::getSearchResultsTotal($query);
@@ -70,8 +70,8 @@ class Google extends SEOstats
      *  Returns total amount of results for any Google search,
      *  requesting the deprecated Websearch API.
      *
-     *  @param    string    $url    String, containing the query URL.
-     *  @return   integer           Returns the total search result count.
+     * @param    string $url String, containing the query URL.
+     * @return   integer           Returns the total search result count.
      */
     public static function getSearchResultsTotal($url = false)
     {
@@ -82,21 +82,20 @@ class Google extends SEOstats
 
         $obj = Helper\Json::decode($ret);
         return !isset($obj->responseData->cursor->estimatedResultCount)
-               ? parent::noDataDefaultValue()
-               : intval($obj->responseData->cursor->estimatedResultCount);
+            ? parent::noDataDefaultValue()
+            : intval($obj->responseData->cursor->estimatedResultCount);
     }
 
     public static function getPagespeedAnalysis($url = false, $strategy = 'desktop')
     {
-        if ('' == Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY) {
+        if ('' == Config\ApiKeys::get('GOOGLE_SIMPLE_API_ACCESS_KEY')) {
             throw new E('In order to use the PageSpeed API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
-            exit(0);
         }
 
         $url = parent::getUrl($url);
         $url = sprintf(Config\Services::GOOGLE_PAGESPEED_URL,
-            $url, $strategy, Config\ApiKeys::GOOGLE_SIMPLE_API_ACCESS_KEY);
+            $url, $strategy, Config\ApiKeys::get('GOOGLE_SIMPLE_API_ACCESS_KEY'));
 
         $ret = static::_getPage($url);
 
@@ -112,8 +111,7 @@ class Google extends SEOstats
         if (!isset($ret->score)) {
             return !isset($ret->ruleGroups->SPEED->score) || !$ret->ruleGroups->SPEED->score ? parent::noDataDefaultValue() :
                 intval($ret->ruleGroups->SPEED->score);
-        }
-        else {
+        } else {
             return $ret->score;
         }
     }
@@ -121,11 +119,11 @@ class Google extends SEOstats
     /**
      * Returns array, containing detailed results for any Google search.
      *
-     * @param     string    $query  String, containing the search query.
-     * @param     string    $tld    String, containing the desired Google top level domain.
+     * @param     string $query String, containing the search query.
+     * @param     string $tld String, containing the desired Google top level domain.
      * @return    array             Returns array, containing the keys 'URL', 'Title' and 'Description'.
      */
-    public static function getSerps($query, $maxResults=100, $domain=false)
+    public static function getSerps($query, $maxResults = 100, $domain = false)
     {
         return Google\Search::getSerps($query, $maxResults, $domain);
     }
