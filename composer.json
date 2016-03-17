@@ -35,10 +35,10 @@
 		"ext-json" : "*"
 	},
     "require-dev" : {
-				"squizlabs/php_codesniffer" : "~1",
+		"squizlabs/php_codesniffer" : "~1",
 		"composer/composer": "1.0.*@dev",
         "phpunit/phpunit" : ">=3.7,<4",
-				"scrutinizer/ocular" : "~1"
+		"scrutinizer/ocular" : "~1"
     },
 	"autoload" : {
 		"psr-0" : {

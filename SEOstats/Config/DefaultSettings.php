@@ -66,4 +66,13 @@ interface DefaultSettings
     //   fr – France
     //   it – Italy
     const SISTRIX_DB = 'de';
+
+    // Enter proxy to use with curl
+    // leave empty to disable proxy
+    const CURLOPT_PROXY = '';
+
+    // Enter proxy username and password (seperated by :) if necessary
+    // leave empty tp to disable
+    const CURLOPT_PROXYUSERPWD = '';
+
 }

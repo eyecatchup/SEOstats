@@ -1,6 +1,8 @@
 <?php
 namespace SEOstats\Helper;
 
+use SEOstats\Config\DefaultSettings;
+
 /**
  * HTTP Request Helper Class
  *
@@ -8,7 +10,7 @@ namespace SEOstats\Helper;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/05/12
+ * @updated    2016/03/17
  */
 
 class HttpRequest
@@ -36,6 +38,12 @@ class HttpRequest
             CURLOPT_MAXREDIRS       => 2,
             CURLOPT_SSL_VERIFYPEER  => 0,
         ));
+        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+            curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
+        }
+        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
+        }
 
         if (false !== $postData) {
             if (false !== $postJson) {
@@ -79,6 +87,12 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_NOBODY          => 1,
         ));
+        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+            curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
+        }
+        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
+        }
 
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -104,6 +118,12 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_FILE            => $fp,
         ));
+        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+            curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
+        }
+        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
+        }
 
         curl_exec($ch);
         curl_close($ch);
