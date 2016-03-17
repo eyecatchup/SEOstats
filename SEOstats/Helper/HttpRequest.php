@@ -38,10 +38,10 @@ class HttpRequest
             CURLOPT_MAXREDIRS       => 2,
             CURLOPT_SSL_VERIFYPEER  => 0,
         ));
-        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+        if(DefaultSettings::CURLOPT_PROXY !== '') {
             curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
         }
-        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+        if(DefaultSettings::CURLOPT_PROXYUSERPWD !== '') {
             curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
         }
 
@@ -87,10 +87,10 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_NOBODY          => 1,
         ));
-        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+        if(DefaultSettings::CURLOPT_PROXY !== '') {
             curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
         }
-        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+        if(DefaultSettings::CURLOPT_PROXYUSERPWD !== '') {
             curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
         }
 
@@ -118,10 +118,10 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_FILE            => $fp,
         ));
-        if(!empty(DefaultSettings::CURLOPT_PROXY)) {
+        if(DefaultSettings::CURLOPT_PROXY !== '') {
             curl_setopt($ch, CURLOPT_PROXY, DefaultSettings::CURLOPT_PROXY);
         }
-        if(!empty(DefaultSettings::CURLOPT_PROXYUSERPWD)) {
+        if(DefaultSettings::CURLOPT_PROXYUSERPWD !== '') {
             curl_setopt($ch, CURLOPT_PROXYUSERPWD, DefaultSettings::CURLOPT_PROXYUSERPWD);
         }
 
