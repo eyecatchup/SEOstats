@@ -69,10 +69,16 @@ interface DefaultSettings
 
     // Enter proxy to use with curl
     // leave empty to disable proxy
+    // can be overwritten by dynamic configuration
     const CURLOPT_PROXY = '';
 
     // Enter proxy username and password (seperated by :) if necessary
-    // leave empty tp to disable
+    // leave empty to disable
+    // can be overwritten by dynamic configuration
     const CURLOPT_PROXYUSERPWD = '';
 
+    // Enter own useragent
+    // leave empty to use default
+    // can be overwritten by dynamic configuration
+    const UA = '';
 }
