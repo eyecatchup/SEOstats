@@ -32,7 +32,8 @@
 	"require" : {
 		"php" : ">=5.3",
 		"ext-curl" : "*",
-		"ext-json" : "*"
+		"ext-json" : "*",
+		"vlucas/phpdotenv" : "*"
 	},
     "require-dev" : {
 				"squizlabs/php_codesniffer" : "~1",

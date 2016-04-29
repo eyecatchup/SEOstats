@@ -15,7 +15,7 @@ namespace SEOstats\Config;
  * Client API keys
  * @package    SEOstats
  */
-interface ApiKeys
+class ApiKeys
 {
     // To acquire an API key, visit Google's APIs Console here:
     //      https://code.google.com/apis/console
@@ -32,4 +32,22 @@ interface ApiKeys
     // To acquire a SISTRIX API key, visit:
     //      http://www.sistrix.de
     const SISTRIX_API_ACCESS_KEY = '';
+
+    public static function getGoogleSimpleApiAccessKey() {
+        return env('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
+    }
+
+    public static function getMozscapeAccessId() {
+        return env('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
+    }
+
+    public static function getMozscapeSecretKey()
+    {
+        return env('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
+    }
+
+    public static function getSistrixApiAccessKey()
+    {
+        return env('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
+    }
 }
