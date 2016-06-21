@@ -113,7 +113,7 @@ If composer is no option for you, you can still just download the [`SEOstats.zip
 There're two configuration files to note:
 <ol>
 <li>`./SEOstats/Config/ApiKeys.php`<br>
-<em>Client API Keys (currently required for Mozscape and Google's Pagespeed Service only).</em>
+<em>Client API Keys (currently only required for Mozscape, Google's Pagespeed Service and Sistrix).</em>
 </li>
 <li>`./SEOstats/Config/DefaultSettings.php`<br>
 <em>Some default settings for querying data (mainly locale related stuff).</em>
