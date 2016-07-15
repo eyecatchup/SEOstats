@@ -1,6 +1,8 @@
 <?php
 namespace SEOstats\Helper;
 
+use SEOstats\Config\DefaultSettings;
+
 /**
  * HTTP Request Helper Class
  *
@@ -8,7 +10,7 @@ namespace SEOstats\Helper;
  * @author     Stephan Schmitz <eyecatchup@gmail.com>
  * @copyright  Copyright (c) 2010 - present Stephan Schmitz
  * @license    http://eyecatchup.mit-license.org/  MIT License
- * @updated    2013/05/12
+ * @updated    2016/03/17
  */
 
 class HttpRequest
@@ -24,8 +26,9 @@ class HttpRequest
      */
     public static function sendRequest($url, $postData = false, $postJson = false)
     {
-        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
-                \SEOstats\SEOstats::BUILD_NO);
+        $ua = self::getUserAgent();
+        $curlopt_proxy = self::getProxy();
+        $curlopt_proxyuserpwd = self::getProxyUserPwd();
 
         $ch = curl_init($url);
         curl_setopt_array($ch, array(
@@ -36,6 +39,12 @@ class HttpRequest
             CURLOPT_MAXREDIRS       => 2,
             CURLOPT_SSL_VERIFYPEER  => 0,
         ));
+        if($curlopt_proxy) {
+            curl_setopt($ch, CURLOPT_PROXY, $curlopt_proxy);
+        }
+        if($curlopt_proxyuserpwd) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $curlopt_proxyuserpwd);
+        }
 
         if (false !== $postData) {
             if (false !== $postJson) {
@@ -66,8 +75,9 @@ class HttpRequest
      */
     public static function getHttpCode($url)
     {
-        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
-                \SEOstats\SEOstats::BUILD_NO);
+        $ua = self::getUserAgent();
+        $curlopt_proxy = self::getProxy();
+        $curlopt_proxyuserpwd = self::getProxyUserPwd();
 
         $ch = curl_init($url);
         curl_setopt_array($ch, array(
@@ -79,6 +89,12 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_NOBODY          => 1,
         ));
+        if($curlopt_proxy) {
+            curl_setopt($ch, CURLOPT_PROXY, $curlopt_proxy);
+        }
+        if($curlopt_proxyuserpwd) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $curlopt_proxyuserpwd);
+        }
 
         curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -89,8 +105,9 @@ class HttpRequest
 
     public function getFile($url, $file)
     {
-        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats',
-                \SEOstats\SEOstats::BUILD_NO);
+        $ua = self::getUserAgent();
+        $curlopt_proxy = self::getProxy();
+        $curlopt_proxyuserpwd = self::getProxyUserPwd();
 
         $fp = fopen("$file", 'w');
 
@@ -104,6 +121,12 @@ class HttpRequest
             CURLOPT_SSL_VERIFYPEER  => 0,
             CURLOPT_FILE            => $fp,
         ));
+        if($curlopt_proxy) {
+            curl_setopt($ch, CURLOPT_PROXY, $curlopt_proxy);
+        }
+        if($curlopt_proxyuserpwd) {
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, $curlopt_proxyuserpwd);
+        }
 
         curl_exec($ch);
         curl_close($ch);
@@ -111,5 +134,38 @@ class HttpRequest
 
         clearstatcache();
         return (bool)(false !== stat($file));
+    }
+
+    public static function getUserAgent() {
+        $ua = sprintf('SEOstats %s https://github.com/eyecatchup/SEOstats', \SEOstats\SEOstats::BUILD_NO);
+        if(\SEOstats\Config\DefaultSettings::UA !== '') {
+            $ua = \SEOstats\Config\DefaultSettings::UA;
+        }
+        if(\SEOstats\SEOstats::getUserAgent()) {
+            $ua = \SEOstats\SEOstats::getUserAgent();
+        }
+        return $ua;
+    }
+
+    public static function getProxy() {
+        $curlopt_proxy = false;
+        if(\SEOstats\Config\DefaultSettings::CURLOPT_PROXY !== '') {
+            $curlopt_proxy = \SEOstats\Config\DefaultSettings::CURLOPT_PROXY;
+        }
+        if(\SEOstats\SEOstats::getCurloptProxy()) {
+            $curlopt_proxy = \SEOstats\SEOstats::getCurloptProxy();
+        }
+        return $curlopt_proxy;
+    }
+
+    public static function getProxyUserPwd() {
+        $curlopt_proxyuserpwd = false;
+        if(\SEOstats\Config\DefaultSettings::CURLOPT_PROXYUSERPWD !== '') {
+            $curlopt_proxyuserpwd = \SEOstats\Config\DefaultSettings::CURLOPT_PROXYUSERPWD;
+        }
+        if(\SEOstats\SEOstats::getCurloptProxyuserpwd()) {
+            $curlopt_proxyuserpwd = \SEOstats\SEOstats::getCurloptProxyuserpwd();
+        }
+        return $curlopt_proxyuserpwd;
     }
 }

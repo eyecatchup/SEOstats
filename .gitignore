@@ -4,3 +4,4 @@ composer.lock
 .project
 .settings
 .DS_Store
+.idea

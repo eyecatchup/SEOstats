@@ -534,16 +534,26 @@ class GTB_Request extends GTB_PageRank
    * @return    string      Returns string, containing the curl result.
    */
   private static function GetWithCurl($url) {
-	$ch  = curl_init($url);
-	curl_setopt($ch,CURLOPT_USERAGENT,'' );
-	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-	curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
-	curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
-	curl_setopt($ch,CURLOPT_MAXREDIRS,2);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	$str = curl_exec($ch);
-	curl_close($ch);
-	return $str;
+      $ua = \SEOstats\Helper\HttpRequest::getUserAgent();
+      $curlopt_proxy = \SEOstats\Helper\HttpRequest::getProxy();
+      $curlopt_proxyuserpwd = \SEOstats\Helper\HttpRequest::getProxyUserPwd();
+
+	  $ch  = curl_init($url);
+      curl_setopt($ch,CURLOPT_USERAGENT,$ua);
+      if($curlopt_proxy) {
+          curl_setopt($ch, CURLOPT_PROXY, $curlopt_proxy);
+      }
+      if($curlopt_proxyuserpwd) {
+          curl_setopt($ch, CURLOPT_PROXYUSERPWD, $curlopt_proxyuserpwd);
+      }
+      curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+      curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,5);
+      curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
+      curl_setopt($ch,CURLOPT_MAXREDIRS,2);
+      curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+      $str = curl_exec($ch);
+      curl_close($ch);
+      return $str;
   }
 }
 /** GTB_Exception     GTB_PageRank exception class.
