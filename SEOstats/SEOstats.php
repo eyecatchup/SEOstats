@@ -84,7 +84,10 @@ class SEOstats
     protected static $_url,
                      $_host,
                      $_lastHtml,
-                     $_lastLoadedUrl
+                     $_lastLoadedUrl,
+                     $_curlopt_proxy,
+                     $_curlopt_proxyuserpwd,
+                     $_ua
                      = false;
 
     public function __construct($url = false)
@@ -217,5 +220,53 @@ class SEOstats
     protected static function noDataDefaultValue()
     {
         return Config\DefaultSettings::DEFAULT_RETURN_NO_DATA;
+    }
+
+    /**
+     * @return Proxy address
+     */
+    public static function getCurloptProxy()
+    {
+        return self::$_curlopt_proxy;
+    }
+
+    /**
+     * @param Proxy address $curlopt_proxy
+     */
+    public static function setCurloptProxy($curlopt_proxy)
+    {
+        self::$_curlopt_proxy = $curlopt_proxy;
+    }
+
+    /**
+     * @return Proxy auth
+     */
+    public static function getCurloptProxyuserpwd()
+    {
+        return self::$_curlopt_proxyuserpwd;
+    }
+
+    /**
+     * @param Proxy auth $curlopt_proxyuserpwd
+     */
+    public static function setCurloptProxyuserpwd($curlopt_proxyuserpwd)
+    {
+        self::$_curlopt_proxyuserpwd = $curlopt_proxyuserpwd;
+    }
+
+    /**
+     * @return Useragent string
+     */
+    public static function getUserAgent()
+    {
+        return self::$_ua;
+    }
+
+    /**
+     * @param Useragent string $ua
+     */
+    public static function setUserAgent($ua)
+    {
+        self::$_ua = $ua;
     }
 }
