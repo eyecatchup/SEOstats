@@ -78,8 +78,8 @@ class Mozscape extends SEOstats
      */
     public static function getCols($cols, $url = false)
     {
-        if ('' == Config\ApiKeys::MOZSCAPE_ACCESS_ID ||
-            '' == Config\ApiKeys::MOZSCAPE_SECRET_KEY) {
+        if ('' == Config\ApiKeys::getMozscapeAccessId() ||
+            '' == Config\ApiKeys::getMozscapeSecretKey()) {
             throw new E('In order to use the Mozscape API, you must obtain
                 and set an API key first (see SEOstats\Config\ApiKeys.php).');
             exit(0);
@@ -90,7 +90,7 @@ class Mozscape extends SEOstats
         $apiEndpoint = sprintf(Config\Services::MOZSCAPE_API_URL,
             urlencode(Helper\Url::parseHost(parent::getUrl($url))),
             $cols,
-            Config\ApiKeys::MOZSCAPE_ACCESS_ID,
+            Config\ApiKeys::getMozscapeAccessId(),
             $expires,
             urlencode(self::_getUrlSafeSignature($expires))
         );
@@ -104,8 +104,8 @@ class Mozscape extends SEOstats
 
     private static function _getUrlSafeSignature($expires)
     {
-        $data = Config\ApiKeys::MOZSCAPE_ACCESS_ID . "\n{$expires}";
-        $sig  = self::_hmacsha1($data, Config\ApiKeys::MOZSCAPE_SECRET_KEY);
+        $data = Config\ApiKeys::getMozscapeAccessId() . "\n{$expires}";
+        $sig  = self::_hmacsha1($data, Config\ApiKeys::getMozscapeSecretKey());
 
         return base64_encode($sig);
     }
