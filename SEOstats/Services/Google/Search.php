@@ -100,8 +100,8 @@ class Search extends SEOstats
     protected static function getNextSerp ($start, $query)
     {
         return 0 == $start
-            ? sprintf('search?q=%s&filter=0', $query)
-            : sprintf('search?q=%s&filter=0&start=%s0', $query, $start);
+            ? sprintf('search?q=%s&filter=1', $query)
+            : sprintf('search?q=%s&filter=1&start=%s0', $query, $start);
     }
 
     protected static function guardNoCaptcha ($response)
