@@ -229,132 +229,6 @@ class Alexa extends SEOstats
     }
 
     /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Bounce Rate from alexa
-     */
-
-    public static function getBounceRate($url = false)
-    {
-        $xpath = self::_getXPath($url);
-
-        $xpathQueryList = array(
-            "//*[@id='engagement-content']/span[1]/span/span/div/strong",
-            "//*[@id='engagement-content']/span[1]/span/span/div/strong/a"
-        );
-
-        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList); 
-    }
-    /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Search Visits  
-     */
-    public static function getSearchVisits($url = false)
-    {
-        $xpath = self::_getXPath($url);
-
-        $xpathQueryList = array(
-            "//*[@id='keyword-content']/span[1]/span/span/div/strong",
-            "//*[@id='keyword-content']/span[1]/span/span/div/strong/a"
-        );
-
-        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList); 
-    }
-
-    /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Get daily page views
-     */
-    public static function getDailyPageViews($url = false)
-    {
-        $xpath = self::_getXPath($url);
-
-        $xpathQueryList = array(
-            "//*[@id='engagement-content']/span[2]/span/span/div/strong",
-            "//*[@id='engagement-content']/span[2]/span/span/div/strong/a"
-        );
-
-        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList); 
-    }
-
-    /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Get daily page time on site
-     */
-
-    public static function getDailyTimeOnSite($url = false)
-    {
-        $xpath = self::_getXPath($url);
-
-        $xpathQueryList = array(
-            "//*[@id='engagement-content']/span[3]/span/span/div/strong",
-            "//*[@id='engagement-content']/span[3]/span/span/div/strong/a"
-        );
-
-        return static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList); 
-    }
-
-    /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Get top keywords (max 5 listed )
-     */
-
-    public static function getKeyWords($url = false)
-    {
-        $xpath = self::_getXPath($url);
-        $res_data = [];
-        for($i = 1; $i < 6; $i++ ) {
-            $xpathQueryList = array(
-                "//*[@id='keyword-content']/span[2]/table/tbody/tr[$i]/td[1]"
-             );
-            $xpathQueryList1 = array(
-                "//*[@id='keyword-content']/span[2]/table/tbody/tr[$i]/td[2]"
-             );
-            $key = static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList);
-            $val = static::parseDomByXpathsToIntegerWithoutTags($xpath, $xpathQueryList1);
-
-            $res_data[$i]["kewords"] = str_replace("&nbsp", "", trim(explode(".", $key)[1]));
-            $res_data[$i]["traffic"] = $val;
-            if(strcmp(trim($key), "n.a.")==0){
-                unset($res_data[$i]);
-            }
-        }
-
-        return  $res_data;
-    }
-
-    /**
-     * @author Meraj Ahmad Siddiqui <merajsiddiqui@outlook.com>
-     * Get top Visitor countries (max 5 listed )
-     */
-    public static function getVisitorCountries($url = false)
-    {
-        $xpath = self::_getXPath($url);
-        $res_data = [];
-        for($i = 1; $i < 6; $i++ ) {
-            $country = array(
-                "//*[@id='visitors-content']/div[2]/span[2]/table/tbody/tr[$i]/td[1]/a"
-             );
-            $traffic = array(
-                "//*[@id='visitors-content']/div[2]/span[2]/table/tbody/tr[$i]/td[2]"
-             );
-            $rank = array(
-                "//*[@id='visitors-content']/div[2]/span[2]/table/tbody/tr[$i]/td[3]"
-             );
-
-            $country = static::parseDomByXpathsToIntegerWithoutTags($xpath, $country);
-            $traffic = static::parseDomByXpathsToIntegerWithoutTags($xpath, $traffic);
-            $rank = static::parseDomByXpathsToIntegerWithoutTags($xpath, $rank);
-            $res_data[$i]["country"] = $country;
-            $res_data[$i]["traffic"] = $traffic;
-            $res_data[$i]["rank in country"] = $rank;
-            if(strcmp(trim($country), "n.a.")==0){
-                unset($res_data[$i]);
-            }
-        }
-
-        return  $res_data;
-    }
-    /**
      * @access        public
      * @param         integer    $type      Specifies the graph type. Valid values are 1 to 6.
      * @param         integer    $width     Specifies the graph width (in px).
@@ -413,7 +287,7 @@ class Alexa extends SEOstats
     {
         $strim = trim(str_replace(',', '', $str));
         $intStr = 0 < strlen($strim) ? $strim : '0';
-        return $intStr;
+        return intval($intStr);
     }
 
     /**
