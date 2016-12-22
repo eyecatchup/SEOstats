@@ -59,6 +59,31 @@ try {
         // Get Alexa's page load time info for the given domain.
         echo "Page load time:   " .
             Alexa::getPageLoadTime() . PHP_EOL;
+
+        //Get bounce Rate for the Given domain from alexa
+        echo "Bounce Rate:   " .
+        Alexa::getBounceRate() . PHP_EOL;
+
+        //Get Daily page views per user for the given domain provided by alexa
+        echo "Daily page views per user:   " .
+        Alexa::getDailyPageViews() . PHP_EOL;
+
+        //Get Daily time on site for the Given domain from alexa
+        echo "Daily time on site:   " .
+        Alexa::getDailyTimeOnSite() . PHP_EOL;
+
+        //Get search visits for the given domain provided by alexa
+        echo "Search Visits:   " .
+        Alexa::getSearchVisits() . PHP_EOL;
+
+         //Get Top keywords for the Given domain from alexa
+        echo "Top keywords :   ";
+        print_r(Alexa::getKeyWords()) . PHP_EOL;
+
+        //Get search visits for the given domain provided by alexa
+        echo "Top Visitor Countries:   ";
+        print_r(Alexa::getVisitorCountries()) . PHP_EOL;
+
     }
 }
 catch (\Exception $e) {

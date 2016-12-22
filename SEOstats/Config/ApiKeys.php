@@ -32,22 +32,34 @@ class ApiKeys
     // To acquire a SISTRIX API key, visit:
     //      http://www.sistrix.de
     const SISTRIX_API_ACCESS_KEY = '';
+    //
+    public static function env($config, $default)
+    {
+        $dotenv = new \Dotenv\Dotenv(__DIR__."/../../../../../");
+        $dotenv->load();
+        $config_value = getenv($config);
+        if(is_string($config_value) && (strlen(trim($config_value)) > 0)) {
+            return $config_value;
+        } else {
+            return $default;
+        }
+    }
 
     public static function getGoogleSimpleApiAccessKey() {
-        return env('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
+        return self::env('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
     }
 
     public static function getMozscapeAccessId() {
-        return env('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
+        return self::env('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
     }
 
     public static function getMozscapeSecretKey()
     {
-        return env('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
+        return self::env('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
     }
 
     public static function getSistrixApiAccessKey()
     {
-        return env('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
+        return self::env('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
     }
 }
