@@ -22,32 +22,50 @@ class ApiKeys
     // In the Services pane, activate the "PageSpeed Insights API" (not the service!).
     // Next, go to the API Access pane. The API key is near the bottom of that pane,
     // in the section titled "Simple API Access.".
-    const GOOGLE_SIMPLE_API_ACCESS_KEY = '';
+    protected static $GOOGLE_SIMPLE_API_ACCESS_KEY = '';
 
     // To acquire a Mozscape (f.k.a. SEOmoz) API key, visit:
     //      https://moz.com/products/api/keys
-    const MOZSCAPE_ACCESS_ID  = '';
-    const MOZSCAPE_SECRET_KEY = '';
+    protected static $MOZSCAPE_ACCESS_ID  = '';
+    protected static $MOZSCAPE_SECRET_KEY = '';
 
     // To acquire a SISTRIX API key, visit:
     //      http://www.sistrix.de
-    const SISTRIX_API_ACCESS_KEY = '';
+    protected static $SISTRIX_API_ACCESS_KEY = '';
 
     public static function getGoogleSimpleApiAccessKey() {
-        return env('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
+        return static::$GOOGLE_SIMPLE_API_ACCESS_KEY;
+    }
+
+    public static function setGoogleSimpleApiAccessKey($value) {
+        return static::$GOOGLE_SIMPLE_API_ACCESS_KEY = $value;
     }
 
     public static function getMozscapeAccessId() {
-        return env('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
+        return static::$MOZSCAPE_ACCESS_ID;
+    }
+
+    public static function setMozscapeAccessId($value) {
+        return static::$MOZSCAPE_ACCESS_ID = $value;
     }
 
     public static function getMozscapeSecretKey()
     {
-        return env('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
+        return static::$MOZSCAPE_SECRET_KEY;
+    }
+
+    public static function setMozscapeSecretKey($value)
+    {
+        return static::$MOZSCAPE_SECRET_KEY = $value;
     }
 
     public static function getSistrixApiAccessKey()
     {
-        return env('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
+        return static::$SISTRIX_API_ACCESS_KEY;
+    }
+
+    public static function setSistrixApiAccessKey($value)
+    {
+        return static::$SISTRIX_API_ACCESS_KEY = $value;
     }
 }
