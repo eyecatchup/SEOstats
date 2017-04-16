@@ -129,7 +129,7 @@ Now, you can create a new SEOstats instance an bind any URL to the instance for 
 ```php
 <?php
 // Depending on how you installed SEOstats
-#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+# require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use \SEOstats\Services as SEOstats;
@@ -157,7 +157,7 @@ Alternatively, you can call all methods statically passing the URL to the method
 ```php
 <?php
 // Depending on how you installed SEOstats
-#require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+# require_once __DIR__ . DIRECTORY_SEPARATOR . 'SEOstats' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 try {
