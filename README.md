@@ -10,10 +10,13 @@ It offers over 50 different methods to fetch data from sources like Alexa, Googl
 
 A variety of *(private as well as enterprise)* SEO tools have been built using SEOstats.
 
+---
+
 ## Dependencies
 
 SEOstats requires PHP version 5.3 or greater and the PHP5-CURL and PHP5-JSON extensions.
 
+---
 ## Installation
 
 The recommended way to install SEOstats is [through composer](http://getcomposer.org).
@@ -26,6 +29,7 @@ To install SEOstats, just create the following `composer.json` file
     }
 and run the `php composer.phar install` (Windows: `composer install`) command in path of the `composer.json`.  
 
+---
 #### Step-by-step example:
 
 If you haven't installed composer yet, here's the easiest way to do so:
@@ -40,7 +44,6 @@ user@host:~/> mv /path/given/by/composer-installer/composer.phar /usr/local/bin/
 # (Note, you need to re-login your terminal for the change to take effect.)
 user@host:~/> echo 'alias composer="php /usr/local/bin/composer.phar"' >> ~/.profile
 ```
-<hr>
 If you have installed composer, follow these steps to install SEOstats:
 ```
 # Create a new directory and cd into it:
@@ -59,16 +62,17 @@ Installing dependencies (including require-dev)
 Writing lock file
 Generating autoload files
 
-# You're done. For a quick start, you can now 
-# copy the example files to the install directory:
+# You're done. For a quick start, you can now  copy the example files to the install directory:
 user@host:/path/to/seostats> cp ./vendor/seostats/seostats/example/*.php  ./
 
 # Your SEOstats install directory should look like this now:
 user@host:/path/to/seostats> ls -1
-composer.json
-composer.lock
-get-alexa-graphs.php
+
+> composer.json
+> composer.lock
+> get-alexa-graphs.php
 get-alexa-metrics.php
+
 get-google-pagerank.php
 get-google-pagespeed-analysis.php
 get-google-serps.php
@@ -79,35 +83,38 @@ get-sistrix-visibilityindex.php
 get-social-metrics.php
 vendor
 ```
-<hr>
+
+
+
+---
+
 #### Use SEOstats without composer
 
 If composer is no option for you, you can still just download the [`SEOstats.zip`](https://github.com/eyecatchup/SEOstats/archive/master.zip) file of the current master branch (version 2.5.2) and extract it. However, currently [there is an issues with autoloading](https://github.com/eyecatchup/SEOstats/issues/49) and you need to follow the instructions in the comments in the example files in order to use SEOstats (or download zip for the development version of SEOstats (2.5.3) [here](https://github.com/eyecatchup/SEOstats/archive/dev-253.zip)).
 
+---
 ## Usage
 
 ### TOC
 
-* <a href='#configuration'>Configuration</a>
+* <a href='#configuration'>configuration</a>
 * <a href='#brief-example-of-use'>Brief Example of Use</a>
 * <a href='#seostats-alexa-methods'>Alexa Methods</a>
- * <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>
- * <a href='#alexa-traffic-graphs'>Alexa Traffic Graphs</a>
+* <a href='#alexa-traffic-metrics'>Alexa Traffic Metrics</a>
+* <a href='#alexa-traffic-graphs'>Alexa Traffic Graphs</a>
 * <a href='#seostats-google-methods'>Google Methods</a>
- * <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>
- * <a href='#google-pagespeed-service'>Pagespeed Service</a>
- * <a href='#google-websearch-index'>Websearch Index</a>
- * <a href='#google-serp-details'>SERP Details</a>
+* <a href='#google-toolbar-pagerank'>Toolbar Pagerank</a>
+* <a href='#google-pagespeed-service'>Pagespeed Service</a>
+* <a href='#google-websearch-index'>Websearch Index</a>
+* <a href='#google-serp-details'>SERP Details</a>
 * <a href='#seostats-mozscape-methods'>Mozscape Methods</a>  
 * <a href='#seostats-open-site-explorer-methods'>Open Site Explorer Methods</a>
 * <a href='#seostats-semrush-methods'>SEMRush Methods</a>
- * <a href='#semrush-domain-reports'>Domain Reports</a>
- * <a href='#semrush-graphs'>Graphs</a>
+* <a href='#semrush-domain-reports'>Domain Reports</a>
+* <a href='#semrush-graphs'>Graphs</a>
 * <a href='#seostats-sistrix-methods'>Sistrix Methods</a>
- * <a href='#sistrix-visibility-index'>Visibility Index</a>
+* <a href='#sistrix-visibility-index'>Visibility Index</a>
 * <a href='#seostats-social-media-methods'>Social Media Methods</a>
-
-<hr>
 
 ### Configuration
 There're two configuration files to note:
@@ -172,7 +179,6 @@ catch (SEOstatsException $e) {
 ```
 
 More detailed examples can be found in the `./example` directory.
-<hr>
 
 ## SEOstats Alexa Methods
 
@@ -223,7 +229,6 @@ More detailed examples can be found in the `./example` directory.
   // Returns HTML code for the 'search visits'-graph, using specific graph dimensions of 320*240 px.
   print Alexa::getTrafficGraph(6, 0, 320, 240);
 ```
-<hr>
 
 ## SEOstats Google Methods
 
@@ -274,7 +279,7 @@ More detailed examples can be found in the `./example` directory.
   // within the first 1000 results for a Google web search for 'keyword'.
   print_r ( Google::getSerps('keyword', 1000, $url) );
 ```
-<hr>
+
 
 ## SEOstats Mozscape Methods
 
@@ -300,7 +305,6 @@ More detailed examples can be found in the `./example` directory.
   // of the root domain of the URL to rank well in search engine results.
   print Mozscape::getDomainAuthority();
 ```
-<hr>
 
 ## SEOstats Open Site Explorer (by MOZ) Methods
 
@@ -343,7 +347,6 @@ More detailed examples can be found in the `./example` directory.
         $ose->totalLinks->unit   . ') - ' .         // String - "Total Links"
         $ose->totalLinks->descr  . PHP_EOL;         // String - Result value description
 ```
-<hr>
 
 ## SEOstats SEMRush Methods
 
@@ -385,7 +388,7 @@ More detailed examples can be found in the `./example` directory.
   // specific graph dimensions of 320*240 px and specific graph colors (black lines and red dots for data points).
   print SemRush::getDomainGraph(5, 0, 'de', 320, 240, '000000', 'ff0000');
 ```
-<hr>
+
 
 ## SEOstats Sistrix Methods
 
@@ -397,7 +400,7 @@ More detailed examples can be found in the `./example` directory.
   // @link http://www.sistrix.com/blog/870-sistrix-visibilityindex.html
   print Sistrix::getVisibilityIndex();
 ```
-<hr>
+
 
 ## SEOstats Social Media Methods
 
@@ -453,8 +456,7 @@ More detailed examples can be found in the `./example` directory.
   // Returns the total count of URL shares via VKontakte
   print Social::getVKontakteShares();
 ```
-<hr>
-
+---
 ## License
 
 (c) 2010 - 2016, Stephan Schmitz eyecatchup@gmail.com   
