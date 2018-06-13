@@ -34,20 +34,20 @@ class ApiKeys
     const SISTRIX_API_ACCESS_KEY = '';
 
     public static function getGoogleSimpleApiAccessKey() {
-        return env('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
+        return getenv('GOOGLE_SIMPLE_API_ACCESS_KEY', self::GOOGLE_SIMPLE_API_ACCESS_KEY);
     }
 
     public static function getMozscapeAccessId() {
-        return env('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
+        return getenv('MOZSCAPE_ACCESS_ID', self::MOZSCAPE_ACCESS_ID);
     }
 
     public static function getMozscapeSecretKey()
     {
-        return env('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
+        return getenv('MOZSCAPE_SECRET_KEY', self::MOZSCAPE_SECRET_KEY);
     }
 
     public static function getSistrixApiAccessKey()
     {
-        return env('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
+        return getenv('SISTRIX_API_ACCESS_KEY', self::SISTRIX_API_ACCESS_KEY);
     }
 }
