@@ -47,7 +47,7 @@ interface Services
     const GOOGLE_PLUSONE_URL = 'https://plusone.google.com/u/0/_/+1/fastbutton?count=true&url=%s';
 
     // Open Site Explorer's public report URL.
-    const OPENSITEEXPLORER_URL = 'https://moz.com/researchtools/ose/%s?group=0&page=%s&site=%s&sort=';
+    const OPENSITEEXPLORER_URL = 'http://www.opensiteexplorer.org/%s?group=0&page=%s&site=%s&sort=';
 
     // Facebook FQL API Endpoint.
     const FB_LINKSTATS_URL = 'https://api.facebook.com/method/fql.query?query=%s&format=json';
