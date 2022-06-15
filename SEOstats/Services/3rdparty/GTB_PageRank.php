@@ -294,6 +294,9 @@ class GTB_jenkinsHash extends GTB_PageRank
   // @see         http://www.burtleburtle.net/bob/c/lookup2.c
   public static function _jenkinsHash($key, $encode=TRUE) {
     $url = $key;
+    if (is_string($url)) {
+        return null;
+    }
     $length = sizeof($url);        // the key's length
     $a = $b = 0x000000009E3779B9;  // the golden ratio; an arbitrary value
     $c = 0x00000000E6359A60;       // the previous hash, or an arbitrary value
@@ -367,7 +370,7 @@ class GTB_ieHash extends GTB_PageRank
     $NumHashLength = strlen($NumHashString);
     $CheckByte = 0;
     for ($i=($NumHashLength-1); $i>=0; $i--) {
-        $Num = $NumHashString{$i};
+        $Num = $NumHashString[$i];
         $CheckByte += (1===($i % 2)) ? (int)((($Num*2)/10)+(($Num*2)%10)) : $Num;
     }   $CheckByte %= 10;
     if ($CheckByte !== 0) {
